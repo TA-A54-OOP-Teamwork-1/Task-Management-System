@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaskManagementSystem.Models.Contracts
+﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface ITaskItem
+    public interface ITaskItem : ICommentable
     {
+        int ID { get; }
+
+        string Title { get; }
+
+        string Description { get; }
+
+        IReadOnlyCollection<string> History { get; }
     }
 }
