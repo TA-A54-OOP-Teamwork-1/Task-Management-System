@@ -1,4 +1,4 @@
-﻿namespace TaskManagementSystem.Models.Enumerations
+﻿namespace TaskManagementSystem.Models.Enums
 {
     public enum Priority
     {

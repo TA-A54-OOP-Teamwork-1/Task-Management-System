@@ -5,13 +5,13 @@ namespace TaskManagementSystem.Models
 {
     public abstract class TaskItem : ITaskItem
     {
-        private const int TITLE_MIN_LENGTH = 10;
-        private const int TITLE_MAX_LENGTH = 50;
-        private const int DESCRIPTION_MIN_LENGTH = 10;
-        private const int DESCRIPTION_MAX_LENGTH = 500;
+        private const int TitleMinLength = 10;
+        private const int TitleMaxLength = 50;
+        private const int DescriptionMinLength = 10;
+        private const int DescriptionMaxLength = 500;
 
-        private const string INVALID_TITLE_LENGTH = "Title must be between 10 and 50 symbols long.";
-        private const string INVALID_DESCRIPTION_LENGTH = "Description must be between 10 and 500 symbols long.";
+        private const string InvalidTitleLength = "Title must be between 10 and 50 symbols long.";
+        private const string InvalidDescriptionLength = "Description must be between 10 and 500 symbols long.";
 
         private string title;
         private string description;
@@ -32,8 +32,8 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, TITLE_MIN_LENGTH,
-                    TITLE_MAX_LENGTH, INVALID_TITLE_LENGTH);
+                DataValidator.IntIsInRange(value.Length, TitleMinLength,
+                    TitleMaxLength, InvalidTitleLength);
 
                 this.title = value;
             }
@@ -44,21 +44,21 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, DESCRIPTION_MIN_LENGTH,
-                    DESCRIPTION_MAX_LENGTH, INVALID_DESCRIPTION_LENGTH);
+                DataValidator.IntIsInRange(value.Length, DescriptionMinLength,
+                    DescriptionMaxLength, InvalidDescriptionLength);
 
                 this.description = value;
             }
         }
 
-        public IReadOnlyCollection<string> History
-        {
-            get { return this.history; }
-        }
-
         public IReadOnlyCollection<IComment> Comments
         {
             get { return this.comments; }
+        }
+
+        public IReadOnlyCollection<string> History
+        {
+            get { return this.history; }
         }
 
         public void AddComment(IComment comment)

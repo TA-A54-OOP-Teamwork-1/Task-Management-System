@@ -1,4 +1,4 @@
-﻿namespace TaskManagementSystem.Models.Enumerations.Statuses
+﻿namespace TaskManagementSystem.Models.Enums.Statuses
 {
     public enum BugStatus
     {
