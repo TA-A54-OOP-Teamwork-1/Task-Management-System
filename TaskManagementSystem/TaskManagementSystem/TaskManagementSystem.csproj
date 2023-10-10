@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Commands\Contracts\" />
     <Folder Include="Core\Contracts\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>
