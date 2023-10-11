@@ -31,6 +31,8 @@ namespace TaskManagementSystem.Models
                 ValidationHelper.StringIsNull(value, NameIsNullError);
                 ValidationHelper.ValidateIntRange(value.Length, NameMinLength,
                     NameMaxLength, InvalidNameLengthError);
+
+                this.name = value;
             }
         }
 
