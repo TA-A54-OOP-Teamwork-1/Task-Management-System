@@ -38,7 +38,9 @@ namespace TaskManagementSystem.Core
                 case CommandType.CreateTeam:
                     return new CreateTeamCommand(commandParams, repository);
                 case CommandType.CreatePerson:
-                case CommandType.CreateNewBoardInTeam:
+                    return new CreatePersonCommand(commandParams, repository);
+                case CommandType.CreateBoard:
+                    return new CreateBoardCommand(commandParams, repository);
                 case CommandType.CreateNewBug:
                 case CommandType.CreateNewStory:
                 case CommandType.CreateNewFeedback:

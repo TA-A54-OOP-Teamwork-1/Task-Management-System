@@ -36,18 +36,18 @@ namespace TaskManagementSystem.Models
             }
         }
 
-        public IReadOnlyCollection<IPerson> Members
+        public IReadOnlyCollection<IPerson> Members { get => members; }
+
+        public IReadOnlyCollection<IBoard> Boards { get => boards; }
+
+        public void AddMember(IPerson member)
         {
-            get { return this.members; }
+            this.members.Add(member);
         }
 
-        public IReadOnlyCollection<IBoard> Boards
+        public void AddBoard(IBoard board)
         {
-            get { return this.boards; }
+            this.boards.Add(board);
         }
-
-        public void AddMember(IPerson member) => this.members.Add(member);
-
-        public void AddBoard(IBoard board) => this.boards.Add(board);
     }
 }

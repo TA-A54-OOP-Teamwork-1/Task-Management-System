@@ -11,7 +11,7 @@ namespace TaskManagementSystem.Models
         private const int DescriptionMaxLength = 500;
 
         private readonly string NullValueError = "{0} cannot be null!";
-        private readonly string InvalidLengthError = "{} must be between {} and {} symbols long!";
+        private readonly string InvalidLengthError = "{0} must be between {1} and {2} symbols long!";
 
         private string title;
         private string description;
