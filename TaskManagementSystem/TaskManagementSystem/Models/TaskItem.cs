@@ -35,9 +35,9 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                DataValidator.StringIsNull(value, string.Format(NullValueError, nameof(this.Title)));
-
-                DataValidator.IntIsInRange(value.Length, TitleMinLength, TitleMaxLength, 
+                ValidationHelper.StringIsNull(value, string.Format(NullValueError, nameof(this.Title)));
+               
+                ValidationHelper.ValidateIntRange(value.Length, TitleMinLength, TitleMaxLength, 
                     string.Format(InvalidLengthError, nameof(this.Title), TitleMinLength, TitleMaxLength));                
 
                 this.title = value;
@@ -49,9 +49,9 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                DataValidator.StringIsNull(value, string.Format(NullValueError, nameof(this.Description)));
+                ValidationHelper.StringIsNull(value, string.Format(NullValueError, nameof(this.Description)));
 
-                DataValidator.IntIsInRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
+                ValidationHelper.ValidateIntRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
                     string.Format(InvalidLengthError, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));
 
                 this.description = value;

@@ -8,11 +8,11 @@ namespace TaskManagementSystem.Core
 {
     public class Repository : IRepository
     {
-        private IList<ITeam> teams = new List<ITeam>();
+        private List<ITeam> teams = new List<ITeam>();
 
-        public IList<ITeam> Teams
+        public IReadOnlyCollection<ITeam> Teams
         {
-            get => new List<ITeam>(teams);
+            get { return this.teams; }
         }
 
         public void AddPersonToTeam(string name, ITeam team)
@@ -89,7 +89,7 @@ namespace TaskManagementSystem.Core
         public void CreateTeam(string name)
         {
             ITeam team = new Team(name);
-            Teams.Add(team);
+            this.teams.Add(team);
             Console.WriteLine($"Creating a new team with name {name}.");
         }
 

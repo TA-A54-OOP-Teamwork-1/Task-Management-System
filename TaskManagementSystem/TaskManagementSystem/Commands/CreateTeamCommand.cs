@@ -16,7 +16,7 @@ namespace TaskManagementSystem.Commands
         public override string Execute()
         {
             // Validate parameters
-            ValidatorHelper.ValidateParametersCount(Parameters, ExpectedParametersCount);
+            ValidationHelper.ValidateParametersCount(Parameters, ExpectedParametersCount);
 
             // Extract name from parameters
             string name = Parameters[0];

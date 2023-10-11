@@ -4,7 +4,7 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Helpers
 {
-    public static class ValidatorHelper
+    public static class ValidationHelper
     {
         private const string InvalidUserInputExceptionErrorMessage = "Parameters count is {0} and does not match expected count of {1}";
         private static readonly string InvalidPriority = $"Priority must be {Priority.Low}, {Priority.Medium} or {Priority.High}!";
@@ -29,7 +29,7 @@ namespace TaskManagementSystem.Helpers
             }
         }
 
-        public static void IntIsInRange(int value, int min, int max, string message)
+        public static void ValidateIntRange(int value, int min, int max, string message)
         {
             if (value < min || value > max)
             {

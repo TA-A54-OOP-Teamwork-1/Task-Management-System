@@ -28,8 +28,8 @@ namespace TaskManagementSystem.Models
             get { return this.name; }
             init
             {
-                DataValidator.StringIsNull(value, NameIsNullError);
-                DataValidator.IntIsInRange(value.Length, NameMinLength, 
+                ValidationHelper.StringIsNull(value, NameIsNullError);
+                ValidationHelper.ValidateIntRange(value.Length, NameMinLength, 
                     NameMaxLength, InvalidNameLengthError);
 
                 this.name = value;

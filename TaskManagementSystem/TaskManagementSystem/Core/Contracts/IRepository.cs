@@ -31,7 +31,7 @@ namespace TaskManagementSystem.Core.Contracts
     public interface IRepository
     {
         // 
-        IList<ITeam> Teams { get; }
+        IReadOnlyCollection<ITeam> Teams { get; }
 
         // 
         void CreateTeam(string name);
@@ -55,21 +55,21 @@ namespace TaskManagementSystem.Core.Contracts
         // ToDO : change ITaskItem with IBug etc...
 
         // 
-        void ChangeBugPriority(ITaskItem task, Priority priority);
+        void ChangeBugPriority(IBug bug, Priority priority);
 
-        void ChangeBugSeverity(ITaskItem task, Severity severity);
+        void ChangeBugSeverity(IBug bug, Severity severity);
 
-        void ChangeBugStatus(ITaskItem task, BugStatus status);
+        void ChangeBugStatus(IBug bug, BugStatus status);
 
-        void ChangeStoryPriority(ITaskItem task, Priority priority);
+        void ChangeStoryPriority(IStory story, Priority priority);
 
-        void ChangeStorySize(ITaskItem task, Size size);
+        void ChangeStorySize(IStory story, Size size);
 
-        void ChangeStoryStatus(ITaskItem task, StoryStatus status);
+        void ChangeStoryStatus(IStory story, StoryStatus status);
 
-        void ChangeFeedbackRating(ITaskItem task, int rating);
+        void ChangeFeedbackRating(IFeedback feedback, int rating);
 
-        void ChangeFeedbackStatus(ITaskItem task, FeedbackStatus status);
+        void ChangeFeedbackStatus(IFeedback feedback, FeedbackStatus status);
 
         // 
         void ShowAllPeople();
