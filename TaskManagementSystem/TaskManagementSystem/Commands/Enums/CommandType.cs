@@ -4,7 +4,7 @@
     {
         CreateTeam,
         CreatePerson,
-        CreateNewBoardInTeam,
+        CreateBoard,
         CreateNewBug,
         CreateNewStory,
         CreateNewFeedback,

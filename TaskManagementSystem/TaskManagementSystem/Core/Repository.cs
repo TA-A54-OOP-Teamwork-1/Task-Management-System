@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Models;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
@@ -15,7 +16,45 @@ namespace TaskManagementSystem.Core
             get { return this.teams; }
         }
 
-        public void AddPersonToTeam(string name, ITeam team)
+        public void CreateTeam(string teamName)
+        {
+            // Do not alllow creating a team if teamName is already used
+            if (DoesTeamExist(teamName))
+            {
+                throw new InvalidUserInputException($"Team with name {teamName} already exists.");
+            }
+
+            ITeam team = new Team(teamName);
+            this.teams.Add(team);
+        }
+
+        public void CreatePerson(string personName, string teamToAddPersonTo)
+        {
+            // Do not allow creating a user if personName is already used
+            if (DoesPersonExist(personName))
+            {
+                throw new InvalidUserInputException($"User with name {personName} already exists.");
+            }
+
+            ITeam team = FindTeamByName(teamToAddPersonTo);
+            IPerson person = new Person(personName);
+            team.AddMember(person);
+        }
+
+        public void CreateNewBoardInTeam(string boardName, string teamToAddBoardTo)
+        {
+            // Do not alllow creating a team if teamName is already used
+            if (DoesBoardNameExist(boardName, teamToAddBoardTo))
+            {
+                throw new InvalidUserInputException($"Board with name {boardName} already exists.");
+            }
+
+            ITeam team = FindTeamByName(teamToAddBoardTo);
+            IBoard board = new Board(boardName);
+            team.AddBoard(board);
+        }
+
+        public void AddPersonToTeam(string name, string team)
         {
             throw new NotImplementedException();
         }
@@ -60,37 +99,19 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void CreateNewBoardInTeam(string name, ITeam team)
+        public void CreateNewBug(string title, string description, Priority priority, Severity severity, string assignee, IList<string> stepsToReproduce, string board)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateNewBug(string title, string description, Priority priority, Severity severity, BugStatus status, IPerson assignee, IList<string> stepsToReproduce, IBoard board)
+        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, string board)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, IBoard board)
+        public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, string assignee, string board)
         {
             throw new NotImplementedException();
-        }
-
-        public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, IPerson assignee, IBoard board)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreatePerson(string name)
-        {
-            Console.WriteLine("Creating a person");
-            throw new NotImplementedException();
-        }
-
-        public void CreateTeam(string name)
-        {
-            ITeam team = new Team(name);
-            this.teams.Add(team);
-            Console.WriteLine($"Creating a new team with name {name}.");
         }
 
         public void ShowAllPeople()
@@ -98,12 +119,12 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ShowAllTeamBoards(ITeam team)
+        public void ShowAllTeamBoards(string team)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowAllTeamMembers(ITeam team)
+        public void ShowAllTeamMembers(string team)
         {
             throw new NotImplementedException();
         }
@@ -113,19 +134,76 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ShowBoardActivity(IBoard board)
+        public void ShowBoardActivity(string board)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowPersonActivity(IPerson person)
+        public void ShowPersonActivity(string person)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowTeamActivity(ITeam team)
+        public void ShowTeamActivity(string team)
         {
             throw new NotImplementedException();
         }
+
+        // API methods
+
+        private bool DoesTeamExist(string teamName)
+        {
+            foreach (ITeam team in this.teams)
+            {
+                if (team.Name.Equals(teamName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool DoesPersonExist(string username)
+        {
+            foreach (ITeam team in this.teams)
+            {
+                foreach (IPerson member in team.Members)
+                {
+                    if (member.Name.Equals(username))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool DoesBoardNameExist(string boardName, string team)
+        {
+            ITeam wantedTeam = FindTeamByName(team);
+
+            foreach (IBoard board in wantedTeam.Boards)
+            {
+                if (board.Name == boardName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private ITeam FindTeamByName(string teamName)
+        {
+            foreach (var item in Teams)
+            {
+                if (item.Name == teamName)
+                {
+                    return item;
+                }
+            }
+
+            throw new InvalidUserInputException($"Team with name {teamName} does not exist.");
+        }
+
     }
 }

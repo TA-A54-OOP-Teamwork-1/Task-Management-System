@@ -10,21 +10,18 @@ namespace TaskManagementSystem.Commands
         public CreateTeamCommand(IList<string> parameters, IRepository repository)
             : base(parameters, repository)
         {
-
         }
 
         public override string Execute()
         {
             // Validate parameters
-            ValidationHelper.ValidateParametersCount(Parameters, ExpectedParametersCount);
+            base.ValidateParametersCount(ExpectedParametersCount);
 
             // Extract name from parameters
             string name = Parameters[0];
-            
-            // 
+
             Repository.CreateTeam(name);
 
-            // 
             return $"A new team with name {name} was created.";
         }
     }
