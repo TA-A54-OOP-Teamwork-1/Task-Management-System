@@ -19,42 +19,42 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ChangeBugPriority(ITaskItem task, Priority priority)
+        public void ChangeBugPriority(IBug bug, Priority priority)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeBugSeverity(ITaskItem task, Severity severity)
+        public void ChangeBugSeverity(IBug bug, Severity severity)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeBugStatus(ITaskItem task, BugStatus status)
+        public void ChangeBugStatus(IBug bug, BugStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeFeedbackRating(ITaskItem task, int rating)
+        public void ChangeFeedbackRating(IFeedback feedback, int rating)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeFeedbackStatus(ITaskItem task, FeedbackStatus status)
+        public void ChangeFeedbackStatus(IFeedback feedback, FeedbackStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeStoryPriority(ITaskItem task, Priority priority)
+        public void ChangeStoryPriority(IStory story, Priority priority)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeStorySize(ITaskItem task, Size size)
+        public void ChangeStorySize(IStory story, Size size)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeStoryStatus(ITaskItem task, StoryStatus status)
+        public void ChangeStoryStatus(IStory story, StoryStatus status)
         {
             throw new NotImplementedException();
         }

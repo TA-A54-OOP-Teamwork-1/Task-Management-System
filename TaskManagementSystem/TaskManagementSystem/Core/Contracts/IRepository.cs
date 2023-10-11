@@ -40,15 +40,14 @@ namespace TaskManagementSystem.Core.Contracts
 
         void CreateNewBoardInTeam(string name, ITeam team);
 
-        void CreateNewBug(string title, string description,
-            Priority priority, Severity severity, BugStatus status,
-            IPerson assignee, IList<string> stepsToReproduce, IBoard board);
+        void CreateNewBug(string title, string description,Priority priority, Severity severity, 
+            BugStatus status, IPerson assignee, IList<string> stepsToReproduce, IBoard board);
 
-        void CreateNewStory(string title, string description, 
-            Priority priority, Size size, StoryStatus status,
-            IPerson assignee, IBoard board);
+        void CreateNewStory(string title, string description, Priority priority, 
+            Size size, StoryStatus status,IPerson assignee, IBoard board);
 
-        void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, IBoard board);
+        void CreateNewFeedback(string title, string description, int rating,
+            FeedbackStatus feedbackStatus, IBoard board);
 
         // 
         void AddPersonToTeam(string name, ITeam team);

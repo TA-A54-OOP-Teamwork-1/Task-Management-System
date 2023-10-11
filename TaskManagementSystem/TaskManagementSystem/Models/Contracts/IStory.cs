@@ -3,15 +3,13 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IBug
+    public interface IStory : ITaskItem
     {
-        IReadOnlyCollection<string> ReproduceSteps { get; }
-
         Priority Priority { get; }
 
-        Severity Severity { get; }
+        Size Size { get; }
 
-        BugStatus Status { get; }
+        StoryStatus Status { get; }
 
         IPerson Assignee { get; }
     }

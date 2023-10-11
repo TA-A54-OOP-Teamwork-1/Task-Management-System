@@ -10,16 +10,19 @@ namespace TaskManagementSystem.Models
         private const int DescriptionMinLength = 10;
         private const int DescriptionMaxLength = 500;
 
-        private const string InvalidTitleLength = "Title must be between 10 and 50 symbols long.";
-        private const string InvalidDescriptionLength = "Description must be between 10 and 500 symbols long.";
+        private readonly string NullValueError = "{0} cannot be null!";
+        private readonly string InvalidLengthError = "{} must be between {} and {} symbols long!";
 
         private string title;
         private string description;
-        private List<IComment> comments;
-        private List<string> history;
+        private readonly List<IComment> comments;
+        private readonly List<string> history;
 
         protected TaskItem(int id, string title, string desciption)
         {
+            this.comments = new List<IComment>();
+            this.history = new List<string>();
+
             this.ID = id;
             this.Title = title;
             this.Description = desciption;
@@ -32,8 +35,10 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, TitleMinLength,
-                    TitleMaxLength, InvalidTitleLength);
+                DataValidator.StringIsNull(value, string.Format(NullValueError, nameof(this.Title)));
+
+                DataValidator.IntIsInRange(value.Length, TitleMinLength, TitleMaxLength, 
+                    string.Format(InvalidLengthError, nameof(this.Title), TitleMinLength, TitleMaxLength));                
 
                 this.title = value;
             }
@@ -44,8 +49,10 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, DescriptionMinLength,
-                    DescriptionMaxLength, InvalidDescriptionLength);
+                DataValidator.StringIsNull(value, string.Format(NullValueError, nameof(this.Description)));
+
+                DataValidator.IntIsInRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
+                    string.Format(InvalidLengthError, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));
 
                 this.description = value;
             }

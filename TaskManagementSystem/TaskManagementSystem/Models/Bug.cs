@@ -5,35 +5,33 @@ using TaskManagementSystem.Models.Enums.Statuses;
 namespace TaskManagementSystem.Models
 {
     internal class Bug : TaskItem, IBug
-    {
-        private List<string> reproduceSteps;
-        private Priority priority;
-        private Severity severity;
-        private BugStatus status;
-
-        public Bug(int id, string title, string desciption) 
+    { 
+        public Bug(
+            int id, 
+            string title, 
+            string desciption,
+            IReadOnlyCollection<string> reproduceSteps,
+            Priority priority, 
+            Severity severity, 
+            IPerson assignee) 
             : base(id, title, desciption)
         {
+            this.Status = BugStatus.Active;
+
+            this.ReproduceSteps = reproduceSteps;
+            this.Priority = priority;
+            this.Severity = severity;
+            this.Assignee = assignee;
         }
 
-        public IReadOnlyCollection<string> ReproduceSteps
-        {
-            get { return this.reproduceSteps; }
-        }
+        public IReadOnlyCollection<string> ReproduceSteps { get; }
 
-        public Priority Priority
-        {
-            get { return this.priority; }
-            init
-            {
+        public Priority Priority { get; private set; }
 
-            }
-        }
+        public Severity Severity { get; private set; }
 
-        public Severity Severity => throw new NotImplementedException();
+        public BugStatus Status { get; private set; }
 
-        public BugStatus BugStatus => throw new NotImplementedException();
-
-        public IPerson Assignee => throw new NotImplementedException();
+        public IPerson Assignee { get; }
     }
 }
