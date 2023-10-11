@@ -1,5 +1,6 @@
 ﻿using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Exceptions;
 
 namespace TaskManagementSystem.Core
 {
@@ -38,6 +39,10 @@ namespace TaskManagementSystem.Core
                     string commandResult = command.Execute();
                     Console.WriteLine(commandResult.Trim());
                     Console.WriteLine(ReportSeparator);
+                }
+                catch (InvalidUserInputException ex)
+                {
+                    Console.Write(ex.Message);
                 }
                 catch (Exception ex)
                 {

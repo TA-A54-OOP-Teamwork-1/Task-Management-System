@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagementSystem.Core.Contracts;
+﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Models;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
@@ -12,7 +8,12 @@ namespace TaskManagementSystem.Core
 {
     public class Repository : IRepository
     {
-        public IList<ITeam> Teams => throw new NotImplementedException();
+        private IList<ITeam> teams = new List<ITeam>();
+
+        public IList<ITeam> Teams
+        {
+            get => new List<ITeam>(teams);
+        }
 
         public void AddPersonToTeam(string name, ITeam team)
         {
@@ -81,12 +82,15 @@ namespace TaskManagementSystem.Core
 
         public void CreatePerson(string name)
         {
+            Console.WriteLine("Creating a person");
             throw new NotImplementedException();
         }
 
         public void CreateTeam(string name)
         {
-            throw new NotImplementedException();
+            ITeam team = new Team(name);
+            Teams.Add(team);
+            Console.WriteLine($"Creating a new team with name {name}.");
         }
 
         public void ShowAllPeople()

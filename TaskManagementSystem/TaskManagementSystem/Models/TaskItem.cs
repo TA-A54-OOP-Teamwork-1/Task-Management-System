@@ -32,7 +32,7 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, TitleMinLength,
+                ValidatorHelper.IntIsInRange(value.Length, TitleMinLength,
                     TitleMaxLength, InvalidTitleLength);
 
                 this.title = value;
@@ -44,7 +44,7 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                DataValidator.IntIsInRange(value.Length, DescriptionMinLength,
+                ValidatorHelper.IntIsInRange(value.Length, DescriptionMinLength,
                     DescriptionMaxLength, InvalidDescriptionLength);
 
                 this.description = value;
