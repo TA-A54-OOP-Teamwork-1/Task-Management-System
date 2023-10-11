@@ -5,12 +5,14 @@ using TaskManagementSystem.Models.Enums.Statuses;
 namespace TaskManagementSystem.Models
 {
     internal class Bug : TaskItem, IBug
-    { 
+    {
+        private List<string> reproduceSteps;
+
         public Bug(
             int id, 
             string title, 
             string desciption,
-            IReadOnlyCollection<string> reproduceSteps,
+            List<string> reproduceSteps,
             Priority priority, 
             Severity severity, 
             IPerson assignee) 
@@ -18,13 +20,16 @@ namespace TaskManagementSystem.Models
         {
             this.Status = BugStatus.Active;
 
-            this.ReproduceSteps = reproduceSteps;
+            this.reproduceSteps = reproduceSteps;
             this.Priority = priority;
             this.Severity = severity;
             this.Assignee = assignee;
         }
 
-        public IReadOnlyCollection<string> ReproduceSteps { get; }
+        public IReadOnlyCollection<string> ReproduceSteps
+        {
+            get { return this.reproduceSteps; }
+        }
 
         public Priority Priority { get; private set; }
 

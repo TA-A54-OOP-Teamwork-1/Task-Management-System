@@ -36,9 +36,15 @@ namespace TaskManagementSystem.Models
             }
         }
 
-        public IReadOnlyCollection<ITaskItem> Tasks { get; }
+        public IReadOnlyCollection<ITaskItem> Tasks
+        {
+            get { return this.tasks; }
+        }
 
-        public IReadOnlyCollection<string> ActivityHistory { get; }
+        public IReadOnlyCollection<string> ActivityHistory
+        {
+            get { return this.activityHistory; }
+        }
 
         public void AddTask(ITaskItem task) => this.tasks.Add(task);
 
