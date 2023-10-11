@@ -38,14 +38,8 @@ namespace TaskManagementSystem.Models
 
         public IReadOnlyCollection<IBoard> Boards { get; }
 
-        public void AddMember(IPerson member)
-        {
-            this.members.Add(member);
-        }
+        public void AddMember(IPerson member) => this.members.Add(member);
 
-        public void AddBoard(IBoard board)
-        {
-            this.boards.Add(board);
-        }
+        public void AddBoard(IBoard board) => this.boards.Add(board);
     }
 }

@@ -40,14 +40,8 @@ namespace TaskManagementSystem.Models
 
         public IReadOnlyCollection<string> ActivityHistory { get; }
 
-        public void AddTask(ITaskItem task)
-        {
-            this.tasks.Add(task);
-        }
+        public void AddTask(ITaskItem task) => this.tasks.Add(task);
 
-        public void LogActivityHistory(string log)
-        {
-            this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | log");
-        }
+        public void LogActivityHistory(string log) => this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | log");
     }
 }
