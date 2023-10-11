@@ -21,6 +21,14 @@ namespace TaskManagementSystem.Helpers
             }
         }
 
+        public static void StringIsNull(string value, string message)
+        {
+            if (value.Equals(null))
+            {
+                throw new ArgumentNullException(message);
+            }
+        }
+
         public static void IntIsInRange(int value, int min, int max, string message)
         {
             if (value < min || value > max)
