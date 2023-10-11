@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Models.Contracts;
+﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Commands.Contracts;
 
 namespace TaskManagementSystem.Commands
@@ -18,6 +12,7 @@ namespace TaskManagementSystem.Commands
         }
 
         protected IList<string> Parameters { get; }
+
         protected IRepository Repository { get; }
 
         public abstract string Execute();

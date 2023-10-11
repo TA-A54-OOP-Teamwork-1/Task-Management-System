@@ -6,7 +6,7 @@ namespace TaskManagementSystem.Helpers
 {
     public static class ValidationHelper
     {
-        private const string InvalidUserInputExceptionErrorMessage = "Parameters count is {0} and does not match expected count of {1}";
+        private const string InvalidParametersCount = "Parameters count is {0} and does not match expected count of {1}";
         private static readonly string InvalidPriority = $"Priority must be {Priority.Low}, {Priority.Medium} or {Priority.High}!";
         private static readonly string InvalidSeverity = $"Severity must be {Severity.Minor}, {Severity.Major} or {Severity.Critical}!";
         private static readonly string InvalidBugStatus = $"Status of a bug can be {BugStatus.Active} or {BugStatus.Fixed}!";
@@ -15,9 +15,9 @@ namespace TaskManagementSystem.Helpers
 
         public static void ValidateParametersCount(IList<string> parameters, int valueToCompareTo)
         {
-            if (parameters.Count !=  valueToCompareTo)
+            if (parameters.Count != valueToCompareTo)
             {
-                throw new InvalidUserInputException(string.Format(InvalidUserInputExceptionErrorMessage, parameters.Count, valueToCompareTo));
+                throw new InvalidUserInputException(string.Format(InvalidParametersCount, parameters.Count, valueToCompareTo));
             }
         }
 
