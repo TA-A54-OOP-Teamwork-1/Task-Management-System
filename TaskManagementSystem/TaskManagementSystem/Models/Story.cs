@@ -29,5 +29,11 @@ namespace TaskManagementSystem.Models
         public StoryStatus Status { get; private set; }
 
         public IPerson Assignee { get; private set; }
+
+        public void UpdatePriority(Priority priority) => this.Priority = priority;
+
+        public void UpdateSize(Size size) => this.Size = size;
+
+        public void UpdateStatus(StoryStatus status) => this.Status = status;
     }
 }

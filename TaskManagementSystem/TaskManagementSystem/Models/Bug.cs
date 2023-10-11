@@ -33,5 +33,11 @@ namespace TaskManagementSystem.Models
         public BugStatus Status { get; private set; }
 
         public IPerson Assignee { get; }
+
+        public void UpdatePriority(Priority priority) => this.Priority = priority;
+
+        public void UpdateSeverity(Severity severity) => this.Severity = severity;
+
+        public void UpdateStatus(BugStatus status) => this.Status = status;
     }
 }
