@@ -1,21 +1,23 @@
-﻿using TaskManagementSystem.Models.Enums;
+﻿using TaskManagementSystem.Exceptions;
+using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Helpers
 {
     public static class ValidatorHelper
     {
+        private const string InvalidUserInputExceptionErrorMessage = "Parameters count is {0} and does not match expected count of {1}";
         private static readonly string InvalidPriority = $"Priority must be {Priority.Low}, {Priority.Medium} or {Priority.High}!";
         private static readonly string InvalidSeverity = $"Severity must be {Severity.Minor}, {Severity.Major} or {Severity.Critical}!";
         private static readonly string InvalidBugStatus = $"Status of a bug can be {BugStatus.Active} or {BugStatus.Fixed}!";
         private static readonly string InvalidSize = $"Size of a story can be {Size.Small}, {Size.Medium} or {Size.Large}!";
         private static readonly string InvalidStoryStatus = $"Status of a story can be {StoryStatus.NotDone}, {StoryStatus.InProgress} or {StoryStatus.Done}!";
 
-        public static void StringIsNull(string value, string message)
+        public static void ValidateParametersCount(IList<string> parameters, int valueToCompareTo)
         {
-            if (value.Equals(null))
+            if (parameters.Count !=  valueToCompareTo)
             {
-                throw new ArgumentNullException(message);
+                throw new InvalidUserInputException(string.Format(InvalidUserInputExceptionErrorMessage, parameters.Count, valueToCompareTo));
             }
         }
 
