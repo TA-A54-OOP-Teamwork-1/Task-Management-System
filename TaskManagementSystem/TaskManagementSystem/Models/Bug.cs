@@ -39,10 +39,19 @@ namespace TaskManagementSystem.Models
 
         public IPerson Assignee { get; }
 
-        public void UpdatePriority(Priority priority) => this.Priority = priority;
+        public void UpdatePriority(Priority priority)
+        {
+            this.Priority = priority;
+        }
 
-        public void UpdateSeverity(Severity severity) => this.Severity = severity;
+        public void UpdateSeverity(Severity severity)
+        {
+            this.Severity = severity;
+        }
 
-        public void UpdateStatus(BugStatus status) => this.Status = status;
+        public void UpdateStatus(BugStatus status)
+        {
+            this.Status = status;
+        }
     }
 }

@@ -16,8 +16,14 @@ namespace TaskManagementSystem.Models
 
         public FeedbackStatus Status { get; private set; }
 
-        public void UpdateStatus(FeedbackStatus status) => this.Status = status;
+        public void UpdateStatus(FeedbackStatus status)
+        {
+            this.Status = status;
+        }
 
-        public void UpdateRating(int rating) => this.Rating = rating;
+        public void UpdateRating(int rating)
+        {
+            this.Rating = rating;
+        }
     }
 }
