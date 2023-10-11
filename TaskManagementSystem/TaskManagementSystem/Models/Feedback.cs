@@ -1,5 +1,4 @@
 ﻿using TaskManagementSystem.Models.Contracts;
-using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models
