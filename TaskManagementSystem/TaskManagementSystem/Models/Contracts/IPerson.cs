@@ -6,8 +6,8 @@
 
         IReadOnlyCollection<string> ActivityHistory { get; }
 
-        public void AddTask(ITaskItem task);
+        void AddTask(ITaskItem task);
 
-        public void LogActivityHistory(string log);
+        void LogActivityHistory(string log);
     }
 }

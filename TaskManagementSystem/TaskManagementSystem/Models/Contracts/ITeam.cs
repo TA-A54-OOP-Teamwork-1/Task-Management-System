@@ -6,8 +6,8 @@
 
         IReadOnlyCollection<IBoard> Boards { get; }
 
-        public void AddMember(IPerson member);
+        void AddMember(IPerson member);
 
-        public void AddBoard(IBoard board);
+        void AddBoard(IBoard board);
     }
 }
