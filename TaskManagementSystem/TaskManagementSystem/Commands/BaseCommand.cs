@@ -26,7 +26,7 @@ namespace TaskManagementSystem.Commands
         /// <summary>
         /// Used by all commands to ensure correct amount or parameters
         /// </summary>
-        /// <param name="compareValue"></param>
+        /// <param name="compareValue"></param>        
         protected void ValidateParametersCount(int compareValue)
         {
             if (Parameters.Count != compareValue)

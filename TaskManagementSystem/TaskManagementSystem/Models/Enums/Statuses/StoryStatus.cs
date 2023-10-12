@@ -2,8 +2,8 @@
 {
     public enum StoryStatus
     {
-        NotDone = 0,
-        InProgress = 1,
-        Done = 2
+        NotDone,
+        InProgress,
+        Done
     }
 }
