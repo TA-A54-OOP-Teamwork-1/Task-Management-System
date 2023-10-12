@@ -29,48 +29,37 @@ namespace TaskManagementSystem.Core
             this.teams.Add(team);
         }
 
-        public void CreatePerson(string personName, string teamToAddPersonTo)
+        public void CreatePerson(string name, ITeam team)
         {
-            // Do not allow creating a user if personName is already used
-            if (PersonExists(personName))
-            {
-                throw new InvalidUserInputException($"User with name {personName} already exists.");
-            }
-
-            ITeam team = FindTeamByName(teamToAddPersonTo);
-            IPerson person = new Person(personName);
+            IPerson person = new Person(name);
             team.AddMember(person);
         }
 
-        public void CreateNewBoardInTeam(string boardName, string teamToAddBoardTo)
+        public void CreateNewBoardInTeam(string boardName, ITeam team)
         {
-            // Do not alllow creating a team if teamName is already used
-            if (BoardExists(boardName, teamToAddBoardTo))
-            {
-                throw new InvalidUserInputException($"Board with name {boardName} already exists.");
-            }
-
-            ITeam team = FindTeamByName(teamToAddBoardTo);
             IBoard board = new Board(boardName);
             team.AddBoard(board);
         }
+        
+        public void CreateNewBug(string title, string description, Priority priority, Severity severity, IList<string> stepsToReproduce, IBoard board)
+        {
+            IPerson assignee = default;
+            //int id = teams.Select(x => x.Boards.Where(y => y.Tasks.Select(z => z.GetType().Equals(typeof(IBug)))));
+            int id = 0;
+            IBug bug = new Bug(id, title, description, stepsToReproduce.ToList(), priority, severity, assignee);
+        }
 
-        public void CreateNewBug(string title, string description, Priority priority, Severity severity, string assignee, IList<string> stepsToReproduce, string board)
+        public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, IPerson assignee, IBoard board)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, string assignee, string board)
+        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, IBoard board)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, string board)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddPersonToTeam(string name, string team)
+        public void AddPersonToTeam(IPerson name, ITeam team)
         {
             throw new NotImplementedException();
         }
@@ -90,27 +79,27 @@ namespace TaskManagementSystem.Core
             bug.UpdateStatus(status);
         }
 
-        public void ChangeStoryPriority(int storyID, Priority priority)
+        public void ChangeStoryPriority(IStory story, Priority priority)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeStorySize(int storyID, Size size)
+        public void ChangeStorySize(IStory story, Size size)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeStoryStatus(int storyID, StoryStatus status)
+        public void ChangeStoryStatus(IStory story, StoryStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeFeedbackRating(int feedbackID, int rating)
+        public void ChangeFeedbackRating(IFeedback feedback, int rating)
         {
             throw new NotImplementedException();
         }
 
-        public void ChangeFeedbackStatus(int feedbackID, FeedbackStatus status)
+        public void ChangeFeedbackStatus(IFeedback feedback, FeedbackStatus status)
         {
             throw new NotImplementedException();
         }
@@ -120,7 +109,7 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ShowPersonActivity(string person)
+        public void ShowPersonActivity(IPerson person)
         {
             throw new NotImplementedException();
         }
@@ -130,37 +119,37 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ShowTeamActivity(string team)
+        public void ShowTeamActivity(ITeam team)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowAllTeamMembers(string team)
+        public void ShowAllTeamMembers(ITeam team)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowAllTeamBoards(string team)
+        public void ShowAllTeamBoards(ITeam team)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowBoardActivity(string board)
+        public void ShowBoardActivity(IBoard board)
         {
             throw new NotImplementedException();
         }
 
-        public void AssignTaskToPerson(int taskID, string personName)
+        public void AssignTaskToPerson(ITaskItem task, IPerson person)
         {
             throw new NotImplementedException();
         }
 
-        public void UnassignTaskToPerson(int taskID, string personName)
+        public void UnassignTaskToPerson(ITaskItem task, IPerson person)
         {
             throw new NotImplementedException();
         }
 
-        public void AddCommentToATask(int commentID, int taskID)
+        public void AddCommentToATask(IComment comment, ITaskItem task)
         {
             throw new NotImplementedException();
         }
@@ -175,12 +164,12 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ListBugs(string assignee)
+        public void ListBugs(IPerson assignee)
         {
             throw new NotImplementedException();
         }
 
-        public void ListBugs(string assignee, BugStatus bugStatus)
+        public void ListBugs(IPerson assignee, BugStatus bugStatus)
         {
             throw new NotImplementedException();
         }
@@ -190,12 +179,12 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ListStories(string assignee)
+        public void ListStories(IPerson assignee)
         {
             throw new NotImplementedException();
         }
 
-        public void ListStories(string assignee, BugStatus bugStatus)
+        public void ListStories(IPerson assignee, BugStatus bugStatus)
         {
             throw new NotImplementedException();
         }
@@ -205,53 +194,26 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ListFeedback(string assignee)
+        public void ListFeedback(IPerson assignee)
         {
             throw new NotImplementedException();
         }
 
-        public void ListFeedback(string assignee, FeedbackStatus feedbackStatus)
+        public void ListFeedback(IPerson assignee, FeedbackStatus feedbackStatus)
         {
             throw new NotImplementedException();
         }
 
         // API methods
 
-        private bool TeamExists(string teamName)
+        public bool TeamExists(string teamName)
         {
             return this.teams.Any(t => t.Name == teamName);
         }
 
-        private bool PersonExists(string username)
+        public bool PersonExists(string username)
         {
             return this.teams.Any(t => t.Members.Any(x => x.Name == username));
-        }
-
-        private bool BoardExists(string boardName, string team)
-        {
-            ITeam wantedTeam = FindTeamByName(team);
-
-            foreach (IBoard board in wantedTeam.Boards)
-            {
-                if (board.Name == boardName)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private ITeam FindTeamByName(string teamName)
-        {
-            foreach (var item in Teams)
-            {
-                if (item.Name == teamName)
-                {
-                    return item;
-                }
-            }
-
-            throw new InvalidUserInputException($"Team with name {teamName} does not exist.");
         }
     }
 }

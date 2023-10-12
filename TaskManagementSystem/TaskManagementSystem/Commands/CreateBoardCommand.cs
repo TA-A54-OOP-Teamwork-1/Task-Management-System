@@ -22,7 +22,7 @@ namespace TaskManagementSystem.Commands
             // Extract team name from parameters
             string teamName = Parameters[1];
 
-            Repository.CreateNewBoardInTeam(boardName, teamName);
+            //Repository.CreateNewBoardInTeam(boardName, teamName);
 
             return $"New board with name {boardName} was created and added to to team {teamName}";
         }

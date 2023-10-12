@@ -23,15 +23,8 @@ namespace TaskManagementSystem.Commands
             // Extract team name to add person to, from parameters
             string teamName = Parameters[1];
 
-            try
-            {
-                Repository.CreatePerson(name, teamName);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
+            //Repository.CreatePerson(name, teamName);
+            
             return $"New Person with name {name} was created and added to team {teamName}.";
         }
     }

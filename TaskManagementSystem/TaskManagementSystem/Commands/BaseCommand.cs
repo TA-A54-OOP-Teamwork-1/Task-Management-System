@@ -1,7 +1,6 @@
 ﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Exceptions;
-using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
