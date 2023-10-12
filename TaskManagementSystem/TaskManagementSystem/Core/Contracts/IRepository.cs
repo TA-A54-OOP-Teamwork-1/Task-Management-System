@@ -10,73 +10,76 @@ namespace TaskManagementSystem.Core.Contracts
 
         void CreateTeam(string name);
 
-        void CreatePerson(string name, string teamToAddPersonTo);
+        void CreatePerson(string name, ITeam team);
 
-        void CreateNewBoardInTeam(string name, string team);
+        void CreateNewBoardInTeam(string name, ITeam team);
 
         void CreateNewBug(string title, string description, Priority priority, Severity severity,
-            string assignee, IList<string> stepsToReproduce, string board);
+            IList<string> stepsToReproduce, IBoard board);
 
         void CreateNewStory(string title, string description, Priority priority,
-            Size size, StoryStatus status, string assignee, string board);
+            Size size, StoryStatus status, IPerson assignee, IBoard board);
 
-        void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, string board);
+        void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, IBoard board);
 
-        void AddPersonToTeam(string name, string team);
+        void AddPersonToTeam(IPerson name, ITeam team);
 
-        void ChangeBugPriority(int bugID, Priority priority);
+        void ChangeBugPriority(IBug bug, Priority priority);
 
-        void ChangeBugSeverity(int bugID, Severity severity);
+        void ChangeBugSeverity(IBug bug, Severity severity);
 
-        void ChangeBugStatus(int bugID, BugStatus status);
+        void ChangeBugStatus(IBug bug, BugStatus status);
 
-        void ChangeStoryPriority(int storyID, Priority priority);
+        void ChangeStoryPriority(IStory story, Priority priority);
 
-        void ChangeStorySize(int storyID, Size size);
+        void ChangeStorySize(IStory story, Size size);
 
-        void ChangeStoryStatus(int storyID, StoryStatus status);
+        void ChangeStoryStatus(IStory story, StoryStatus status);
 
-        void ChangeFeedbackRating(int feedbackID, int rating);
+        void ChangeFeedbackRating(IFeedback feedback, int rating);
 
-        void ChangeFeedbackStatus(int feedbackID, FeedbackStatus status);
+        void ChangeFeedbackStatus(IFeedback feedback, FeedbackStatus status);
 
         void ShowAllPeople();
 
-        void ShowPersonActivity(string person);
+        void ShowPersonActivity(IPerson person);
 
         void ShowAllTeams();
 
-        void ShowTeamActivity(string team);
+        void ShowTeamActivity(ITeam team);
 
-        void ShowAllTeamMembers(string team);
+        void ShowAllTeamMembers(ITeam team);
 
-        void ShowAllTeamBoards(string team);
+        void ShowAllTeamBoards(ITeam team);
 
-        void ShowBoardActivity(string board);
+        void ShowBoardActivity(IBoard board);
 
-        void AssignTaskToPerson(int taskID, string personName);
+        void AssignTaskToPerson(ITaskItem task, IPerson person);
 
-        void UnassignTaskToPerson(int taskID, string personName);
+        void UnassignTaskToPerson(ITaskItem task, IPerson person);
 
-        void AddCommentToATask(int commentID, int taskID);
+        void AddCommentToATask(IComment comment, ITaskItem task);
 
         void ListAllTasks();
 
 
         void ListBugs(BugStatus bugStatus);
-        void ListBugs(string assignee);
-        void ListBugs(string assignee, BugStatus bugStatus);
+        void ListBugs(IPerson assignee);
+        void ListBugs(IPerson assignee, BugStatus bugStatus);
 
         void ListStories(StoryStatus storyStatus);
-        void ListStories(string assignee);
-        void ListStories(string assignee, BugStatus bugStatus);
+        void ListStories(IPerson assignee);
+        void ListStories(IPerson assignee, BugStatus bugStatus);
 
         void ListFeedback(FeedbackStatus feedbackStatus);
-        void ListFeedback(string assignee);
-        void ListFeedback(string assignee, FeedbackStatus feedbackStatus);
+        void ListFeedback(IPerson assignee);
+        void ListFeedback(IPerson assignee, FeedbackStatus feedbackStatus);
 
         //void ListTasksWithAssignee(string assignee);
         //void ListTasksWithAssignee(string type, int status);
         //void ListTasksWithAssignee(string assignee, string type, int status);        
+
+        bool TeamExists(string team);
+        bool PersonExists(string person);
     }
 }

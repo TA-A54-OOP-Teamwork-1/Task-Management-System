@@ -2,6 +2,9 @@
 using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Exceptions;
+using TaskManagementSystem.Models.Enums;
+using TaskManagementSystem.Models.Enums.Statuses;
+using System.Xml.Linq;
 
 namespace TaskManagementSystem.Commands
 {
@@ -33,6 +36,33 @@ namespace TaskManagementSystem.Commands
             {
                 throw new InvalidUserInputException(string.Format(InvalidParametersCountErrorMessage, Parameters.Count, compareValue));
             }
+        }
+
+        /// <summary>
+        /// Use Genric method to simplify code
+        /// Use for all enum parse calls
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        protected T TryParseStringToEnum<T>(string value) where T : struct
+        {
+            if (Enum.TryParse(value, true, out T resultInputType) == false)
+            {
+                throw new InvalidUserInputException($"None of the enums in {typeof(T).Name} match the value {value}.");
+            }
+            return resultInputType;
+        }
+
+        protected bool DoesTeamExist(string teamName)
+        {
+            // Do not alllow creating a team if teamName is already used
+            if (Repository.TeamExists(teamName))
+            {
+                return true;
+            }
+            throw new InvalidUserInputException($"Team with name {teamName} already exists.");
         }
     }
 }
