@@ -14,5 +14,13 @@ namespace TaskManagementSystem.Models.Contracts
         BugStatus Status { get; }
 
         IPerson Assignee { get; }
+
+        public void UpdatePriority(Priority priority);
+
+        public void UpdateSeverity(Severity severity);
+
+        public void UpdateStatus(BugStatus status);
+
+        public void ChangeAssignee(IPerson assignee);
     }
 }

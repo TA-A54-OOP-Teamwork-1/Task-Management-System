@@ -20,7 +20,7 @@ namespace TaskManagementSystem.Core
         public void CreateTeam(string teamName)
         {
             // Do not alllow creating a team if teamName is already used
-            if (DoesTeamExist(teamName))
+            if (TeamExists(teamName))
             {
                 throw new InvalidUserInputException($"Team with name {teamName} already exists.");
             }
@@ -32,7 +32,7 @@ namespace TaskManagementSystem.Core
         public void CreatePerson(string personName, string teamToAddPersonTo)
         {
             // Do not allow creating a user if personName is already used
-            if (DoesPersonExist(personName))
+            if (PersonExists(personName))
             {
                 throw new InvalidUserInputException($"User with name {personName} already exists.");
             }
@@ -45,7 +45,7 @@ namespace TaskManagementSystem.Core
         public void CreateNewBoardInTeam(string boardName, string teamToAddBoardTo)
         {
             // Do not alllow creating a team if teamName is already used
-            if (DoesBoardNameExist(boardName, teamToAddBoardTo))
+            if (BoardExists(boardName, teamToAddBoardTo))
             {
                 throw new InvalidUserInputException($"Board with name {boardName} already exists.");
             }
@@ -75,19 +75,19 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        public void ChangeBugPriority(int bugID, Priority priority)
+        public void ChangeBugPriority(IBug bug, Priority priority)
         {
-            throw new NotImplementedException();
+            bug.UpdatePriority(priority);
         }
 
-        public void ChangeBugSeverity(int bugID, Severity severity)
+        public void ChangeBugSeverity(IBug bug, Severity severity)
         {
-            throw new NotImplementedException();
+            bug.UpdateSeverity(severity);
         }
 
-        public void ChangeBugStatus(int bugID, BugStatus status)
+        public void ChangeBugStatus(IBug bug, BugStatus status)
         {
-            throw new NotImplementedException();
+            bug.UpdateStatus(status);
         }
 
         public void ChangeStoryPriority(int storyID, Priority priority)
@@ -217,17 +217,17 @@ namespace TaskManagementSystem.Core
 
         // API methods
 
-        private bool DoesTeamExist(string teamName)
+        private bool TeamExists(string teamName)
         {
             return this.teams.Any(t => t.Name == teamName);
         }
 
-        private bool DoesPersonExist(string username)
+        private bool PersonExists(string username)
         {
             return this.teams.Any(t => t.Members.Any(x => x.Name == username));
         }
 
-        private bool DoesBoardNameExist(string boardName, string team)
+        private bool BoardExists(string boardName, string team)
         {
             ITeam wantedTeam = FindTeamByName(team);
 

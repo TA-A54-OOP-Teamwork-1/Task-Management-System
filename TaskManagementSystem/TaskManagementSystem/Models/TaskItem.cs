@@ -10,8 +10,8 @@ namespace TaskManagementSystem.Models
         private const int DescriptionMinLength = 10;
         private const int DescriptionMaxLength = 500;
 
-        private readonly string NullValueError = "{0} cannot be null!";
-        private readonly string InvalidLengthError = "{0} must be between {1} and {2} symbols long!";
+        private const string NullValueErrorMessage = "{0} cannot be null!";
+        private const string InvalidLengthErrorMessage = "{0} must be between {1} and {2} symbols long!";
 
         private string title;
         private string description;
@@ -35,10 +35,10 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                ValidationHelper.StringIsNull(value, string.Format(NullValueError, nameof(this.Title)));
+                ValidationHelper.StringIsNull(value, string.Format(NullValueErrorMessage, nameof(this.Title)));
                
                 ValidationHelper.ValidateIntRange(value.Length, TitleMinLength, TitleMaxLength, 
-                    string.Format(InvalidLengthError, nameof(this.Title), TitleMinLength, TitleMaxLength));                
+                    string.Format(InvalidLengthErrorMessage, nameof(this.Title), TitleMinLength, TitleMaxLength));                
 
                 this.title = value;
             }
@@ -49,10 +49,10 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                ValidationHelper.StringIsNull(value, string.Format(NullValueError, nameof(this.Description)));
+                ValidationHelper.StringIsNull(value, string.Format(NullValueErrorMessage, nameof(this.Description)));
 
                 ValidationHelper.ValidateIntRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
-                    string.Format(InvalidLengthError, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));
+                    string.Format(InvalidLengthErrorMessage, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));
 
                 this.description = value;
             }

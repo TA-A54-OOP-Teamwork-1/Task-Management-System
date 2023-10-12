@@ -24,11 +24,11 @@ namespace TaskManagementSystem.Core.Contracts
 
         void AddPersonToTeam(string name, string team);
 
-        void ChangeBugPriority(int bugID, Priority priority);
+        void ChangeBugPriority(IBug bug, Priority priority);
 
-        void ChangeBugSeverity(int bugID, Severity severity);
+        void ChangeBugSeverity(IBug bug, Severity severity);
 
-        void ChangeBugStatus(int bugID, BugStatus status);
+        void ChangeBugStatus(IBug bug, BugStatus status);
 
         void ChangeStoryPriority(int storyID, Priority priority);
 

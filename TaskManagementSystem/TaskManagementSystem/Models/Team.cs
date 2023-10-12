@@ -8,8 +8,8 @@ namespace TaskManagementSystem.Models
         private const int NameMinLength = 5;
         private const int NameMaxLength = 15;
 
-        private readonly string NameIsNullError = "Name cannot be null!";
-        private readonly string InvalidNameLengthError = $"Name must be between {NameMinLength} and {NameMaxLength} symbols long!";
+        private const string NameIsNullErrorMessage = "Name cannot be null!";
+        private const string InvalidNameLengthErrorMessage = "Name must be between {0} and {1} symbols long!";
 
         private string name;
         private List<IPerson> members;
@@ -28,9 +28,9 @@ namespace TaskManagementSystem.Models
             get { return this.name; }
             init
             {
-                ValidationHelper.StringIsNull(value, NameIsNullError);
+                ValidationHelper.StringIsNull(value, NameIsNullErrorMessage);
                 ValidationHelper.ValidateIntRange(value.Length, NameMinLength,
-                    NameMaxLength, InvalidNameLengthError);
+                    NameMaxLength, string.Format(InvalidNameLengthErrorMessage, NameMinLength, NameMaxLength));
 
                 this.name = value;
             }

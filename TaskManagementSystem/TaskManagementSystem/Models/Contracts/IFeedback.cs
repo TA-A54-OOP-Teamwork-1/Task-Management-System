@@ -7,5 +7,9 @@ namespace TaskManagementSystem.Models.Contracts
         int Rating { get; }
 
         FeedbackStatus Status { get; }
+
+        public void UpdateStatus(FeedbackStatus status);
+
+        public void UpdateRating(int rating);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Exceptions;
 
 namespace TaskManagementSystem.Core
 {
@@ -23,19 +22,19 @@ namespace TaskManagementSystem.Core
             {
                 try
                 {
-                    string inpuCmmand = Console.ReadLine().Trim();
+                    string inputCommand = Console.ReadLine().Trim();
 
-                    if (inpuCmmand == string.Empty)
+                    if (inputCommand == string.Empty)
                     {
                         Console.WriteLine(EmptyCommandError);
                         continue;
                     }
-                    else if (inpuCmmand.Equals(TerminationCommand, StringComparison.InvariantCultureIgnoreCase))
+                    else if (inputCommand.Equals(TerminationCommand, StringComparison.InvariantCultureIgnoreCase))
                     {
                         break;
                     }
 
-                    ICommand command = commandFactory.Create(inpuCmmand);
+                    ICommand command = commandFactory.Create(inputCommand);
                     string commandResult = command.Execute();
                     Console.WriteLine(commandResult.Trim());
                     Console.WriteLine(ReportSeparator);

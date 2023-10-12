@@ -46,6 +46,7 @@ namespace TaskManagementSystem.Core
                 case CommandType.CreateNewFeedback:
                 case CommandType.AddPersonToTeam:
                 case CommandType.ChangeBugPriority:
+                    return new ChangeBugPriorityCommand(commandParams, repository);
                 case CommandType.ChangeBugSeverity:
                 case CommandType.ChangeBugStatus:
                 case CommandType.ChangeStoryPriority:

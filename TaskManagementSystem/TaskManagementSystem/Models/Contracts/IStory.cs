@@ -12,5 +12,13 @@ namespace TaskManagementSystem.Models.Contracts
         StoryStatus Status { get; }
 
         IPerson Assignee { get; }
+
+        public void UpdatePriority(Priority priority);
+
+        public void UpdateSize(Size size);
+
+        public void UpdateStatus(StoryStatus status);
+
+        public void ChangeAssignee(IPerson assignee);
     }
 }

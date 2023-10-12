@@ -11,15 +11,14 @@ namespace TaskManagementSystem.Models
             string title, 
             string desciption,
             Priority priority,
-            Size size,
-            IPerson assignee) 
+            Size size) 
             : base(id, title, desciption)
         {
             this.Status = StoryStatus.NotDone;
+            this.Assignee = null;
 
             this.Priority = priority;
             this.Size = size;
-            this.Assignee = assignee;
         }
 
         public Priority Priority { get; private set; }
@@ -29,7 +28,7 @@ namespace TaskManagementSystem.Models
         public StoryStatus Status { get; private set; }
 
         public IPerson Assignee { get; private set; }
-
+       
         public void UpdatePriority(Priority priority)
         {
             this.Priority = priority;
@@ -43,6 +42,10 @@ namespace TaskManagementSystem.Models
         public void UpdateStatus(StoryStatus status)
         {
             this.Status = status;
+        }
+        public void ChangeAssignee(IPerson assignee)
+        {
+            this.Assignee = assignee;
         }
     }
 }

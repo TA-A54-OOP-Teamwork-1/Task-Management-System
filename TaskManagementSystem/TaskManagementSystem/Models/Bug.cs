@@ -6,24 +6,23 @@ namespace TaskManagementSystem.Models
 {
     internal class Bug : TaskItem, IBug
     {
-        private List<string> reproduceSteps;
+        private IReadOnlyCollection<string> reproduceSteps;
 
         public Bug(
             int id, 
             string title, 
             string desciption,
-            List<string> reproduceSteps,
+            IReadOnlyCollection<string> reproduceSteps,
             Priority priority, 
-            Severity severity, 
-            IPerson assignee) 
+            Severity severity) 
             : base(id, title, desciption)
         {
             this.Status = BugStatus.Active;
+            this.Assignee = null;
 
             this.reproduceSteps = reproduceSteps;
             this.Priority = priority;
             this.Severity = severity;
-            this.Assignee = assignee;
         }
 
         public IReadOnlyCollection<string> ReproduceSteps
@@ -37,7 +36,7 @@ namespace TaskManagementSystem.Models
 
         public BugStatus Status { get; private set; }
 
-        public IPerson Assignee { get; }
+        public IPerson Assignee { get; private set; }        
 
         public void UpdatePriority(Priority priority)
         {
@@ -52,6 +51,11 @@ namespace TaskManagementSystem.Models
         public void UpdateStatus(BugStatus status)
         {
             this.Status = status;
+        }
+
+        public void ChangeAssignee(IPerson assignee)
+        {
+            this.Assignee = assignee;
         }
     }
 }
