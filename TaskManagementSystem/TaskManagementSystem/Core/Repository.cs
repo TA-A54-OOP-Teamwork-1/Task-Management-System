@@ -9,6 +9,7 @@ namespace TaskManagementSystem.Core
 {
     public class Repository : IRepository
     {
+        // Use only a list of teams and use LINQ to filter collections
         private List<ITeam> teams = new List<ITeam>();
 
         public IReadOnlyCollection<ITeam> Teams
@@ -54,57 +55,7 @@ namespace TaskManagementSystem.Core
             team.AddBoard(board);
         }
 
-        public void AddPersonToTeam(string name, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeBugPriority(IBug bug, Priority priority)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeBugSeverity(IBug bug, Severity severity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeBugStatus(IBug bug, BugStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeFeedbackRating(IFeedback feedback, int rating)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeFeedbackStatus(IFeedback feedback, FeedbackStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeStoryPriority(IStory story, Priority priority)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeStorySize(IStory story, Size size)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeStoryStatus(IStory story, StoryStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
         public void CreateNewBug(string title, string description, Priority priority, Severity severity, string assignee, IList<string> stepsToReproduce, string board)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, string board)
         {
             throw new NotImplementedException();
         }
@@ -114,27 +65,57 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
+        public void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, string board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPersonToTeam(string name, string team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeBugPriority(int bugID, Priority priority)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeBugSeverity(int bugID, Severity severity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeBugStatus(int bugID, BugStatus status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeStoryPriority(int storyID, Priority priority)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeStorySize(int storyID, Size size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeStoryStatus(int storyID, StoryStatus status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeFeedbackRating(int feedbackID, int rating)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeFeedbackStatus(int feedbackID, FeedbackStatus status)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ShowAllPeople()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowAllTeamBoards(string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowAllTeamMembers(string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowAllTeams()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowBoardActivity(string board)
         {
             throw new NotImplementedException();
         }
@@ -144,7 +125,92 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
+        public void ShowAllTeams()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ShowTeamActivity(string team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowAllTeamMembers(string team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowAllTeamBoards(string team)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowBoardActivity(string board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AssignTaskToPerson(int taskID, string personName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnassignTaskToPerson(int taskID, string personName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCommentToATask(int commentID, int taskID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListAllTasks()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListBugs(BugStatus bugStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListBugs(string assignee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListBugs(string assignee, BugStatus bugStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListStories(StoryStatus storyStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListStories(string assignee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListStories(string assignee, BugStatus bugStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListFeedback(FeedbackStatus feedbackStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListFeedback(string assignee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ListFeedback(string assignee, FeedbackStatus feedbackStatus)
         {
             throw new NotImplementedException();
         }
@@ -153,29 +219,12 @@ namespace TaskManagementSystem.Core
 
         private bool DoesTeamExist(string teamName)
         {
-            foreach (ITeam team in this.teams)
-            {
-                if (team.Name.Equals(teamName))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return this.teams.Any(t => t.Name == teamName);
         }
 
         private bool DoesPersonExist(string username)
         {
-            foreach (ITeam team in this.teams)
-            {
-                foreach (IPerson member in team.Members)
-                {
-                    if (member.Name.Equals(username))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return this.teams.Any(t => t.Members.Any(x => x.Name == username));
         }
 
         private bool DoesBoardNameExist(string boardName, string team)
@@ -204,6 +253,5 @@ namespace TaskManagementSystem.Core
 
             throw new InvalidUserInputException($"Team with name {teamName} does not exist.");
         }
-
     }
 }

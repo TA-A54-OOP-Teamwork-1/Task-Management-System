@@ -23,6 +23,14 @@
         ShowTeamActivity,
         ShowAllTeamMembers,
         ShowAllTeamBoards,
-        ShowBoardActivity
+        ShowBoardActivity,
+        AssignTaskToPerson,
+        UnAssignTaskToPerson,
+        AddCommentToATask,
+        ListAllTasks,
+        ListBugs,
+        ListStories,
+        ListFeedback,
+        ListTasksWithAssignee
     }
 }

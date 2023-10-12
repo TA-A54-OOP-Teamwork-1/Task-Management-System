@@ -40,10 +40,6 @@ namespace TaskManagementSystem.Core
                     Console.WriteLine(commandResult.Trim());
                     Console.WriteLine(ReportSeparator);
                 }
-                //catch (InvalidUserInputException ex)
-                //{
-                //    Console.Write(ex.Message);
-                //}
                 catch (Exception ex)
                 {
                     if (!string.IsNullOrEmpty(ex.Message))

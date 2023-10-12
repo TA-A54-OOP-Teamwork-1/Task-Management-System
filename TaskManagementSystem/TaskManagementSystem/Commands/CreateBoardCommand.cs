@@ -1,5 +1,4 @@
 ﻿using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Helpers;
 
 namespace TaskManagementSystem.Commands
 {
@@ -25,7 +24,7 @@ namespace TaskManagementSystem.Commands
 
             Repository.CreateNewBoardInTeam(boardName, teamName);
 
-            return "";
+            return $"New board with name {boardName} was created and added to to team {teamName}";
         }
     }
 }

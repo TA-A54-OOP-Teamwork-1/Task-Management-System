@@ -60,6 +60,14 @@ namespace TaskManagementSystem.Core
                 case CommandType.ShowAllTeamMembers:
                 case CommandType.ShowAllTeamBoards:
                 case CommandType.ShowBoardActivity:
+                case CommandType.AssignTaskToPerson:
+                case CommandType.UnAssignTaskToPerson:
+                case CommandType.AddCommentToATask:
+                case CommandType.ListAllTasks:
+                case CommandType.ListBugs:
+                case CommandType.ListStories:
+                case CommandType.ListFeedback:
+                case CommandType.ListTasksWithAssignee:
                 default:
                     throw new InvalidUserInputException(string.Format(CommandDoesNotExistErrorMessage, command));
             }
@@ -90,7 +98,7 @@ namespace TaskManagementSystem.Core
             {
                 parameters.Add(arguments[i]);
             }
-            
+
             return parameters;
         }
     }

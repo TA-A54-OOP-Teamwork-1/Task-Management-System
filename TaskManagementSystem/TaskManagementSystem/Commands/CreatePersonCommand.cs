@@ -32,7 +32,7 @@ namespace TaskManagementSystem.Commands
                 Console.WriteLine(ex.ToString());
             }
 
-            return $"New Person with name {name} was created.";
+            return $"New Person with name {name} was created and added to team {teamName}.";
         }
     }
 }
