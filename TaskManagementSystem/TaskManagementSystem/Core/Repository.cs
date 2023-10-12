@@ -46,7 +46,7 @@ namespace TaskManagementSystem.Core
             IPerson assignee = default;
             //int id = teams.Select(x => x.Boards.Where(y => y.Tasks.Select(z => z.GetType().Equals(typeof(IBug)))));
             int id = 0;
-            IBug bug = new Bug(id, title, description, stepsToReproduce.ToList(), priority, severity, assignee);
+            //IBug bug = new Bug(id, title, description, stepsToReproduce.ToList(), priority, severity, assignee);
         }
 
         public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, IPerson assignee, IBoard board)

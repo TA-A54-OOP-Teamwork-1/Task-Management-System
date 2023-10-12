@@ -31,10 +31,10 @@ namespace TaskManagementSystem.Commands
             string description = Parameters[1];
 
             // Priority
-            Priority bugPriority = base.TryParseStringToEnum<Priority>(Parameters[2]);
+            Priority bugPriority = base.ParseEnum<Priority>(Parameters[2]);
 
             // Severity
-            Severity bugSeverity = base.TryParseStringToEnum<Severity>(Parameters[3]);
+            Severity bugSeverity = base.ParseEnum<Severity>(Parameters[3]);
 
             // Assignee
             IPerson assignee = null; // Parameters[4];
