@@ -2,11 +2,11 @@
 {
     public interface ITeam : IHasName
     {
-        IReadOnlyCollection<IPerson> Members { get; }
+        IReadOnlyCollection<IMember> Members { get; }
 
         IReadOnlyCollection<IBoard> Boards { get; }
 
-        void AddMember(IPerson member);
+        void AddMember(IMember member);
 
         void AddBoard(IBoard board);
     }

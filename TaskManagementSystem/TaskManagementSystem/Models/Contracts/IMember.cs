@@ -1,6 +1,6 @@
 ﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IPerson : IHasName
+    public interface IMember : IHasName
     {
         IReadOnlyCollection<ITaskItem> Tasks { get; }
 

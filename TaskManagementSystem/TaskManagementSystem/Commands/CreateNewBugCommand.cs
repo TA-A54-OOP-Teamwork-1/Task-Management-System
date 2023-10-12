@@ -37,7 +37,7 @@ namespace TaskManagementSystem.Commands
             Severity bugSeverity = base.ParseEnum<Severity>(Parameters[3]);
 
             // Assignee
-            IPerson assignee = null; // Parameters[4];
+            IMember assignee = null; // Parameters[4];
 
             // Steps to reproduce
             string[] steps = Parameters[5].Split(", ");

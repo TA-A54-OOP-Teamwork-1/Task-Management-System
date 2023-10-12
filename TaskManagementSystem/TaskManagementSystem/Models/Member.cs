@@ -3,7 +3,7 @@ using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Models
 {
-    public class Person : IPerson
+    public class Member : IMember
     {
         private const int NameMinLength = 5;
         private const int NameMaxLength = 15;
@@ -15,7 +15,7 @@ namespace TaskManagementSystem.Models
         private List<ITaskItem> tasks;
         private List<string> activityHistory;
 
-        public Person(string name)
+        public Member(string name)
         {
             this.tasks = new List<ITaskItem>();
             this.activityHistory = new List<string>();
@@ -28,7 +28,7 @@ namespace TaskManagementSystem.Models
             get { return this.name; }
             init
             {
-                ValidationHelper.StringIsNull(value, NameIsNullErrorMessage);
+                ValidationHelper.ValidateNull(value, NameIsNullErrorMessage);
                 ValidationHelper.ValidateIntRange(value.Length, NameMinLength, 
                     NameMaxLength, string.Format(InvalidNameLengthErrorMessage, NameMinLength, NameMaxLength));
 

@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
@@ -22,7 +23,9 @@ namespace TaskManagementSystem.Commands
             // Extract team name from parameters
             string teamName = Parameters[1];
 
-            //Repository.CreateNewBoardInTeam(boardName, teamName);
+            ITeam team = base.Repository.GetTeam(teamName);
+
+            Repository.CreateNewBoardInTeam(boardName, teamName);
 
             return $"New board with name {boardName} was created and added to to team {teamName}";
         }

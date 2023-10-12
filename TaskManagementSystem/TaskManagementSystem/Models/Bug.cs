@@ -36,7 +36,7 @@ namespace TaskManagementSystem.Models
 
         public BugStatus Status { get; private set; }
 
-        public IPerson Assignee { get; private set; }        
+        public IMember Assignee { get; private set; }        
 
         public void UpdatePriority(Priority priority)
         {
@@ -53,9 +53,19 @@ namespace TaskManagementSystem.Models
             this.Status = status;
         }
 
-        public void ChangeAssignee(IPerson assignee)
+        public void ChangeAssignee(IMember assignee)
         {
             this.Assignee = assignee;
+        }
+
+        public void SetAssignee(IMember member)
+        {
+            this.Assignee = member;
+        }
+
+        public void RemoveAssignee()
+        {
+            this.Assignee = null;
         }
     }
 }

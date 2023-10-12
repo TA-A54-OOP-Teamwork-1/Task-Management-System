@@ -2,9 +2,9 @@
 {
     public static class ValidationHelper
     {
-        public static void StringIsNull(string value, string message)
+        public static void ValidateNull(object? value, string message)
         {
-            if (value.Equals(null))
+            if (value == null)
             {
                 throw new ArgumentNullException(message);
             }

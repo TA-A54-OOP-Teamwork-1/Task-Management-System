@@ -1,5 +1,4 @@
 ﻿using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
@@ -20,9 +19,7 @@ namespace TaskManagementSystem.Commands
             int bugID = base.ParseInt(base.Parameters[0]);
             Priority priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
-            IBug bug = (IBug)base.GetTask(bugID, string.Format(NotExistentErrorMessage, "Bug", bugID));
-
-            base.Repository.ChangeBugPriority(bug, priority);
+            base.Repository.ChangeBugPriority(bugID, priority);
 
             return $"Priority of Bug with ID {bugID} changed to {priority}";
         }              

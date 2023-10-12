@@ -3,7 +3,7 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IBug
+    public interface IBug : ITaskItem, IAssignable
     {
         IReadOnlyCollection<string> ReproduceSteps { get; }
 
@@ -13,7 +13,7 @@ namespace TaskManagementSystem.Models.Contracts
 
         BugStatus Status { get; }
 
-        IPerson Assignee { get; }
+        IMember Assignee { get; }
 
         void UpdatePriority(Priority priority);
 
@@ -21,6 +21,6 @@ namespace TaskManagementSystem.Models.Contracts
 
         void UpdateStatus(BugStatus status);
 
-        void ChangeAssignee(IPerson assignee);
+        void ChangeAssignee(IMember assignee);
     }
 }

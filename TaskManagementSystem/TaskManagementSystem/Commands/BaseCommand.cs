@@ -9,9 +9,7 @@ namespace TaskManagementSystem.Commands
     {
         private const string InvalidParametersCountErrorMessage = "Parameters count is {0} and does not match expected count of {1}!";
         private const string CouldNotParseIntegerErrorMessage = "Could not be parsed to int!";
-        private const string CouldNotParseEnumErrorMessage = "None of the enums in {0} matches the value {1}!";
-
-        protected const string NotExistentErrorMessage = "{0} with ID {1} does not exist!";
+        private const string CouldNotParseEnumErrorMessage = "None of the enums in {0} matches the value {1}!";        
 
         public BaseCommand(IList<string> parameters, IRepository repository)
         {
@@ -45,25 +43,6 @@ namespace TaskManagementSystem.Commands
             }
 
             return parsedInteger;
-        }
-
-        protected ITaskItem GetTask(int ID, string message)
-        {
-            foreach (var team in this.Repository.Teams)
-            {
-                foreach (var board in team.Boards)
-                {
-                    foreach (var task in board.Tasks)
-                    {
-                        if (task.ID == ID)
-                        {
-                            return task;
-                        }
-                    }
-                }
-            }
-
-            throw new EntityNotFoundException(message);
         }
 
         protected T ParseEnum<T>(string value) where T : struct

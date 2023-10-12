@@ -35,7 +35,7 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                ValidationHelper.StringIsNull(value, string.Format(NullValueErrorMessage, nameof(this.Title)));
+                ValidationHelper.ValidateNull(value, string.Format(NullValueErrorMessage, nameof(this.Title)));
                
                 ValidationHelper.ValidateIntRange(value.Length, TitleMinLength, TitleMaxLength, 
                     string.Format(InvalidLengthErrorMessage, nameof(this.Title), TitleMinLength, TitleMaxLength));                
@@ -49,7 +49,7 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                ValidationHelper.StringIsNull(value, string.Format(NullValueErrorMessage, nameof(this.Description)));
+                ValidationHelper.ValidateNull(value, string.Format(NullValueErrorMessage, nameof(this.Description)));
 
                 ValidationHelper.ValidateIntRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
                     string.Format(InvalidLengthErrorMessage, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));

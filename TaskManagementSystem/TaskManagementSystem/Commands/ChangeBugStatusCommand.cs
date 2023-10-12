@@ -20,9 +20,7 @@ namespace TaskManagementSystem.Commands
             int bugID = base.ParseInt(base.Parameters[0]);
             BugStatus status = base.ParseEnum<BugStatus>(base.Parameters[1]);
 
-            IBug bug = (IBug)base.GetTask(bugID, string.Format(NotExistentErrorMessage, "Bug", bugID));
-
-            base.Repository.ChangeBugStatus(bug, status);
+            base.Repository.ChangeBugStatus(bugID, status);
 
             return $"Priority of Bug with ID {bugID} changed to {status}";
         }

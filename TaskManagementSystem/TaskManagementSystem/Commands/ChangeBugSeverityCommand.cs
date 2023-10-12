@@ -20,9 +20,7 @@ namespace TaskManagementSystem.Commands
             int bugID = base.ParseInt(base.Parameters[0]);
             Severity severity = base.ParseEnum<Severity>(base.Parameters[1]);
 
-            IBug bug = (IBug)base.GetTask(bugID, string.Format(NotExistentErrorMessage, "Bug", bugID));
-
-            base.Repository.ChangeBugSeverity(bug, severity);
+            base.Repository.ChangeBugSeverity(bugID, severity);
 
             return $"Priority of Bug with ID {bugID} changed to {severity}";
         }

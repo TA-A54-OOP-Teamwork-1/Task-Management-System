@@ -28,7 +28,7 @@ namespace TaskManagementSystem.Models
             get { return this.name; }
             init
             {
-                ValidationHelper.StringIsNull(value, NameIsNullErrorMessage);
+                ValidationHelper.ValidateNull(value, NameIsNullErrorMessage);
                 ValidationHelper.ValidateIntRange(value.Length, NameMinLength, 
                     NameMaxLength, string.Format(InvalidNameLengthErrorMessage, NameMinLength, NameMaxLength));
 

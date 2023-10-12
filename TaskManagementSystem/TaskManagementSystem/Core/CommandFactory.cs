@@ -37,15 +37,15 @@ namespace TaskManagementSystem.Core
             {
                 case CommandType.CreateTeam:
                     return new CreateTeamCommand(commandParams, repository);
-                case CommandType.CreatePerson:
-                    return new CreatePersonCommand(commandParams, repository);
+                case CommandType.CreateMember:
+                    return new CreateMemberCommand(commandParams, repository);
                 case CommandType.CreateBoard:
                     return new CreateBoardCommand(commandParams, repository);
                 case CommandType.CreateNewBug:
                     return new CreateNewBugCommand(commandParams, repository);
                 case CommandType.CreateNewStory:
                 case CommandType.CreateNewFeedback:
-                case CommandType.AddPersonToTeam:
+                case CommandType.AddMemberToTeam:
                 case CommandType.ChangeBugPriority:
                     return new ChangeBugPriorityCommand(commandParams, repository);
                 case CommandType.ChangeBugSeverity:
@@ -56,14 +56,14 @@ namespace TaskManagementSystem.Core
                 case CommandType.ChangeFeedbackRating:
                 case CommandType.ChangeFeedbackStatus:
                 case CommandType.ShowAllPeople:
-                case CommandType.ShowPersonActivity:
+                case CommandType.ShowMemberActivity:
                 case CommandType.ShowAllTeams:
                 case CommandType.ShowTeamActivity:
                 case CommandType.ShowAllTeamMembers:
                 case CommandType.ShowAllTeamBoards:
                 case CommandType.ShowBoardActivity:
-                case CommandType.AssignTaskToPerson:
-                case CommandType.UnAssignTaskToPerson:
+                case CommandType.AssignTaskToMember:
+                case CommandType.UnAssignTaskToMember:
                 case CommandType.AddCommentToATask:
                 case CommandType.ListAllTasks:
                 case CommandType.ListBugs:

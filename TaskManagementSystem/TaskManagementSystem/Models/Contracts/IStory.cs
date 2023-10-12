@@ -3,7 +3,7 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IStory : ITaskItem
+    public interface IStory : ITaskItem, IAssignable
     {
         Priority Priority { get; }
 
@@ -11,14 +11,12 @@ namespace TaskManagementSystem.Models.Contracts
 
         StoryStatus Status { get; }
 
-        IPerson Assignee { get; }
+        IMember Assignee { get; }
 
        void UpdatePriority(Priority priority);
 
        void UpdateSize(Size size);
 
        void UpdateStatus(StoryStatus status);
-
-       void ChangeAssignee(IPerson assignee);
     }
 }

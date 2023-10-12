@@ -8,9 +8,11 @@ namespace TaskManagementSystem.Core.Contracts
     {
         IReadOnlyCollection<ITeam> Teams { get; }
 
+        IReadOnlyCollection<IMember> People { get; }
+
         void CreateTeam(string name);
 
-        void CreatePerson(string name, ITeam team);
+        void CreateMember(string name);
 
         void CreateNewBoardInTeam(string name, ITeam team);
 
@@ -18,19 +20,19 @@ namespace TaskManagementSystem.Core.Contracts
             IList<string> stepsToReproduce, IBoard board);
 
         void CreateNewStory(string title, string description, Priority priority,
-            Size size, StoryStatus status, IPerson assignee, IBoard board);
+            Size size, StoryStatus status, IMember assignee, IBoard board);
 
         void CreateNewFeedback(string title, string description, int rating, FeedbackStatus feedbackStatus, IBoard board);
 
-        void AddPersonToTeam(IPerson name, ITeam team);
+        void AddMemberToTeam(IMember name, ITeam team);
 
-        void ChangeBugPriority(IBug bug, Priority priority);
+        void ChangeBugPriority(int bugID, Priority priority);
 
-        void ChangeBugSeverity(IBug bug, Severity severity);
+        void ChangeBugSeverity(int bugID, Severity severity);
 
-        void ChangeBugStatus(IBug bug, BugStatus status);
+        void ChangeBugStatus(int bugID, BugStatus status);
 
-        void ChangeStoryPriority(IStory story, Priority priority);
+        void ChangeStoryPriority(int storyID, Priority priority);
 
         void ChangeStorySize(IStory story, Size size);
 
@@ -42,7 +44,7 @@ namespace TaskManagementSystem.Core.Contracts
 
         void ShowAllPeople();
 
-        void ShowPersonActivity(IPerson person);
+        void ShowMemberActivity(IMember member);
 
         void ShowAllTeams();
 
@@ -54,9 +56,9 @@ namespace TaskManagementSystem.Core.Contracts
 
         void ShowBoardActivity(IBoard board);
 
-        void AssignTaskToPerson(ITaskItem task, IPerson person);
+        void AssignTaskToMember(ITaskItem task, IMember member);
 
-        void UnassignTaskToPerson(ITaskItem task, IPerson person);
+        void UnassignTaskToMember(ITaskItem task, IMember member);
 
         void AddCommentToATask(IComment comment, ITaskItem task);
 
@@ -64,22 +66,26 @@ namespace TaskManagementSystem.Core.Contracts
 
 
         void ListBugs(BugStatus bugStatus);
-        void ListBugs(IPerson assignee);
-        void ListBugs(IPerson assignee, BugStatus bugStatus);
+        void ListBugs(IMember assignee);
+        void ListBugs(IMember assignee, BugStatus bugStatus);
 
         void ListStories(StoryStatus storyStatus);
-        void ListStories(IPerson assignee);
-        void ListStories(IPerson assignee, BugStatus bugStatus);
+        void ListStories(IMember assignee);
+        void ListStories(IMember assignee, BugStatus bugStatus);
 
         void ListFeedback(FeedbackStatus feedbackStatus);
-        void ListFeedback(IPerson assignee);
-        void ListFeedback(IPerson assignee, FeedbackStatus feedbackStatus);
+        void ListFeedback(IMember assignee);
+        void ListFeedback(IMember assignee, FeedbackStatus feedbackStatus);
 
         //void ListTasksWithAssignee(string assignee);
         //void ListTasksWithAssignee(string type, int status);
         //void ListTasksWithAssignee(string assignee, string type, int status);        
 
         bool TeamExists(string team);
-        bool PersonExists(string person);
+        bool MemberExists(string member);
+
+        public T? GetTask<T>(int ID) where T : class;
+
+        public ITeam GetTeam(string teamName);
     }
 }

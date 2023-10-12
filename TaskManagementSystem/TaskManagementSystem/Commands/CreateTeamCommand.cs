@@ -21,7 +21,7 @@ namespace TaskManagementSystem.Commands
             // Extract name from parameters
             string name = Parameters[0];
 
-            Repository.CreateTeam(name);
+            base.Repository.CreateTeam(name);
 
             return $"A new team with name {name} was created.";
         }
