@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Models.Contracts;
+﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Models.Enums;
-using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Commands
 {
@@ -19,34 +12,20 @@ namespace TaskManagementSystem.Commands
         {
         }
 
+         //   0           1               2           3           4
+        //someTitle someDescription somePriority someSeverity step1,step2,step3
         public override string Execute()
         {
-            // Validate parameters
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            // Extract title from parameters
-            string title = Parameters[0];
+            string title = base.Parameters[0];
+            string description = base.Parameters[1];
+            Priority priority = base.ParseEnum<Priority>(base.Parameters[2]);
+            Severity severity = base.ParseEnum<Severity>(base.Parameters[3]);
+            IReadOnlyCollection<string> steps = base.Parameters[4].Split(",");
+            string boardName = base.Parameters[5];
 
-            // Description
-            string description = Parameters[1];
-
-            // Priority
-            Priority bugPriority = base.ParseEnum<Priority>(Parameters[2]);
-
-            // Severity
-            Severity bugSeverity = base.ParseEnum<Severity>(Parameters[3]);
-
-            // Assignee
-            IMember assignee = null; // Parameters[4];
-
-            // Steps to reproduce
-            string[] steps = Parameters[5].Split(", ");
-
-            // Board ID
-            int.TryParse(Parameters[6], out int boardID);
-
-            // 
-            //Repository.CreateNewBug(title, description, bugPriority, bugSeverity, assignee, steps.ToList(), boardID);
+            base.Repository.CreateNewBug(title, description, priority, severity, steps, boardName);
 
             return "New Bug was created.";
         }

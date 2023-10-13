@@ -12,12 +12,12 @@ namespace TaskManagementSystem.Models
         private const string InvalidNameLengthErrorMessage = "Name must be between {0} and {1} symbols long!";
 
         private string name;
-        private List<IMember> members;
+        private List<string> memberNames;
         private List<IBoard> boards;
 
         public Team(string name)
         {
-            this.members = new List<IMember>();
+            this.memberNames = new List<string>();
             this.boards = new List<IBoard>();
             
             this.Name = name;
@@ -36,9 +36,9 @@ namespace TaskManagementSystem.Models
             }
         }
 
-        public IReadOnlyCollection<IMember> Members
+        public IReadOnlyCollection<string> MemberNames
         {
-            get { return this.members; }
+            get { return this.memberNames; }
         }
 
         public IReadOnlyCollection<IBoard> Boards
@@ -46,9 +46,9 @@ namespace TaskManagementSystem.Models
             get { return this.boards; }
         }
 
-        public void AddMember(IMember member)
+        public void AddMemberName(string memberName)
         {
-            this.members.Add(member);
+            this.memberNames.Add(memberName);
         }
 
         public void AddBoard(IBoard board)

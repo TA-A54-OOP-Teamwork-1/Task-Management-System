@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http.Headers;
-using TaskManagementSystem.Core.Contracts;
+﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models;
@@ -12,51 +10,57 @@ namespace TaskManagementSystem.Core
 {
     public class Repository : IRepository
     {
-        private const string NotExistentErrorMessage = "{0} with ID {1} does not exist!";
-        // Use only a list of teams and use LINQ to filter collections
+        private const string TaskNotExistentErrorMessage = "{0} with ID {1} does not exist!";
+        private const string TeamNotExistentErrorMessage = "Team with name {0} does not exist!";
+        private const string BoardNotExistentErrorMessage = "Team with name {0} does not exist!";
+       
         private List<ITeam> teams = new List<ITeam>();
-        private List<IMember> people = new List<IMember>();
+        private List<IMember> members = new List<IMember>();
 
         public IReadOnlyCollection<ITeam> Teams
         {
             get { return this.teams; }
         }
 
-        public IReadOnlyCollection<IMember> People
+        public IReadOnlyCollection<IMember> Members
         {
-            get { return this.people; }
+            get { return this.members; }
         }
 
         public void CreateTeam(string teamName)
         {
-            // Do not alllow creating a team if teamName is already used
-            if (TeamExists(teamName))
+            if (this.TeamExists(teamName))
             {
                 throw new InvalidUserInputException($"Team with name {teamName} already exists.");
             }
 
-            ITeam team = new Team(teamName);
+            var team = new Team(teamName);
             this.teams.Add(team);
         }
 
         public void CreateMember(string name)
         {
-            IMember member = new Member(name);
-            people.Add(member);
+            var member = new Member(name);
+            members.Add(member);
         }
 
-        public void CreateNewBoardInTeam(string boardName, ITeam team)
+        public void CreateNewBoardInTeam(string boardName, string teamName)
         {
-            IBoard board = new Board(boardName);
+            var board = new Board(boardName);
+            var team = this.GetTeam(teamName);
             team.AddBoard(board);
         }
         
-        public void CreateNewBug(string title, string description, Priority priority, Severity severity, IList<string> stepsToReproduce, IBoard board)
+        public void CreateNewBug(string title, string description, Priority priority, Severity severity, IReadOnlyCollection<string> stepsToReproduce, string boardName)
         {
-            IMember assignee = default;
-            //int id = teams.Select(x => x.Boards.Where(y => y.Tasks.Select(z => z.GetType().Equals(typeof(IBug)))));
-            int id = 0;
-            //IBug bug = new Bug(id, title, description, stepsToReproduce.ToList(), priority, severity, assignee);
+            var board = this.GetBoard(boardName);
+            var nextID = board.Tasks.Count + 1;
+            var bug = new Bug(nextID, title, description, priority, severity, stepsToReproduce);
+            board.AddTask(bug);
+
+            // get all bugs - board.Tasks.Where(t => t.GetType().Name == "Bug");
+            // get all stories - board.Tasks.Where(t => t.GetType().Name == "Story");
+            // get all feedback - board.Tasks.Where(t => t.GetType().Name == "Feedback");
         }
 
         public void CreateNewStory(string title, string description, Priority priority, Size size, StoryStatus status, IMember assignee, IBoard board)
@@ -77,28 +81,24 @@ namespace TaskManagementSystem.Core
         public void ChangeBugPriority(int bugID, Priority priority)
         {
             var bug = GetTask<IBug>(bugID);
-            ValidationHelper.ValidateNull(bug, string.Format(NotExistentErrorMessage, nameof(Bug), bugID));
             bug.UpdatePriority(priority);
         }
 
         public void ChangeBugSeverity(int bugID, Severity severity)
         {
             var bug = GetTask<IBug>(bugID);
-            ValidationHelper.ValidateNull(bug, string.Format(NotExistentErrorMessage, nameof(Bug), bugID));
             bug.UpdateSeverity(severity);
         }
 
         public void ChangeBugStatus(int bugID, BugStatus status)
         {
             var bug = GetTask<IBug>(bugID);
-            ValidationHelper.ValidateNull(bug, string.Format(NotExistentErrorMessage, nameof(Bug), bugID));
             bug.UpdateStatus(status);
         }
 
         public void ChangeStoryPriority(int storyID, Priority priority)
         {
             var story = GetTask<IStory>(storyID);
-            ValidationHelper.ValidateNull(story, string.Format(NotExistentErrorMessage, nameof(Story), storyID));
             story.UpdatePriority(priority);
         }
 
@@ -222,8 +222,6 @@ namespace TaskManagementSystem.Core
             throw new NotImplementedException();
         }
 
-        // API methods
-
         public bool TeamExists(string teamName)
         {
             return this.teams.Any(t => t.Name == teamName);
@@ -231,31 +229,51 @@ namespace TaskManagementSystem.Core
 
         public bool MemberExists(string username)
         {
-            return this.teams.Any(t => t.Members.Any(x => x.Name == username));
+            return this.teams.Any(t => t.MemberNames.Any(n => n == username));
         }
 
-        public T? GetTask<T>(int ID) where T : class
+        private T GetTask<T>(int ID) where T : ITaskItem
         {
-            foreach (var team in this.teams)
-            {
-                foreach (var board in team.Boards)
-                {
-                    foreach (var task in board.Tasks)
-                    {
-                        if (task.ID == ID)
-                        {
-                            return (T)task;
-                        }
-                    }
-                }
-            }
+            var task = this.teams
+                .SelectMany(team => team.Boards)
+                .SelectMany(board => board.Tasks)
+                .FirstOrDefault(task => task.ID == ID);
 
-            return null;
+            ValidationHelper.ValidateNull(task, string.Format(TaskNotExistentErrorMessage, nameof(T).Substring(1), ID));
+
+            return (T)task;
+
+            //foreach (var team in this.teams)
+            //{
+            //    foreach (var board in team.Boards)
+            //    {
+            //        foreach (var task in board.Tasks)
+            //        {
+            //            if (task.ID == ID)
+            //            {
+            //                return (T)task;
+            //            }
+            //        }
+            //    }
+            //}
+
+            //return null;
         }
 
-        public ITeam GetTeam(string teamName)
+        private ITeam? GetTeam(string teamName)
         {
-           return this.teams.FirstOrDefault(t => t.Name == teamName);
+            var team = this.teams.FirstOrDefault(t => t.Name == teamName);
+            ValidationHelper.ValidateNull(team, string.Format(TeamNotExistentErrorMessage, teamName));
+            return team;
+        }
+
+        private IBoard? GetBoard(string boardName)
+        {
+            // SelectMany - [1, 2, 3] [4, 5, 6] => [1, 2, 3, 4, 5, 6] (flattens)
+
+            var board = this.teams.SelectMany(team => team.Boards).FirstOrDefault(board => board.Name == boardName);
+            ValidationHelper.ValidateNull(board, string.Format(BoardNotExistentErrorMessage, boardName));
+            return board;
         }
     }
 }

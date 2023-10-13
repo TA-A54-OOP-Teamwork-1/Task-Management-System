@@ -8,16 +8,22 @@ namespace TaskManagementSystem.Core.Contracts
     {
         IReadOnlyCollection<ITeam> Teams { get; }
 
-        IReadOnlyCollection<IMember> People { get; }
+        IReadOnlyCollection<IMember> Members { get; }
 
         void CreateTeam(string name);
 
         void CreateMember(string name);
 
-        void CreateNewBoardInTeam(string name, ITeam team);
+        void CreateNewBoardInTeam(string name, string teamName);
 
-        void CreateNewBug(string title, string description, Priority priority, Severity severity,
-            IList<string> stepsToReproduce, IBoard board);
+        void CreateNewBug(
+            string title, 
+            string description,
+            Priority priority, 
+            Severity severity, 
+            IReadOnlyCollection<string> stepsToReproduce, 
+            string boardName
+        );
 
         void CreateNewStory(string title, string description, Priority priority,
             Size size, StoryStatus status, IMember assignee, IBoard board);
@@ -83,9 +89,5 @@ namespace TaskManagementSystem.Core.Contracts
 
         bool TeamExists(string team);
         bool MemberExists(string member);
-
-        public T? GetTask<T>(int ID) where T : class;
-
-        public ITeam GetTeam(string teamName);
     }
 }

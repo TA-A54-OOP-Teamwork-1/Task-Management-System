@@ -11,7 +11,8 @@ namespace TaskManagementSystem.Models
             string title, 
             string desciption,
             Priority priority,
-            Size size) 
+            Size size
+        ) 
             : base(id, title, desciption)
         {
             this.Status = StoryStatus.NotDone;

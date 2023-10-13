@@ -1,7 +1,6 @@
 ﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Exceptions;
-using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
@@ -22,11 +21,7 @@ namespace TaskManagementSystem.Commands
         protected IRepository Repository { get; }
 
         public abstract string Execute();
-
-        /// <summary>
-        /// Used by all commands to ensure correct amount or parameters
-        /// </summary>
-        /// <param name="expectedCount"></param>        
+      
         protected void ValidateParametersCount(int expectedCount)
         {
             if (Parameters.Count != expectedCount)
@@ -44,10 +39,10 @@ namespace TaskManagementSystem.Commands
 
             return parsedInteger;
         }
-
+            
         protected T ParseEnum<T>(string value) where T : struct
         {
-            if (Enum.TryParse(value, out T result))
+            if (!Enum.TryParse(value, out T result))
             {
                 throw new InvalidUserInputException(string.Format(CouldNotParseEnumErrorMessage, typeof(T), value));
             }

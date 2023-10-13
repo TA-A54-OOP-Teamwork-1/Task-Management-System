@@ -25,10 +25,8 @@ namespace TaskManagementSystem.Core
         /// <returns></returns>
         public ICommand Create(string commandLine)
         {
-            // 
-            string[] arguments = commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string[] arguments = commandLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            // 
             CommandType command = ParseCommandType(arguments[0]);
             List<string> commandParams = ExtractCommandParameters(arguments);
 
@@ -75,23 +73,12 @@ namespace TaskManagementSystem.Core
             }
         }
 
-        /// <summary>
-        /// Try parse a string to a command type
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         private CommandType ParseCommandType(string value)
         {
             Enum.TryParse(value, true, out CommandType commandType);
             return commandType;
         }
 
-        /// <summary>
-        /// Add all commands to a list of strings
-        /// NOTE : skipping first elemnt as it is the actual command
-        /// </summary>
-        /// <param name="arguments"></param>
-        /// <returns></returns>
         private List<string> ExtractCommandParameters(string[] arguments)
         {
             List<string> parameters = new List<string>();

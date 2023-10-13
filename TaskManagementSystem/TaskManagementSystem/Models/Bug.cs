@@ -12,9 +12,10 @@ namespace TaskManagementSystem.Models
             int id, 
             string title, 
             string desciption,
-            IReadOnlyCollection<string> reproduceSteps,
             Priority priority, 
-            Severity severity) 
+            Severity severity,
+            IReadOnlyCollection<string> reproduceSteps
+        )
             : base(id, title, desciption)
         {
             this.Status = BugStatus.Active;
@@ -23,18 +24,18 @@ namespace TaskManagementSystem.Models
             this.reproduceSteps = reproduceSteps;
             this.Priority = priority;
             this.Severity = severity;
-        }
+        }        
+
+        public Priority Priority { get; private set; }
+
+        public Severity Severity { get; private set; }
 
         public IReadOnlyCollection<string> ReproduceSteps
         {
             get { return this.reproduceSteps; }
         }
 
-        public Priority Priority { get; private set; }
-
-        public Severity Severity { get; private set; }
-
-        public BugStatus Status { get; private set; }
+        public BugStatus Status { get; private set; } 
 
         public IMember Assignee { get; private set; }        
 
