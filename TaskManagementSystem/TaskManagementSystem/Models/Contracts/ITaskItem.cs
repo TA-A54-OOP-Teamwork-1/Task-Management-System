@@ -1,7 +1,11 @@
-﻿namespace TaskManagementSystem.Models.Contracts
-{
+﻿using TaskManagementSystem.Models.Enums;
+
+namespace TaskManagementSystem.Models.Contracts
+{   
     public interface ITaskItem : ICommentable
     {
+        TaskType TaskType { get; }
+
         int ID { get; }
 
         string Title { get; }

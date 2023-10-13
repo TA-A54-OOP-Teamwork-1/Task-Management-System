@@ -1,5 +1,6 @@
 ﻿using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models.Contracts;
+using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Models
 {
@@ -18,17 +19,20 @@ namespace TaskManagementSystem.Models
         private readonly List<IComment> comments;
         private readonly List<string> history;
 
-        protected TaskItem(int id, string title, string desciption)
+        protected TaskItem(int id, string title, string desciption, TaskType taskType)
         {
             this.comments = new List<IComment>();
             this.history = new List<string>();
 
             this.ID = id;
+            this.TaskType = taskType;
             this.Title = title;
             this.Description = desciption;
         }
 
         public int ID { get; }
+
+        public TaskType TaskType { get; }
 
         public string Title
         {

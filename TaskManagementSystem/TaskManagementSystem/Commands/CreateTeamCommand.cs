@@ -1,6 +1,4 @@
-﻿using TaskManagementSystem.Core;
-using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Exceptions;
+﻿using TaskManagementSystem.Core.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
@@ -15,15 +13,13 @@ namespace TaskManagementSystem.Commands
 
         public override string Execute()
         {
-            // Validate parameters
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            // Extract name from parameters
             string name = Parameters[0];
 
             base.Repository.CreateTeam(name);
 
-            return $"A new team with name {name} was created.";
+            return $"New team with name {name} was created.";
         }
     }
 }

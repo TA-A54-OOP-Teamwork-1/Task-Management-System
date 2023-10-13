@@ -2,7 +2,7 @@
 {
     public interface IAssignable
     {
-        void SetAssignee(IMember member);
+        void SetAssignee(IPerson person);
 
         void RemoveAssignee();
     }

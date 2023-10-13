@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Models.Contracts;
+using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models
@@ -6,7 +7,7 @@ namespace TaskManagementSystem.Models
     public class Feedback : TaskItem, IFeedback
     {
         public Feedback(int id, string title, string desciption, int rating)
-            : base(id, title, desciption)
+            : base(id, title, desciption, TaskType.Feedback)
         {
             this.Status = FeedbackStatus.New;
             this.Rating = rating;
@@ -16,12 +17,12 @@ namespace TaskManagementSystem.Models
 
         public FeedbackStatus Status { get; private set; }
 
-        public void UpdateStatus(FeedbackStatus status)
+        public void ChangeStatus(FeedbackStatus status)
         {
             this.Status = status;
         }
 
-        public void UpdateRating(int rating)
+        public void ChangeRating(int rating)
         {
             this.Rating = rating;
         }

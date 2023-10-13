@@ -32,7 +32,7 @@ namespace TaskManagementSystem.Commands
 
         protected int ParseInt(string integer)
         {
-            if (int.TryParse(integer, out int parsedInteger))
+            if (!int.TryParse(integer, out int parsedInteger))
             {
                 throw new InvalidUserInputException(CouldNotParseIntegerErrorMessage);
             }

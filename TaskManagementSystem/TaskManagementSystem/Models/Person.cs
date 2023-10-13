@@ -3,7 +3,7 @@ using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Models
 {
-    public class Member : IMember
+    public class Person : IPerson
     {
         private const int NameMinLength = 5;
         private const int NameMaxLength = 15;
@@ -12,12 +12,12 @@ namespace TaskManagementSystem.Models
         private const string InvalidNameLengthErrorMessage = "Name must be between {0} and {1} symbols long!";
 
         private string name;
-        private List<ITaskItem> tasks;
+        private List<IAssignable> tasks;
         private List<string> activityHistory;
 
-        public Member(string name)
+        public Person(string name)
         {
-            this.tasks = new List<ITaskItem>();
+            this.tasks = new List<IAssignable>();
             this.activityHistory = new List<string>();
 
             this.Name = name;
@@ -36,7 +36,7 @@ namespace TaskManagementSystem.Models
             }
         }
 
-        public IReadOnlyCollection<ITaskItem> Tasks
+        public IReadOnlyCollection<IAssignable> Tasks
         {
             get { return this.tasks; }
         }
@@ -46,14 +46,20 @@ namespace TaskManagementSystem.Models
             get { return this.activityHistory; }
         }
 
-        public void AddTask(ITaskItem task)
+        public void AddTask(IAssignable task)
         {
             this.tasks.Add(task);
+        }
+       
+        public void RemoveTask(IAssignable task)
+        {
+            this.tasks.Remove(task);
         }
 
         public void LogActivityHistory(string log)
         {
             this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | log");
         }
+
     }
 }

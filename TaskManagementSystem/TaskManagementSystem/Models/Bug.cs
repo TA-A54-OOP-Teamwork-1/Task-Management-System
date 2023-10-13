@@ -16,7 +16,7 @@ namespace TaskManagementSystem.Models
             Severity severity,
             IReadOnlyCollection<string> reproduceSteps
         )
-            : base(id, title, desciption)
+            : base(id, title, desciption, TaskType.Bug)
         {
             this.Status = BugStatus.Active;
             this.Assignee = null;
@@ -37,31 +37,31 @@ namespace TaskManagementSystem.Models
 
         public BugStatus Status { get; private set; } 
 
-        public IMember Assignee { get; private set; }        
+        public IPerson Assignee { get; private set; }        
 
-        public void UpdatePriority(Priority priority)
+        public void ChangePriority(Priority priority)
         {
             this.Priority = priority;
         }
 
-        public void UpdateSeverity(Severity severity)
+        public void ChangeSeverity(Severity severity)
         {
             this.Severity = severity;
         }
 
-        public void UpdateStatus(BugStatus status)
+        public void ChangeStatus(BugStatus status)
         {
             this.Status = status;
         }
 
-        public void ChangeAssignee(IMember assignee)
+        public void ChangeAssignee(IPerson assignee)
         {
             this.Assignee = assignee;
         }
 
-        public void SetAssignee(IMember member)
+        public void SetAssignee(IPerson person)
         {
-            this.Assignee = member;
+            this.Assignee = person;
         }
 
         public void RemoveAssignee()

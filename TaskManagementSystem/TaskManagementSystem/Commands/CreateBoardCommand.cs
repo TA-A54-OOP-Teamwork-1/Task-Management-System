@@ -13,7 +13,6 @@ namespace TaskManagementSystem.Commands
 
         public override string Execute()
         {
-            // Validate parameters
             base.ValidateParametersCount(ExpectedParametersCount);
 
             string boardName = Parameters[0];

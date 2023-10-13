@@ -8,8 +8,8 @@ namespace TaskManagementSystem.Models.Contracts
 
         FeedbackStatus Status { get; }
 
-        void UpdateStatus(FeedbackStatus status);
+        void ChangeStatus(FeedbackStatus status);
 
-        void UpdateRating(int rating);
+        void ChangeRating(int rating);
     }
 }
