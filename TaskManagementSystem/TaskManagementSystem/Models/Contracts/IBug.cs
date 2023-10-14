@@ -20,7 +20,5 @@ namespace TaskManagementSystem.Models.Contracts
         void ChangeSeverity(Severity severity);
 
         void ChangeStatus(BugStatus status);
-
-        void ChangeAssignee(IPerson assignee);
     }
 }

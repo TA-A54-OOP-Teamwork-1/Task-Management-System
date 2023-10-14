@@ -54,11 +54,6 @@ namespace TaskManagementSystem.Models
             this.Status = status;
         }
 
-        public void ChangeAssignee(IPerson assignee)
-        {
-            this.Assignee = assignee;
-        }
-
         public void SetAssignee(IPerson person)
         {
             this.Assignee = person;

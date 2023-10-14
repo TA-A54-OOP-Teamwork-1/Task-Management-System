@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Core.Contracts;
+﻿using System.Threading.Tasks;
+using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models;
@@ -14,9 +15,11 @@ namespace TaskManagementSystem.Core
         private const string TeamNotExistentErrorMessage = "Team with name {0} does not exist!";
         private const string BoardNotExistentErrorMessage = "Team with name {0} does not exist!";
         private const string PersonNotExistentErrorMessage = "Person with name {0} does not exist!";
-        private const string TeamAlreadyExistsErrorMessage = "Team with name {0} already exists.";
-        private const string PersonAlreadyExistsErrorMessage = "Person with name {0} already exists.";
-        private const string BoardAlreadyExistsErrorMessage = "Board with name {0} already exists.";
+        private const string TeamAlreadyExistsErrorMessage = "Team with name {0} already exists!";
+        private const string PersonAlreadyExistsErrorMessage = "Person with name {0} already exists!";
+        private const string BoardAlreadyExistsErrorMessage = "Board with name {0} already exists!";
+        private const string TaskNotAssignableErrorMessage = "Task with ID {0} cannot be assigned/unassigned!";
+        private const string EmptyListErrorMessage = "{0} list is empty!";
 
         private List<ITeam> teams = new List<ITeam>();
         private List<IPerson> people = new List<IPerson>();
@@ -215,20 +218,36 @@ namespace TaskManagementSystem.Core
 
         public void AssignTaskToPerson(int taskID, string personName)
         {
-            var task = (IAssignable)this.GetTask<ITaskItem>(taskID);
+            var task = this.GetTask<ITaskItem>(taskID);
             var person = this.GetPerson(personName);
 
-            person.AddTask(task);
-            task.SetAssignee(person);
+            if (TaskIsAssignable(task))
+            {
+                var assignableTask = (IAssignable)task;
+                person.AddTask(assignableTask);
+                assignableTask.SetAssignee(person);
+            }
+            else
+            {
+                throw new InvalidUserInputException(string.Format(TaskNotAssignableErrorMessage, task.ID));
+            }
         }
 
         public void UnassignTaskToPerson(int taskID, string personName)
         {
-            var task = (IAssignable)this.GetTask<ITaskItem>(taskID);
+            var task = this.GetTask<ITaskItem>(taskID);
             var person = this.GetPerson(personName);
 
-            person.RemoveTask(task);
-            task.RemoveAssignee();
+            if (TaskIsAssignable(task))
+            {
+                var assignableTask = (IAssignable)task;
+                person.RemoveTask(assignableTask);
+                assignableTask.RemoveAssignee();
+            }
+            else
+            {
+                throw new InvalidUserInputException(string.Format(TaskNotAssignableErrorMessage, task.ID));
+            }
         }
 
         public void AddCommentToATask(IComment comment, int taskID)
@@ -239,23 +258,40 @@ namespace TaskManagementSystem.Core
 
         public void ListAllTasks()
         {
-            this.teams
+            var tasks = this.teams
                 .SelectMany(t => t.Boards)
                 .SelectMany(b => b.Tasks)
-                .ToList()
-                .ForEach(Console.WriteLine);
+                .ToList();
+            //.ForEach(Console.WriteLine);
+
+            if (!tasks.Any())
+            {
+                throw new ListIsEmptyException(string.Format(EmptyListErrorMessage, "Tasks"));
+            }
+
+            foreach (var task in tasks)
+            {
+                Console.WriteLine(task);
+            }
         }
 
-        public void ListBugs(BugStatus status)
+        public IReadOnlyCollection<ITaskItem> ListBugs(BugStatus status)
         {
-            this.teams
+            var bugs = this.teams
                 .SelectMany(t => t.Boards)
                 .SelectMany(b => b.Tasks)
                 .Where(t => t.TaskType == TaskType.Bug)
                 .Select(b => (IBug)b)
                 .Where(b => b.Status == status)
-                .ToList()
-                .ForEach(Console.WriteLine);
+                .ToList();
+            //.ForEach(Console.WriteLine);
+
+            if (!bugs.Any())
+            {
+                throw new ListIsEmptyException(string.Format(EmptyListErrorMessage, "Bugs"));
+            }
+
+            return bugs;
         }
 
         public void ListBugs(string assigneeName)
@@ -266,8 +302,8 @@ namespace TaskManagementSystem.Core
                 .Where(t => t.TaskType == TaskType.Bug)
                 .Select(b => (IBug)b)
                 .Where(b => b.Assignee.Name == assigneeName)
-                .ToList()
-                .ForEach(Console.WriteLine);
+                .ToList();
+                //.ForEach(Console.WriteLine);
         }
 
         public void ListBugs(string assigneeName, BugStatus status)
@@ -380,6 +416,11 @@ namespace TaskManagementSystem.Core
             var person = this.people.FirstOrDefault(m => m.Name == personName);
             ValidationHelper.ValidateNull(person, string.Format(PersonNotExistentErrorMessage, personName));
             return person;
+        }
+
+        private bool TaskIsAssignable(ITaskItem task)
+        {
+            return task is IAssignable;
         }
     }
 }

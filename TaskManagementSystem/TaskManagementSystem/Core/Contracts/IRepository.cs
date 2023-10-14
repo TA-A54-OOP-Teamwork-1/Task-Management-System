@@ -71,7 +71,7 @@ namespace TaskManagementSystem.Core.Contracts
 
         void ListAllTasks();
 
-        void ListBugs(BugStatus status);
+        IReadOnlyCollection<ITaskItem> ListBugs(BugStatus status);
 
         void ListBugs(string assigneeName);
 

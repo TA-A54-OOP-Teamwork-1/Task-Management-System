@@ -8,9 +8,6 @@ namespace TaskManagementSystem.Models
         private const int NameMinLength = 5;
         private const int NameMaxLength = 10;
 
-        private const string NameIsNullErrorMessage = "Name cannot be null!";
-        private const string InvalidNameLengthErrorMessage = "Name must be between {0} and {1}!";
-
         private string name;
         private List<ITaskItem> tasks;
         private List<string> activityHistory;
@@ -28,10 +25,7 @@ namespace TaskManagementSystem.Models
             get { return this.name; }
             init
             {
-                ValidationHelper.ValidateNull(value, NameIsNullErrorMessage);
-                ValidationHelper.ValidateIntRange(value.Length, NameMinLength, 
-                    NameMaxLength, string.Format(InvalidNameLengthErrorMessage, NameMinLength, NameMaxLength));
-
+                ValidationHelper.ValidateString(value, NameMinLength, NameMaxLength, nameof(this.Name));
                 this.name = value;
             }
         }

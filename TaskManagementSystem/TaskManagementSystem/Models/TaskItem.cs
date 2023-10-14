@@ -17,12 +17,12 @@ namespace TaskManagementSystem.Models
         private string title;
         private string description;
         private readonly List<IComment> comments;
-        private readonly List<string> history;
+        private readonly List<string> activityHistory;
 
         protected TaskItem(int id, string title, string desciption, TaskType taskType)
         {
             this.comments = new List<IComment>();
-            this.history = new List<string>();
+            this.activityHistory = new List<string>();
 
             this.ID = id;
             this.TaskType = taskType;
@@ -39,11 +39,7 @@ namespace TaskManagementSystem.Models
             get { return this.title; }
             init
             {
-                ValidationHelper.ValidateNull(value, string.Format(NullValueErrorMessage, nameof(this.Title)));
-               
-                ValidationHelper.ValidateIntRange(value.Length, TitleMinLength, TitleMaxLength, 
-                    string.Format(InvalidLengthErrorMessage, nameof(this.Title), TitleMinLength, TitleMaxLength));                
-
+                ValidationHelper.ValidateString(value, TitleMinLength, TitleMaxLength, nameof(this.Title));
                 this.title = value;
             }
         }
@@ -53,11 +49,7 @@ namespace TaskManagementSystem.Models
             get { return this.description; }
             init
             {
-                ValidationHelper.ValidateNull(value, string.Format(NullValueErrorMessage, nameof(this.Description)));
-
-                ValidationHelper.ValidateIntRange(value.Length, DescriptionMinLength, DescriptionMaxLength, 
-                    string.Format(InvalidLengthErrorMessage, nameof(this.Description), DescriptionMinLength, DescriptionMaxLength));
-
+                ValidationHelper.ValidateString(value, DescriptionMinLength, DescriptionMaxLength, nameof(this.Description));
                 this.description = value;
             }
         }
@@ -69,12 +61,17 @@ namespace TaskManagementSystem.Models
 
         public IReadOnlyCollection<string> History
         {
-            get { return this.history; }
+            get { return this.activityHistory; }
         }
 
         public void AddComment(IComment comment)
         {
             this.comments.Add(comment);
+        }
+
+        public void LogActivityHistory(string log)
+        {
+            this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | {log}");
         }
     }
 }

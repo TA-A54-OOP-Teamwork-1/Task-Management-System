@@ -13,5 +13,7 @@ namespace TaskManagementSystem.Models.Contracts
         string Description { get; }
 
         IReadOnlyCollection<string> History { get; }
+
+        public void LogActivityHistory(string log);
     }
 }
