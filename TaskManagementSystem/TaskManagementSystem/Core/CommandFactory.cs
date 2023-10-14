@@ -17,71 +17,61 @@ namespace TaskManagementSystem.Core
             // TODO : may be check for null repository
             this.repository = repository;
         }
-
-        /// <summary>
-        /// Called by the Engine class with a command line string that holds all commands
-        /// </summary>
-        /// <param name="commandLine"></param>
-        /// <returns></returns>
         public ICommand Create(string commandLine)
         {
-            string[] arguments = commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var arguments = commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var commandType = this.ParseCommandType(arguments[0]);
 
-            string commandString = arguments[0];
-            bool validCommand = ParseCommandType(commandString, out CommandType commandType);
 
-            if (validCommand)
+            List<string> commandParams = this.ExtractCommandParameters(arguments);
+
+            switch (commandType)
             {
-                List<string> commandParams = ExtractCommandParameters(arguments);
-
-                switch (commandType)
-                {
-                    case CommandType.CreateTeam:
-                        return new CreateTeamCommand(commandParams, repository);
-                    case CommandType.CreatePerson:
-                        return new CreatePersonCommand(commandParams, repository);
-                    case CommandType.CreateBoard:
-                        return new CreateBoardCommand(commandParams, repository);
-                    case CommandType.CreateNewBug:
-                        return new CreateNewBugCommand(commandParams, repository);
-                    case CommandType.CreateNewStory:
-                    case CommandType.CreateNewFeedback:
-                    case CommandType.AddPersonToTeam:
-                    case CommandType.ChangeBugPriority:
-                        return new ChangeBugPriorityCommand(commandParams, repository);
-                    case CommandType.ChangeBugSeverity:
-                    case CommandType.ChangeBugStatus:
-                    case CommandType.ChangeStoryPriority:
-                    case CommandType.ChangeStorySize:
-                    case CommandType.ChangeStoryStatus:
-                    case CommandType.ChangeFeedbackRating:
-                    case CommandType.ChangeFeedbackStatus:
-                    case CommandType.ShowAllPeople:
-                    case CommandType.ShowPersonActivity:
-                    case CommandType.ShowAllTeams:
-                    case CommandType.ShowTeamActivity:
-                    case CommandType.ShowAllTeamPeople:
-                    case CommandType.ShowAllTeamBoards:
-                    case CommandType.ShowBoardActivity:
-                    case CommandType.AssignTaskToPerson:
-                    case CommandType.UnassignTaskToPerson:
-                    case CommandType.AddCommentToATask:
-                    case CommandType.ListAllTasks:
-                    case CommandType.ListBugs:
-                    case CommandType.ListStories:
-                    case CommandType.ListFeedback:
-                    case CommandType.ListTasksWithAssignee:
-                        break;
-                }
-            } 
-
-            throw new InvalidUserInputException(string.Format(CommandDoesNotExistErrorMessage, commandString));
+                case CommandType.CreateTeam:
+                    return new CreateTeamCommand(commandParams, repository);
+                case CommandType.CreatePerson:
+                    return new CreatePersonCommand(commandParams, repository);
+                case CommandType.CreateBoard:
+                    return new CreateBoardCommand(commandParams, repository);
+                case CommandType.CreateBug:
+                    return new CreateBugCommand(commandParams, repository);
+                case CommandType.CreateStory:
+                case CommandType.CreateFeedback:
+                case CommandType.AddPersonToTeam:
+                case CommandType.ChangeBugPriority:
+                    return new ChangeBugPriorityCommand(commandParams, repository);
+                case CommandType.ChangeBugSeverity:
+                case CommandType.ChangeBugStatus:
+                case CommandType.ChangeStoryPriority:
+                case CommandType.ChangeStorySize:
+                case CommandType.ChangeStoryStatus:
+                case CommandType.ChangeFeedbackRating:
+                case CommandType.ChangeFeedbackStatus:
+                case CommandType.ShowAllPeople:
+                case CommandType.ShowPersonActivity:
+                case CommandType.ShowAllTeams:
+                case CommandType.ShowTeamActivity:
+                case CommandType.ShowAllTeamPeople:
+                case CommandType.ShowAllTeamBoards:
+                case CommandType.ShowBoardActivity:
+                case CommandType.AssignTaskToPerson:
+                case CommandType.UnassignTaskToPerson:
+                case CommandType.AddCommentToATask:
+                case CommandType.ListAllTasks:
+                case CommandType.ListBugs:
+                case CommandType.ListStories:
+                case CommandType.ListFeedback:
+                case CommandType.ListTasksWithAssignee:
+                    return new ListAllTasksCommand(commandParams, repository);
+                default:
+                    throw new InvalidUserInputException(string.Format(CommandDoesNotExistErrorMessage, commandType));
+            }
         }
 
-
-        private bool ParseCommandType(string value, out CommandType commandType)
+        private CommandType ParseCommandType(string value)
         {
-            return Enum.TryParse(value, true, out commandType);
+            Enum.TryParse(value, true, out CommandType result);
+            return result;
         }
 
         private List<string> ExtractCommandParameters(string[] arguments)

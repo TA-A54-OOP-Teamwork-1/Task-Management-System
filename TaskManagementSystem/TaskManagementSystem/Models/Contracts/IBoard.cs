@@ -1,13 +1,13 @@
 ﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IBoard : IHasName
+    public interface IBoard : IHasName, ILoggable
     {
-        IReadOnlyCollection<ITaskItem> Tasks { get; }
+        IReadOnlyCollection<IAssignable> Tasks { get; }
 
-        IReadOnlyCollection<string> ActivityHistory { get; }
+        IReadOnlyCollection<IFeedback> Feedbacks { get; }
 
-        void AddTask(ITaskItem task);
+        void AddTask(IAssignable task);
 
-        void LogActivityHistory(string log);
+        void AddFeedback(IFeedback feedback);
     }
 }

@@ -2,18 +2,12 @@
 
 namespace TaskManagementSystem.Models.Contracts
 {   
-    public interface ITaskItem : ICommentable
+    public interface ITaskItem : IHasID, ICommentable, ILoggable
     {
         TaskType TaskType { get; }
-
-        int ID { get; }
 
         string Title { get; }
 
         string Description { get; }
-
-        IReadOnlyCollection<string> History { get; }
-
-        public void LogActivityHistory(string log);
     }
 }

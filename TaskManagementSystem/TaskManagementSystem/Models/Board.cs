@@ -9,12 +9,14 @@ namespace TaskManagementSystem.Models
         private const int NameMaxLength = 10;
 
         private string name;
-        private List<ITaskItem> tasks;
-        private List<string> activityHistory;
+        private readonly List<IAssignable> tasks;
+        private readonly List<IFeedback> feedbacks;
+        private readonly List<string> activityHistory;
 
         public Board(string name)
         {
-            this.tasks = new List<ITaskItem>();
+            this.tasks = new List<IAssignable>();
+            this.feedbacks = new List<IFeedback>();
             this.activityHistory = new List<string>();
 
             this.Name = name;
@@ -30,9 +32,14 @@ namespace TaskManagementSystem.Models
             }
         }
 
-        public IReadOnlyCollection<ITaskItem> Tasks
+        public IReadOnlyCollection<IAssignable> Tasks
         {
             get { return this.tasks; }
+        }
+
+        public IReadOnlyCollection<IFeedback> Feedbacks
+        {
+            get { return this.feedbacks; }
         }
 
         public IReadOnlyCollection<string> ActivityHistory
@@ -40,14 +47,19 @@ namespace TaskManagementSystem.Models
             get { return this.activityHistory; }
         }
 
-        public void AddTask(ITaskItem task)
+        public void AddTask(IAssignable task)
         {
             this.tasks.Add(task);
         }
 
-        public void LogActivityHistory(string log)
+        public void AddFeedback(IFeedback feedback)
         {
-            this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | log");
+            this.feedbacks.Add(feedback);
+        }
+
+        public void LogActivity(string log)
+        {
+            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }
     }
 }

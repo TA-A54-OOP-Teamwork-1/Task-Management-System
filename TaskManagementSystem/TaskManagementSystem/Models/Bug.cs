@@ -6,7 +6,7 @@ namespace TaskManagementSystem.Models
 {
     internal class Bug : TaskItem, IBug
     {
-        private IReadOnlyCollection<string> reproduceSteps;
+        private readonly IReadOnlyCollection<string> stepsToReproduce;
 
         public Bug(
             int id, 
@@ -14,14 +14,14 @@ namespace TaskManagementSystem.Models
             string desciption,
             Priority priority, 
             Severity severity,
-            IReadOnlyCollection<string> reproduceSteps
+            IReadOnlyCollection<string> stepsToReproduce
         )
             : base(id, title, desciption, TaskType.Bug)
         {
             this.Status = BugStatus.Active;
             this.Assignee = null;
 
-            this.reproduceSteps = reproduceSteps;
+            this.stepsToReproduce = stepsToReproduce;
             this.Priority = priority;
             this.Severity = severity;
         }        
@@ -32,7 +32,7 @@ namespace TaskManagementSystem.Models
 
         public IReadOnlyCollection<string> ReproduceSteps
         {
-            get { return this.reproduceSteps; }
+            get { return this.stepsToReproduce; }
         }
 
         public BugStatus Status { get; private set; } 

@@ -4,11 +4,11 @@ using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
 {
-    public class ChangeBugSeverityCommand : BaseCommand
+    public class ChangeStorySizeCommand : BaseCommand
     {
         private const int ExpectedParametersCount = 2;
 
-        public ChangeBugSeverityCommand(IList<string> parameters, IRepository repository)
+        public ChangeStorySizeCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
         {
         }
@@ -17,13 +17,13 @@ namespace TaskManagementSystem.Commands
         {
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            var bugID = base.ParseInt(base.Parameters[0]);
-            var severity = base.ParseEnum<Severity>(base.Parameters[1]);
+            var storyID = base.ParseInt(base.Parameters[0]);
+            var size = base.ParseEnum<Size>(base.Parameters[1]);
 
-            var bug = base.Repository.GetTaskByID<IBug>(bugID);
-            var log = base.Repository.UpdateBugSeverity(bug, severity);
+            var story = base.Repository.GetTaskByID<IStory>(storyID);
+            var log = base.Repository.UpdateStorySize(story, size);
 
-            bug.LogActivity(log);
+            story.LogActivity(log);
             return log;
         }
     }

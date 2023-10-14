@@ -9,8 +9,8 @@ namespace TaskManagementSystem.Models
         private const int NameMaxLength = 15;
 
         private string name;
-        private List<IPerson> people;
-        private List<IBoard> boards;
+        private readonly List<IPerson> people;
+        private readonly List<IBoard> boards;
 
         public Team(string name)
         {

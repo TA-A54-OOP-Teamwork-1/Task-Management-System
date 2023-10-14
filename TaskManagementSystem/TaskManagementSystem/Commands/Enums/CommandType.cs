@@ -5,10 +5,10 @@
         CreateTeam,
         CreatePerson,
         CreateBoard,
-        CreateNewBug,
-        CreateNewStory,
-        CreateNewFeedback,
-        AddPersonToTeam,
+        CreateBug,
+        CreateStory,
+        CreateFeedback,
+
         ChangeBugPriority,
         ChangeBugSeverity,
         ChangeBugStatus,
@@ -17,6 +17,7 @@
         ChangeStoryStatus,
         ChangeFeedbackRating,
         ChangeFeedbackStatus,
+
         ShowAllPeople,
         ShowPersonActivity,
         ShowAllTeams,
@@ -24,9 +25,13 @@
         ShowAllTeamPeople,
         ShowAllTeamBoards,
         ShowBoardActivity,
+
+        AddPersonToTeam,
+        AddCommentToATask,
+        
         AssignTaskToPerson,
         UnassignTaskToPerson,
-        AddCommentToATask,
+
         ListAllTasks,
         ListBugs,
         ListStories,

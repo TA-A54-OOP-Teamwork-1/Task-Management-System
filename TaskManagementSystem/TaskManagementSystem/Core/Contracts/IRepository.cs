@@ -10,79 +10,55 @@ namespace TaskManagementSystem.Core.Contracts
 
         IReadOnlyCollection<IPerson> People { get; }
 
-        string CreateTeam(string teamName);
+        IReadOnlyCollection<IBoard> Boards { get; }
 
-        string CreatePerson(string personName);
+        IReadOnlyCollection<IAssignable> AssignableTasks { get; }
 
-        string CreateNewBoardInTeam(string boardName, string teamName);
+        IReadOnlyCollection<IFeedback> Feedbacks { get; }
 
-        string CreateNewBug(
-            string title, 
-            string description,
-            Priority priority, 
-            Severity severity, 
-            IReadOnlyCollection<string> stepsToReproduce, 
-            string boardName
-        );
+        ITeam CreateTeam(string teamName);
 
-        string CreateNewStory(string title, string description, Priority priority, Size size, string boardName);
+        IPerson CreatePerson(string personName);
 
-        string CreateNewFeedback(string title, string description, int rating, string boardName);
+        IBoard CreateBoard(string boardName);
 
-        string AddPersonToTeam(string personName, string teamName);
+        IBug CreateBug(string title, string description, Priority priority, 
+            Severity severity, IReadOnlyCollection<string> stepsToReproduce);
 
-        string ChangeBugPriority(int bugID, Priority priority);
+        IStory CreateStory(string title, string description, Priority priority, Size size);
 
-        string ChangeBugSeverity(int bugID, Severity severity);
+        IFeedback CreateFeedback(string title, string description, int rating);
 
-        string ChangeBugStatus(int bugID, BugStatus status);
+        string UpdateBugPriority(IBug bug, Priority priority);
 
-        string ChangeStoryPriority(int storyID, Priority priority);
+        string UpdateBugSeverity(IBug bug, Severity severity);
 
-        string ChangeStorySize(int storyID, Size size);
+        string UpdateBugStatus(IBug bug, BugStatus status);
 
-        string ChangeStoryStatus(int storyID, StoryStatus status);
+        string UpdateStoryPriority(IStory story, Priority priority);
 
-        string ChangeFeedbackRating(int feedbackID, int rating);
+        string UpdateStorySize(IStory story, Size size);
 
-        string ChangeFeedbackStatus(int feedbackID, FeedbackStatus status);
+        string UpdateStoryStatus(IStory story, StoryStatus status);
 
-        void ShowAllPeople();
+        string UpdateFeedbackRating(IFeedback feedback, int rating);
 
-        void ShowPersonActivity(IPerson person);
+        string UpdateFeedbackStatus(IFeedback feedback, FeedbackStatus status);
 
-        void ShowAllTeams();
+        public bool TeamExists(string teamName);
 
-        void ShowTeamActivity(ITeam team);
+        public bool PersonExists(string personName);
 
-        void ShowAllTeamPeople(ITeam team);
+        public bool BoardExists(string boardName);
 
-        void ShowAllTeamBoards(ITeam team);
+        public ITeam GetTeamByName(string teamName);
 
-        void ShowBoardActivity(IBoard board);
+        public IBoard GetBoardByName(string boardName);
 
-        //
+        public T GetTaskByID<T>(int ID) where T : ITaskItem;
 
-        void AssignTaskToPerson(int taskID, string personName);
+        public IPerson GetPersonByName(string personName);
 
-        void UnassignTaskToPerson(int taskID, string personName);
-
-        void AddCommentToATask(IComment comment, int taskID);
-
-        void ListAllTasks();
-
-        IReadOnlyCollection<ITaskItem> ListBugs(BugStatus status);
-
-        void ListBugs(string assigneeName);
-
-        void ListBugs(string assigneeName, BugStatus status);
-
-        void ListStories(StoryStatus status);
-
-        void ListStories(string assigneeName);
-
-        void ListStories(string assigneeName, StoryStatus status);
-
-        void ListFeedback(FeedbackStatus status);
+        public List<ITaskItem> GetAllTasks();
     }
 }

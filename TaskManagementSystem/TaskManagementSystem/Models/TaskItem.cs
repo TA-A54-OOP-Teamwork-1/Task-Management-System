@@ -11,9 +11,6 @@ namespace TaskManagementSystem.Models
         private const int DescriptionMinLength = 10;
         private const int DescriptionMaxLength = 500;
 
-        private const string NullValueErrorMessage = "{0} cannot be null!";
-        private const string InvalidLengthErrorMessage = "{0} must be between {1} and {2} symbols long!";
-
         private string title;
         private string description;
         private readonly List<IComment> comments;
@@ -59,7 +56,7 @@ namespace TaskManagementSystem.Models
             get { return this.comments; }
         }
 
-        public IReadOnlyCollection<string> History
+        public IReadOnlyCollection<string> ActivityHistory
         {
             get { return this.activityHistory; }
         }
@@ -69,9 +66,9 @@ namespace TaskManagementSystem.Models
             this.comments.Add(comment);
         }
 
-        public void LogActivityHistory(string log)
+        public void LogActivity(string log)
         {
-            this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | {log}");
+            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }
     }
 }

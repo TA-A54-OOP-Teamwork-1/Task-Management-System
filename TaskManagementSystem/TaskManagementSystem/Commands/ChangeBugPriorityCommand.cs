@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
@@ -16,12 +17,14 @@ namespace TaskManagementSystem.Commands
         {
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            int bugID = base.ParseInt(base.Parameters[0]);
-            Priority priority = base.ParseEnum<Priority>(base.Parameters[1]);
+            var bugID = base.ParseInt(base.Parameters[0]);
+            var priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
-            base.Repository.ChangeBugPriority(bugID, priority);
+            var bug = base.Repository.GetTaskByID<IBug>(bugID);
+            var log = base.Repository.UpdateBugPriority(bug, priority);
 
-            return $"Priority of Bug with ID {bugID} changed to {priority}";
+            bug.LogActivity(log);
+            return log;
         }              
     }
 }

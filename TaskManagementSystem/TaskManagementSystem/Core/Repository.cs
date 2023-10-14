@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using TaskManagementSystem.Core.Contracts;
+﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models;
@@ -11,18 +10,18 @@ namespace TaskManagementSystem.Core
 {
     public class Repository : IRepository
     {
-        private const string TaskNotExistentErrorMessage = "{0} with ID {1} does not exist!";
         private const string TeamNotExistentErrorMessage = "Team with name {0} does not exist!";
-        private const string BoardNotExistentErrorMessage = "Team with name {0} does not exist!";
+        private const string BoardNotExistentErrorMessage = "Board with name {0} does not exist!";
+        private const string TaskNotExistentErrorMessage = "{0} with ID {1} does not exist!";
         private const string PersonNotExistentErrorMessage = "Person with name {0} does not exist!";
-        private const string TeamAlreadyExistsErrorMessage = "Team with name {0} already exists!";
-        private const string PersonAlreadyExistsErrorMessage = "Person with name {0} already exists!";
-        private const string BoardAlreadyExistsErrorMessage = "Board with name {0} already exists!";
         private const string TaskNotAssignableErrorMessage = "Task with ID {0} cannot be assigned/unassigned!";
         private const string EmptyListErrorMessage = "{0} list is empty!";
-
-        private List<ITeam> teams = new List<ITeam>();
-        private List<IPerson> people = new List<IPerson>();
+        
+        private readonly List<ITeam> teams = new List<ITeam>();
+        private readonly List<IPerson> people = new List<IPerson>();
+        private readonly List<IBoard> boards = new List<IBoard>();
+        private readonly List<IAssignable> assignableTasks = new List<IAssignable>();
+        private readonly List<IFeedback> feedbacks = new List<IFeedback>();
 
         public IReadOnlyCollection<ITeam> Teams
         {
@@ -34,393 +33,165 @@ namespace TaskManagementSystem.Core
             get { return this.people; }
         }
 
-        public string CreateTeam(string teamName)
+        public IReadOnlyCollection<IBoard> Boards
         {
-            if (this.TeamExists(teamName))
-            {
-                throw new InvalidUserInputException(string.Format(TeamAlreadyExistsErrorMessage, teamName));
-            }
+            get { return this.boards; }
+        }
 
+        public IReadOnlyCollection<IAssignable> AssignableTasks
+        {
+            get { return this.assignableTasks; }
+        }
+
+        public IReadOnlyCollection<IFeedback> Feedbacks
+        {
+            get { return this.feedbacks; }
+        }
+
+        public ITeam CreateTeam(string teamName)
+        {           
             var team = new Team(teamName);
             this.teams.Add(team);
-
-            return $"Team with name {teamName} created.";
+            return team;
         }
 
-        public string CreatePerson(string personName)
-        {
-            if (this.PersonExists(personName))
-            {
-                throw new InvalidUserInputException(string.Format(PersonAlreadyExistsErrorMessage, personName));
-            }
-
+        public IPerson CreatePerson(string personName)
+        {           
             var person = new Person(personName);
-            people.Add(person);
-
-            return $"Person with name {personName} created.";
+            this.people.Add(person);
+            return person;
         }
 
-        public string CreateNewBoardInTeam(string boardName, string teamName)
+        public IBoard CreateBoard(string boardName)
         {
             var board = new Board(boardName);
-
-            if (this.BoardExist(boardName))
-            {
-                throw new InvalidUserInputException(string.Format(BoardAlreadyExistsErrorMessage, boardName));
-
-            }
-
-            var team = this.GetTeam(teamName);
-            team.AddBoard(board);
-
-            return $"Board with name {boardName} in team {teamName}.";
+            this.boards.Add(board);
+            return board;
         }
         
-        public string CreateNewBug(string title, string description, Priority priority, Severity severity, IReadOnlyCollection<string> stepsToReproduce, string boardName)
+        public IBug CreateBug(
+            string title, 
+            string description, 
+            Priority priority, 
+            Severity severity, 
+            IReadOnlyCollection<string> stepsToReproduce)
         {
-            var board = this.GetBoard(boardName);
-            var nextID = board.Tasks.Count + 1;
-            var bug = new Bug(nextID, title, description, priority, severity, stepsToReproduce);
-            board.AddTask(bug);
-
-            return $"Bug with ID {nextID} created.";
+            var ID = this.assignableTasks.Count + 1;
+            var bug = new Bug(ID, title, description, priority, severity, stepsToReproduce);
+            this.assignableTasks.Add(bug);
+            return bug;
         }
 
-        public string CreateNewStory(string title, string description, Priority priority, Size size, string boardName)
+        public IStory CreateStory(string title, string description, Priority priority, Size size)
         {
-            var board = this.GetBoard(boardName);
-            var nextID = board.Tasks.Count + 1;
-            var story = new Story(nextID, title, description, priority, size);
-            board.AddTask(story);
-
-            return $"Story with ID {nextID} created.";
+            var ID = this.assignableTasks.Count + 1;
+            var story = new Story(ID, title, description, priority, size);
+            this.assignableTasks.Add(story);
+            return story;
         }
 
-        public string CreateNewFeedback(string title, string description, int rating, string boardName)
+        public IFeedback CreateFeedback(string title, string description, int rating)
         {
-            var board = this.GetBoard(boardName);
-            var nextID = board.Tasks.Count + 1;
-            var feedback = new Feedback(nextID, title, description, rating);
-            board.AddTask(feedback);
-
-            return $"Feedback with ID {nextID} created.";
+            var ID = this.assignableTasks.Count + 1;
+            var feedback = new Feedback(ID, title, description, rating);
+            this.feedbacks.Add(feedback);
+            return feedback;
         }
 
-        public string AddPersonToTeam(string personName, string teamName)
+        public string UpdateBugPriority(IBug bug, Priority priority)
         {
-            var person = this.GetPerson(personName);
-            var team = this.GetTeam(teamName);
-            team.AddPerson(person);
-
-            return $"Person with name {personName} added to team {teamName}.";
-        }
-
-        public string ChangeBugPriority(int bugID, Priority priority)
-        {
-            var bug = this.GetTask<IBug>(bugID);
             bug.ChangePriority(priority);
-
-            return $"Bug priority changed to {priority}.";
+            return $"Priority of [Bug - ID: {bug.ID}] changed to {priority}.";
         }
 
-        public string ChangeBugSeverity(int bugID, Severity severity)
-        { 
-            var bug = this.GetTask<IBug>(bugID);
+        public string UpdateBugSeverity(IBug bug, Severity severity)
+        {
             bug.ChangeSeverity(severity);
-
-            return $"Bug severity changed to {severity}.";
+            return $"Severity of [Bug - ID: {bug.ID}] changed to {severity}.";
         }
 
-        public string ChangeBugStatus(int bugID, BugStatus status)
+        public string UpdateBugStatus(IBug bug, BugStatus status)
         {
-            var bug = this.GetTask<IBug>(bugID);
             bug.ChangeStatus(status);
-
-            return $"Bug status changed to {status}.";
+            return $"Status of [Bug - ID: {bug.ID}] changed to {status}.";
         }
 
-        public string ChangeStoryPriority(int storyID, Priority priority)
+        public string UpdateStoryPriority(IStory story, Priority priority)
         {
-            var story = this.GetTask<IStory>(storyID);
             story.ChangePriority(priority);
-
-            return $"Story priority changed to {priority}.";
+            return $"Priority of [Story - ID: {story.ID}] changed to {priority}.";
         }
 
-        public string ChangeStorySize(int storyID, Size size)
+        public string UpdateStorySize(IStory story, Size size)
         {
-            var story = this.GetTask<IStory>(storyID);
             story.ChangeSize(size);
-
-            return $"Story size changed to {size}.";
+            return $"Size of [Story - ID: {story.ID}] changed to {size}.";
         }
 
-        public string ChangeStoryStatus(int storyID, StoryStatus status)
+        public string UpdateStoryStatus(IStory story, StoryStatus status)
         {
-            var story = this.GetTask<IStory>(storyID);
             story.ChangeStatus(status);
-        
-            return $"Story status changed to {status}.";
+            return $"Size of [Story - ID: {story.ID}] changed to {status}.";
         }
 
-        public string ChangeFeedbackRating(int feedbackID, int rating)
-        {
-            var feedback = this.GetTask<IFeedback>(feedbackID);
-            feedback.ChangeRating(rating);
-
-            return $"Feedback rating changed to {rating}.";
-        }
-
-        public string ChangeFeedbackStatus(int feedbackID, FeedbackStatus status)
-        {
-            var feedback = this.GetTask<IFeedback>(feedbackID);
-            feedback.ChangeStatus(status);
-
-            return $"Feedback status changed to {status}.";
-        }
-
-        public void ShowAllPeople()
+        public string UpdateFeedbackRating(IFeedback feedback, int rating)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowPersonActivity(IPerson person)
+        public string UpdateFeedbackStatus(IFeedback feedback, FeedbackStatus status)
         {
             throw new NotImplementedException();
         }
 
-        public void ShowAllTeams()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowTeamActivity(ITeam team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowAllTeamPeople(ITeam team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowAllTeamBoards(ITeam team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowBoardActivity(IBoard board)
-        {
-            throw new NotImplementedException();
-        }
-
-        //
-
-        public void AssignTaskToPerson(int taskID, string personName)
-        {
-            var task = this.GetTask<ITaskItem>(taskID);
-            var person = this.GetPerson(personName);
-
-            if (TaskIsAssignable(task))
-            {
-                var assignableTask = (IAssignable)task;
-                person.AddTask(assignableTask);
-                assignableTask.SetAssignee(person);
-            }
-            else
-            {
-                throw new InvalidUserInputException(string.Format(TaskNotAssignableErrorMessage, task.ID));
-            }
-        }
-
-        public void UnassignTaskToPerson(int taskID, string personName)
-        {
-            var task = this.GetTask<ITaskItem>(taskID);
-            var person = this.GetPerson(personName);
-
-            if (TaskIsAssignable(task))
-            {
-                var assignableTask = (IAssignable)task;
-                person.RemoveTask(assignableTask);
-                assignableTask.RemoveAssignee();
-            }
-            else
-            {
-                throw new InvalidUserInputException(string.Format(TaskNotAssignableErrorMessage, task.ID));
-            }
-        }
-
-        public void AddCommentToATask(IComment comment, int taskID)
-        {
-            var task = this.GetTask<ITaskItem>(taskID);
-            task.AddComment(comment);
-        }
-
-        public void ListAllTasks()
-        {
-            var tasks = this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .ToList();
-            //.ForEach(Console.WriteLine);
-
-            if (!tasks.Any())
-            {
-                throw new ListIsEmptyException(string.Format(EmptyListErrorMessage, "Tasks"));
-            }
-
-            foreach (var task in tasks)
-            {
-                Console.WriteLine(task);
-            }
-        }
-
-        public IReadOnlyCollection<ITaskItem> ListBugs(BugStatus status)
-        {
-            var bugs = this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Bug)
-                .Select(b => (IBug)b)
-                .Where(b => b.Status == status)
-                .ToList();
-            //.ForEach(Console.WriteLine);
-
-            if (!bugs.Any())
-            {
-                throw new ListIsEmptyException(string.Format(EmptyListErrorMessage, "Bugs"));
-            }
-
-            return bugs;
-        }
-
-        public void ListBugs(string assigneeName)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Bug)
-                .Select(b => (IBug)b)
-                .Where(b => b.Assignee.Name == assigneeName)
-                .ToList();
-                //.ForEach(Console.WriteLine);
-        }
-
-        public void ListBugs(string assigneeName, BugStatus status)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Bug)
-                .Select(b => (IBug)b)
-                .Where(b => b.Assignee.Name == assigneeName
-                    && b.Status == status)
-                .ToList()
-                .ForEach(Console.WriteLine);
-        }
-
-        public void ListStories(StoryStatus status)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Story)
-                .Select(s => (IStory)s)
-                .Where(s => s.Status == status)
-                .ToList()
-                .ForEach(Console.WriteLine);
-        }
-
-        public void ListStories(string assigneeName)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Story)
-                .Select(s => (IStory)s)
-                .Where(s => s.Assignee.Name == assigneeName)
-                .ToList()
-                .ForEach(Console.WriteLine);
-        }
-
-        public void ListStories(string assigneeName, StoryStatus status)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Bug)
-                .Select(s => (IStory)s)
-                .Where(s => s.Assignee.Name == assigneeName
-                    && s.Status == status)
-                .ToList()
-                .ForEach(Console.WriteLine);
-        }
-
-        public void ListFeedback(FeedbackStatus status)
-        {
-            this.teams
-                .SelectMany(t => t.Boards)
-                .SelectMany(b => b.Tasks)
-                .Where(t => t.TaskType == TaskType.Feedback)
-                .Select(f => (IFeedback)f)
-                .Where(f => f.Status == status)
-                .ToList()
-                .ForEach(Console.WriteLine);
-        }
-
-        private bool TeamExists(string teamName)
+        public bool TeamExists(string teamName)
         {
             return this.teams.Any(t => t.Name == teamName);
         }
 
-        private bool PersonExists(string personName)
+        public bool PersonExists(string personName)
         {
-            return this.teams.Any(t => t.People.Any(m => m.Name == personName));
+            return this.people.Any(p => p.Name == personName);
         }
 
-        private bool BoardExist(string boardName)
+        public bool BoardExists(string boardName)
         {
-            return this.teams.Any(t => t.Boards.Any(b => b.Name == boardName));
+            return this.boards.Any(b => b.Name == boardName);
         }        
 
-        private ITeam GetTeam(string teamName)
+        public ITeam GetTeamByName(string teamName)
         {
-            var team = this.teams.FirstOrDefault(t => t.Name == teamName);
-            ValidationHelper.ValidateNull(team, string.Format(TeamNotExistentErrorMessage, teamName));
-            return team;
+            return this.teams.FirstOrDefault(t => t.Name == teamName) ??
+            throw new EntityNotFoundException(string.Format(TeamNotExistentErrorMessage, teamName));
         }
 
-        private IBoard GetBoard(string boardName)
+        public IBoard GetBoardByName(string boardName)
         {
-            // SelectMany - [1, 2, 3] [4, 5, 6] => [1, 2, 3, 4, 5, 6] (flattens)
-
-            var board = this.teams.SelectMany(team => team.Boards).FirstOrDefault(board => board.Name == boardName);
-            ValidationHelper.ValidateNull(board, string.Format(BoardNotExistentErrorMessage, boardName));
-            return board;
+            return this.boards.FirstOrDefault(b => b.Name == boardName) ??
+            throw new EntityNotFoundException(string.Format(BoardNotExistentErrorMessage, boardName));
         }
 
-        private T GetTask<T>(int ID) where T : ITaskItem
-        {           
-            var task = this.teams
-                .SelectMany(team => team.Boards)
-                .SelectMany(board => board.Tasks)
-                .FirstOrDefault(task => task.ID == ID);
-
-            ValidationHelper.ValidateNull(task, string.Format(TaskNotExistentErrorMessage, nameof(T).Substring(1), ID));
-
-            return (T)task;
+        public T GetTaskByID<T>(int ID) where T : ITaskItem
+        {
+            var type = typeof(T).Name.Substring(1);
+            return (T)this.assignableTasks.FirstOrDefault(t => t.ID == ID) ?? 
+                throw new EntityNotFoundException(string.Format(TaskNotExistentErrorMessage, type, ID));
         }
 
-        private IPerson GetPerson(string personName)
+        public IPerson GetPersonByName(string personName)
         {
-            var person = this.people.FirstOrDefault(m => m.Name == personName);
-            ValidationHelper.ValidateNull(person, string.Format(PersonNotExistentErrorMessage, personName));
-            return person;
+            return this.people.FirstOrDefault(m => m.Name == personName) ??
+             throw new EntityNotFoundException(string.Format(PersonNotExistentErrorMessage, personName));
         }
 
-        private bool TaskIsAssignable(ITaskItem task)
+        public List<ITaskItem> GetAllTasks()
         {
-            return task is IAssignable;
+            var allTasks = new List<ITaskItem>(); 
+
+            allTasks.AddRange(this.assignableTasks.Select(t => (ITaskItem)t));
+            allTasks.AddRange(this.feedbacks);
+
+            return allTasks;
         }
     }
 }

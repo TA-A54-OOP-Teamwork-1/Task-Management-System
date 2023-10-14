@@ -9,8 +9,8 @@ namespace TaskManagementSystem.Models
         private const int NameMaxLength = 15;
 
         private string name;
-        private List<IAssignable> tasks;
-        private List<string> activityHistory;
+        private readonly List<IAssignable> tasks;
+        private readonly List<string> activityHistory;
 
         public Person(string name)
         {
@@ -50,9 +50,9 @@ namespace TaskManagementSystem.Models
             this.tasks.Remove(task);
         }
 
-        public void LogActivityHistory(string log)
+        public void LogActivity(string log)
         {
-            this.activityHistory.Add($"[{DateTime.Now.ToString("dd/MM/yyyy")}] | {log}");
+            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }
 
     }

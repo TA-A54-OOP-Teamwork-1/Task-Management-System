@@ -1,14 +1,14 @@
 ﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Models.Contracts;
-using TaskManagementSystem.Models.Enums;
+using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Commands
 {
-    public class ChangeStoryPriorityCommand : BaseCommand
+    public class ChangeStoryStatusCommand : BaseCommand
     {
         private const int ExpectedParametersCount = 2;
 
-        public ChangeStoryPriorityCommand(IList<string> parameters, IRepository repository) 
+        public ChangeStoryStatusCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
         {
         }
@@ -18,10 +18,10 @@ namespace TaskManagementSystem.Commands
             base.ValidateParametersCount(ExpectedParametersCount);
 
             var storyID = base.ParseInt(base.Parameters[0]);
-            var priority = base.ParseEnum<Priority>(base.Parameters[1]);
+            var status = base.ParseEnum<StoryStatus>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
-            var log = base.Repository.UpdateStoryPriority(story, priority);
+            var log = base.Repository.UpdateStoryStatus(story, status);
 
             story.LogActivity(log);
             return log;

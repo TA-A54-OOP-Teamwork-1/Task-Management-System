@@ -1,8 +1,8 @@
 ﻿namespace TaskManagementSystem.Exceptions
 {
-    public class ListIsEmptyException : Exception
+    public class EmptyListException : Exception
     {
-        public ListIsEmptyException(string message) 
+        public EmptyListException(string message) 
             : base(message)
         {
         }

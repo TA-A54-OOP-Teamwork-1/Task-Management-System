@@ -1,6 +1,6 @@
 ﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IAssignable
+    public interface IAssignable : IHasID
     {
         void SetAssignee(IPerson person);
 
