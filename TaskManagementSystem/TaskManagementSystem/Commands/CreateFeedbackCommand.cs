@@ -25,7 +25,7 @@ namespace TaskManagementSystem.Commands
 
             board.AddFeedback(feedback);
 
-            var log = $"Feedback with {feedback.ID} was created.";
+            var log = $"Feedback with ID {feedback.ID} was created.";
 
             board.LogActivity(log);
             feedback.LogActivity(log);

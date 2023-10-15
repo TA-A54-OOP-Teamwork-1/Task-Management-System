@@ -1,4 +1,6 @@
-﻿using TaskManagementSystem.Core.Contracts;
+﻿using System.Drawing;
+using System.Threading.Channels;
+using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
@@ -29,7 +31,7 @@ namespace TaskManagementSystem.Commands
 
             board.AddTask(bug);
 
-            var log = $"Bug with {bug.ID} was created.";
+            var log = $"Bug with ID {bug.ID} was created.";
 
             board.LogActivity(log);
             bug.LogActivity(log);

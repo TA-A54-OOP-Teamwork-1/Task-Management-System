@@ -1,6 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Exceptions;
-using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
@@ -100,48 +99,58 @@ namespace TaskManagementSystem.Core
 
         public string UpdateBugPriority(IBug bug, Priority priority)
         {
+            var previousPriority = bug.Priority;
             bug.ChangePriority(priority);
-            return $"Priority of [Bug - ID: {bug.ID}] changed to {priority}.";
+            return $"Priority of [Bug - ID: {bug.ID}] changed from {previousPriority} to {priority}.";
         }
 
         public string UpdateBugSeverity(IBug bug, Severity severity)
         {
+            var previousSeverity = bug.Severity;
             bug.ChangeSeverity(severity);
-            return $"Severity of [Bug - ID: {bug.ID}] changed to {severity}.";
+            return $"Severity of [Bug - ID: {bug.ID}] changed from {previousSeverity} to {severity}.";
         }
 
         public string UpdateBugStatus(IBug bug, BugStatus status)
         {
+            var previousStatus = bug.Status;
             bug.ChangeStatus(status);
-            return $"Status of [Bug - ID: {bug.ID}] changed to {status}.";
+            return $"Status of [Bug - ID: {bug.ID}] changed from {previousStatus} to {status}.";
         }
 
         public string UpdateStoryPriority(IStory story, Priority priority)
         {
+            var previousPriority = story.Priority;
             story.ChangePriority(priority);
-            return $"Priority of [Story - ID: {story.ID}] changed to {priority}.";
+            return $"Priority of [Story - ID: {story.ID}] changed from {previousPriority} to {priority}.";
         }
 
         public string UpdateStorySize(IStory story, Size size)
         {
+            var previousSize = story.Size;
             story.ChangeSize(size);
-            return $"Size of [Story - ID: {story.ID}] changed to {size}.";
+            return $"Size of [Story - ID: {story.ID}] changed from {previousSize} to {size}.";
         }
 
         public string UpdateStoryStatus(IStory story, StoryStatus status)
         {
+            var previousStatus = story.Status;
             story.ChangeStatus(status);
-            return $"Size of [Story - ID: {story.ID}] changed to {status}.";
+            return $"Status of [Story - ID: {story.ID}] changed from {previousStatus} to {status}.";
         }
 
         public string UpdateFeedbackRating(IFeedback feedback, int rating)
         {
-            throw new NotImplementedException();
+            var previousRating = feedback.Rating;
+            feedback.ChangeRating(rating);
+            return $"Rating of [Feedback - ID: {feedback.ID}] changed from {previousRating} to {rating}.";
         }
 
         public string UpdateFeedbackStatus(IFeedback feedback, FeedbackStatus status)
         {
-            throw new NotImplementedException();
+            var previousStatus = feedback.Status;
+            feedback.ChangeStatus(status);
+            return $"Status of [Feedback - ID: {feedback.ID}] changed from {previousStatus} to {status}.";
         }
 
         public bool TeamExists(string teamName)

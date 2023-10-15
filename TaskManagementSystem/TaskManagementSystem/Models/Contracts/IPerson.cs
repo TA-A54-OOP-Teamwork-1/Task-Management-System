@@ -2,6 +2,8 @@
 {
     public interface IPerson : IHasName, ILoggable
     {
+
+
         IReadOnlyCollection<IAssignable> Tasks { get; }
 
         void AddTask(IAssignable task);

@@ -51,7 +51,10 @@ namespace TaskManagementSystem.Models
 
         public void ChangeStatus(BugStatus status)
         {
+            var oldStatus = this.Status;
             this.Status = status;
+
+            base.LogActivity($"St")
         }
 
         public void SetAssignee(IPerson person)
