@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var status = base.ParseEnum<StoryStatus>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
-            var log = base.Repository.UpdateStoryStatus(story, status);
+            var result = base.Repository.UpdateStoryStatus(story, status);
 
-            story.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }

@@ -26,10 +26,8 @@ namespace TaskManagementSystem.Commands
             }
 
             var person = base.Repository.CreatePerson(personName);
-            var log = $"Person with name {person.Name} was created.";
-            person.LogActivity(log);
 
-            return log;
+            return person.LastActivity;
         }
     }
 }

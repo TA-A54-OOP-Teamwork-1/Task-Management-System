@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Core.Contracts;
+﻿using System.Text;
+using TaskManagementSystem.Core.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
@@ -25,12 +26,11 @@ namespace TaskManagementSystem.Commands
 
             board.AddFeedback(feedback);
 
-            var log = $"Feedback with ID {feedback.ID} was created.";
+            var output = new StringBuilder();
+            output.AppendLine(feedback.LastActivity);
+            output.Append(board.LastActivity);
 
-            board.LogActivity(log);
-            feedback.LogActivity(log);
-
-            return log;
+            return output.ToString();
         }
     }
 }

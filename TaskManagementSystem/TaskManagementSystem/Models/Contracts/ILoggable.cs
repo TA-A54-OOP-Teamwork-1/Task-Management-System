@@ -4,6 +4,6 @@
     {
         IReadOnlyCollection<string> ActivityHistory { get; }
 
-        void LogActivity(string log);
+        string LastActivity { get; }
     }
 }

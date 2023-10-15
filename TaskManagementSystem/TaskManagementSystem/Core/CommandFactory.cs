@@ -14,20 +14,20 @@ namespace TaskManagementSystem.Core
 
         public CommandFactory(IRepository repository)
         {
-            // TODO : may be check for null repository
             this.repository = repository;
         }
+
         public ICommand Create(string commandLine)
         {
             var arguments = commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var commandType = this.ParseCommandType(arguments[0]);
+            var commandParams = this.ExtractCommandParameters(arguments);
 
-
-            List<string> commandParams = this.ExtractCommandParameters(arguments);
+            //ToDo: In case we are given numbers instead of command cast to int the CommandType enum
 
             switch (commandType)
             {
-                case CommandType.CreateTeam:
+                case (int)CommandType.CreateTeam:
                     return new CreateTeamCommand(commandParams, repository);
                 case CommandType.CreatePerson:
                     return new CreatePersonCommand(commandParams, repository);
@@ -36,17 +36,25 @@ namespace TaskManagementSystem.Core
                 case CommandType.CreateBug:
                     return new CreateBugCommand(commandParams, repository);
                 case CommandType.CreateStory:
+                    return new CreateStoryCommand(commandParams, repository);
                 case CommandType.CreateFeedback:
-                case CommandType.AddPersonToTeam:
+                    return new CreateFeedbackCommand(commandParams, repository);
                 case CommandType.ChangeBugPriority:
                     return new ChangeBugPriorityCommand(commandParams, repository);
                 case CommandType.ChangeBugSeverity:
+                    return new ChangeBugSeverityCommand(commandParams, repository);
                 case CommandType.ChangeBugStatus:
+                    return new ChangeBugStatusCommand(commandParams, repository);
                 case CommandType.ChangeStoryPriority:
+                    return new ChangeStoryPriorityCommand(commandParams, repository);
                 case CommandType.ChangeStorySize:
+                    return new ChangeStorySizeCommand(commandParams, repository);
                 case CommandType.ChangeStoryStatus:
+                    return new ChangeStoryStatusCommand(commandParams, repository);
                 case CommandType.ChangeFeedbackRating:
+                    return new ChangeFeedbackRatingCommand(commandParams, repository);
                 case CommandType.ChangeFeedbackStatus:
+                    return new ChangeFeedbackStatusCommand(commandParams, repository);
                 case CommandType.ShowAllPeople:
                 case CommandType.ShowPersonActivity:
                 case CommandType.ShowAllTeams:
@@ -56,8 +64,10 @@ namespace TaskManagementSystem.Core
                 case CommandType.ShowBoardActivity:
                 case CommandType.AssignTaskToPerson:
                 case CommandType.UnassignTaskToPerson:
+                case CommandType.AddPersonToTeam:
                 case CommandType.AddCommentToATask:
                 case CommandType.ListAllTasks:
+                    return new ListAllTasksCommand(commandParams, repository);
                 case CommandType.ListBugs:
                 case CommandType.ListStories:
                 case CommandType.ListFeedback:

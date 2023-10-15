@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var size = base.ParseEnum<Size>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
-            var log = base.Repository.UpdateStorySize(story, size);
+            var result = base.Repository.UpdateStorySize(story, size);
 
-            story.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }

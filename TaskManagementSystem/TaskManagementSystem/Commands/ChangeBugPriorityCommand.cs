@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
             var bug = base.Repository.GetTaskByID<IBug>(bugID);
-            var log = base.Repository.UpdateBugPriority(bug, priority);
+            var result = base.Repository.UpdateBugPriority(bug, priority);
 
-            bug.LogActivity(log);
-            return log;
+            return result;
         }              
     }
 }

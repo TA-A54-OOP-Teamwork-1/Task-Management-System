@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var status = base.ParseEnum<FeedbackStatus>(base.Parameters[1]);
 
             var feedback = base.Repository.GetTaskByID<IFeedback>(feedbackID);
-            var log = base.Repository.UpdateFeedbackStatus(feedback, status);
+            var result = base.Repository.UpdateFeedbackStatus(feedback, status);
 
-            feedback.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }

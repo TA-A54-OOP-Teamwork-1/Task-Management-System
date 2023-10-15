@@ -25,6 +25,8 @@ namespace TaskManagementSystem.Models
             this.TaskType = taskType;
             this.Title = title;
             this.Description = desciption;
+
+            this.LogActivity($"{this.TaskType} with ID {this.ID} was created.");
         }
 
         public int ID { get; }
@@ -61,14 +63,20 @@ namespace TaskManagementSystem.Models
             get { return this.activityHistory; }
         }
 
+        public string LastActivity { get; private set; }
+
         public void AddComment(IComment comment)
         {
             this.comments.Add(comment);
+            this.LogActivity($"Comment with author {comment.Author} was added to {this.TaskType} with ID {this.ID}.");
         }
 
-        public void LogActivity(string log)
+        protected void LogActivity(string log)
         {
+            this.LastActivity = log;
             this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }
+
+        
     }
 }

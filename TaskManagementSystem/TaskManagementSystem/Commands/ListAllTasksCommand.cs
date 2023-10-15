@@ -27,7 +27,7 @@ namespace TaskManagementSystem.Commands
                 .Where(t => t.Title == title)
                 .OrderBy(t => t.Title);
 
-            if (filtered.Count() != 0)
+            if (!filtered.Any())
             {
                 throw new EmptyListException(EmptyTasksListErrorMessage);
             }

@@ -31,10 +31,7 @@ namespace TaskManagementSystem.Commands
 
             team.AddBoard(board);
 
-            var log = $"Board with name {board.Name} was created and added to team {team.Name}";
-            board.LogActivity(log);
-
-            return log;
+            return board.LastActivity;
         }
     }
 }

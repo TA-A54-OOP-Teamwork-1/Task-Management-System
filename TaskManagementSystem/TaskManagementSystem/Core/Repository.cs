@@ -99,51 +99,44 @@ namespace TaskManagementSystem.Core
 
         public string UpdateBugPriority(IBug bug, Priority priority)
         {
-            var previousPriority = bug.Priority;
             bug.ChangePriority(priority);
-            return $"Priority of [Bug - ID: {bug.ID}] changed from {previousPriority} to {priority}.";
+            return bug.LastActivity;
         }
 
         public string UpdateBugSeverity(IBug bug, Severity severity)
         {
-            var previousSeverity = bug.Severity;
             bug.ChangeSeverity(severity);
-            return $"Severity of [Bug - ID: {bug.ID}] changed from {previousSeverity} to {severity}.";
+            return bug.LastActivity;
         }
 
         public string UpdateBugStatus(IBug bug, BugStatus status)
         {
-            var previousStatus = bug.Status;
             bug.ChangeStatus(status);
-            return $"Status of [Bug - ID: {bug.ID}] changed from {previousStatus} to {status}.";
+            return bug.LastActivity;
         }
 
         public string UpdateStoryPriority(IStory story, Priority priority)
         {
-            var previousPriority = story.Priority;
             story.ChangePriority(priority);
-            return $"Priority of [Story - ID: {story.ID}] changed from {previousPriority} to {priority}.";
+            return story.LastActivity;
         }
 
         public string UpdateStorySize(IStory story, Size size)
         {
-            var previousSize = story.Size;
             story.ChangeSize(size);
-            return $"Size of [Story - ID: {story.ID}] changed from {previousSize} to {size}.";
+            return story.LastActivity;
         }
 
         public string UpdateStoryStatus(IStory story, StoryStatus status)
         {
-            var previousStatus = story.Status;
             story.ChangeStatus(status);
-            return $"Status of [Story - ID: {story.ID}] changed from {previousStatus} to {status}.";
+            return story.LastActivity;
         }
 
         public string UpdateFeedbackRating(IFeedback feedback, int rating)
         {
-            var previousRating = feedback.Rating;
             feedback.ChangeRating(rating);
-            return $"Rating of [Feedback - ID: {feedback.ID}] changed from {previousRating} to {rating}.";
+            return feedback.LastActivity;
         }
 
         public string UpdateFeedbackStatus(IFeedback feedback, FeedbackStatus status)

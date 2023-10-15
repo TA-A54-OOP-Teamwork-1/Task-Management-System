@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Core.Contracts;
+﻿using System.Text;
+using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
@@ -27,12 +28,11 @@ namespace TaskManagementSystem.Commands
 
             board.AddTask(story);
 
-            var log = $"Story with ID {story.ID} was created.";
+            var output = new StringBuilder();
+            output.AppendLine(story.LastActivity);
+            output.Append(board.LastActivity);
 
-            board.LogActivity(log);
-            story.LogActivity(log);
-
-            return log;
+            return output.ToString();
         }
     }
 }

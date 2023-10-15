@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var status = base.ParseEnum<BugStatus>(base.Parameters[1]);
 
             var bug = base.Repository.GetTaskByID<IBug>(bugID);
-            var log = base.Repository.UpdateBugStatus(bug, status);
+            var result = base.Repository.UpdateBugStatus(bug, status);
 
-            bug.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }

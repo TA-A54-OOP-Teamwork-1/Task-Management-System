@@ -20,6 +20,8 @@ namespace TaskManagementSystem.Models
             this.activityHistory = new List<string>();
 
             this.Name = name;
+
+            this.LogActivity($"Board with name {this.Name} was created.");
         }
 
         public string Name
@@ -47,17 +49,21 @@ namespace TaskManagementSystem.Models
             get { return this.activityHistory; }
         }
 
+        public string LastActivity { get; private set; }
+
         public void AddTask(IAssignable task)
         {
             this.tasks.Add(task);
+            this.LogActivity($"{task.GetType().Name} with ID {task.ID} was added to the board.");
         }
 
         public void AddFeedback(IFeedback feedback)
         {
             this.feedbacks.Add(feedback);
+            this.LogActivity($"Feedback with ID {feedback.ID} was added to the board.");
         }
 
-        public void LogActivity(string log)
+        private void LogActivity(string log)
         {
             this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }

@@ -45,20 +45,20 @@ namespace TaskManagementSystem.Core.Contracts
 
         string UpdateFeedbackStatus(IFeedback feedback, FeedbackStatus status);
 
-        public bool TeamExists(string teamName);
+        bool TeamExists(string teamName);
 
-        public bool PersonExists(string personName);
+        bool PersonExists(string personName);
 
-        public bool BoardExists(string boardName);
+        bool BoardExists(string boardName);
 
-        public ITeam GetTeamByName(string teamName);
+        ITeam GetTeamByName(string teamName);
 
-        public IBoard GetBoardByName(string boardName);
+        IBoard GetBoardByName(string boardName);
 
-        public T GetTaskByID<T>(int ID) where T : ITaskItem;
+        T GetTaskByID<T>(int ID) where T : ITaskItem;
 
-        public IPerson GetPersonByName(string personName);
+        IPerson GetPersonByName(string personName);
 
-        public List<ITaskItem> GetAllTasks();
+        List<ITaskItem> GetAllTasks();
     }
 }

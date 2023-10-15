@@ -21,10 +21,9 @@ namespace TaskManagementSystem.Commands
             var priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
-            var log = base.Repository.UpdateStoryPriority(story, priority);
+            var result = base.Repository.UpdateStoryPriority(story, priority);
 
-            story.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }

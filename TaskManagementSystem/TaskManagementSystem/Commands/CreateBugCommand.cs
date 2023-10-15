@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text;
 using System.Threading.Channels;
 using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Models.Enums;
@@ -31,12 +32,11 @@ namespace TaskManagementSystem.Commands
 
             board.AddTask(bug);
 
-            var log = $"Bug with ID {bug.ID} was created.";
+            var output = new StringBuilder();
+            output.AppendLine(bug.LastActivity);
+            output.Append(board.LastActivity);
 
-            board.LogActivity(log);
-            bug.LogActivity(log);
-
-            return log;
+            return bug.LastActivity;
         }
     }
 }

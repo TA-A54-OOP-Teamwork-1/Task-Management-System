@@ -2,12 +2,10 @@
 {
     public interface IPerson : IHasName, ILoggable
     {
-
-
         IReadOnlyCollection<IAssignable> Tasks { get; }
 
-        void AddTask(IAssignable task);
+        void AssignTask(IAssignable task);
 
-        void RemoveTask(IAssignable task);
+        void UnassignTask(IAssignable task);
     }
 }

@@ -18,6 +18,8 @@ namespace TaskManagementSystem.Models
             this.activityHistory = new List<string>();
 
             this.Name = name;
+
+            this.LogActivity($"Person with name {this.Name} was created.");
         }
 
         public string Name
@@ -40,18 +42,23 @@ namespace TaskManagementSystem.Models
             get { return this.activityHistory; }
         }
 
-        public void AddTask(IAssignable task)
+        public string LastActivity { get; private set; }
+
+        public void AssignTask(IAssignable task)
         {
             this.tasks.Add(task);
+            this.LogActivity($"{task.GetType().Name} with ID {task.ID} was assigned to {this.Name}.");
         }
        
-        public void RemoveTask(IAssignable task)
+        public void UnassignTask(IAssignable task)
         {
             this.tasks.Remove(task);
+            this.LogActivity($"{task.GetType().Name} with ID {task.ID} was unassigned.");
         }
 
-        public void LogActivity(string log)
+        private void LogActivity(string log)
         {
+            // ToDo: make private
             this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
         }
 

@@ -20,10 +20,9 @@ namespace TaskManagementSystem.Commands
             var rating = base.ParseInt(base.Parameters[1]);
 
             var feedback = base.Repository.GetTaskByID<IFeedback>(feedbackID);
-            var log = base.Repository.UpdateFeedbackRating(feedback, rating);
+            var result = base.Repository.UpdateFeedbackRating(feedback, rating);
 
-            feedback.LogActivity(log);
-            return log;
+            return result;
         }
     }
 }
