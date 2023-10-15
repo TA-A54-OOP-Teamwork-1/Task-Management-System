@@ -1,6 +1,6 @@
 ﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IBoard : IHasName, ILoggable
+    public interface IBoard : IHasName, ITrackable
     {
         IReadOnlyCollection<IAssignable> Tasks { get; }
 

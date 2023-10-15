@@ -1,6 +1,6 @@
 ﻿namespace TaskManagementSystem.Models.Contracts
 {
-    public interface ILoggable
+    public interface ITrackable
     {
         IReadOnlyCollection<string> ActivityHistory { get; }
 
