@@ -1,5 +1,4 @@
-﻿
-namespace TaskManagementSystem.Core.Contracts
+﻿namespace TaskManagementSystem.Core.Contracts
 {
     public interface IEngine
     {

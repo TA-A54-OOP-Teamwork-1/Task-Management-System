@@ -8,15 +8,15 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Commands
 {
-    public class ListBugsCommand : BaseCommand
+    public class ListStoriesCommand : BaseCommand
     {
-        private const string EmptyBugsListErrorMessage = "No bugs to display.";
+        private const string EmptyStoriesListErrorMessage = "No stories to display!";
         private const string InvalidFormatErrorMessage = "Invalid input format!";
 
         private const int ExpectedParametersMinCount = 2;
         private const int ExpectedParametersMaxCount = 4;
 
-        public ListBugsCommand(IList<string> parameters, IRepository repository) 
+        public ListStoriesCommand(IList<string> parameters, IRepository repository)
             : base(parameters, repository)
         {
         }
@@ -25,46 +25,46 @@ namespace TaskManagementSystem.Commands
         {
             base.ValidateParametersCount(ExpectedParametersMinCount, ExpectedParametersMaxCount);
 
-            var bugs = this.FilterBugs();
+            var stories = this.FilterStories();
 
-            this.ValidateEmptyList(bugs);
+            this.ValidateEmptyList(stories);
             this.ValidateInputFormat(base.Parameters);
 
             if (base.Parameters.Contains("-fsa"))
             {
-                var status = base.ParseEnum<BugStatus>(base.Parameters[1]);
+                var status = base.ParseEnum<StoryStatus>(base.Parameters[1]);
                 var assignee = base.Repository.GetPersonByName(base.Parameters[2]);
 
-                bugs = this.FilterByStatus(bugs, status);
-                bugs = this.FilterByAssignee(bugs, assignee);
+                stories = this.FilterByStatus(stories, status);
+                stories = this.FilterByAssignee(stories, assignee);
             }
             else if (base.Parameters.Contains("-fs"))
             {
-                var status = base.ParseEnum<BugStatus>(base.Parameters[1]);
-                bugs = this.FilterByStatus(bugs, status);
+                var status = base.ParseEnum<StoryStatus>(base.Parameters[1]);
+                stories = this.FilterByStatus(stories, status);
             }
             else if (base.Parameters.Contains("-fa"))
             {
                 var assignee = base.Repository.GetPersonByName(base.Parameters[1]);
-                bugs = this.FilterByAssignee(bugs, assignee);
-            }            
+                stories = this.FilterByAssignee(stories, assignee);
+            }
 
             if (base.Parameters.Contains("-st"))
             {
-                bugs = this.SortByTitle(bugs);
+                stories = this.SortByTitle(stories);
             }
             else if (base.Parameters.Contains("-sp"))
             {
-                bugs = this.SortByPriority(bugs);
+                stories = this.SortByPriority(stories);
             }
             else if (base.Parameters.Contains("-ss"))
             {
-                bugs = this.SortBySeverity(bugs);
+                stories = this.SortBySize(stories);
             }
 
             var output = new StringBuilder();
 
-            bugs.ForEach(b => output.AppendLine(b.ToString()));
+            stories.ForEach(s => output.AppendLine(s.ToString()));
             output.Append("End of display.");
 
             return output.ToString();
@@ -78,55 +78,55 @@ namespace TaskManagementSystem.Commands
             }
         }
 
-        private void ValidateEmptyList(List<IBug> bugs)
+        private void ValidateEmptyList(List<IStory> stories)
         {
-            if (!bugs.Any())
+            if (!stories.Any())
             {
-                throw new EmptyListException(EmptyBugsListErrorMessage);
+                throw new EmptyListException(EmptyStoriesListErrorMessage);
             }
         }
 
-        private List<IBug> FilterBugs()
+        private List<IStory> FilterStories()
         {
             return base.Repository.GetAllTasks()
-                .Where(t => t.TaskType == TaskType.Bug)
-                .Select(t => (IBug)t)
+                .Where(t => t.TaskType == TaskType.Story)
+                .Select(t => (IStory)t)
                 .ToList();
         }
 
-        private List<IBug> FilterByStatus(List<IBug> bugs, BugStatus status)
+        private List<IStory> FilterByStatus(List<IStory> stories, StoryStatus status)
         {
-            return bugs
-                .Where(b => b.Status == status)
+            return stories
+                .Where(s => s.Status == status)
                 .ToList();
         }
 
-        private List<IBug> FilterByAssignee(List<IBug> bugs, IPerson assignee)
+        private List<IStory> FilterByAssignee(List<IStory> stories, IPerson assignee)
         {
-            return bugs
-                .Where(b => b.Assignee == assignee)
+            return stories
+                .Where(s => s.Assignee == assignee)
                 .ToList();
 
         }
 
-        private List<IBug> SortByTitle(List<IBug> bugs)
+        private List<IStory> SortByTitle(List<IStory> stories)
         {
-            return bugs
-                .OrderBy(b => b.Title)
+            return stories
+                .OrderBy(s => s.Title)
                 .ToList();
         }
 
-        private List<IBug> SortByPriority(List<IBug> bugs)
+        private List<IStory> SortByPriority(List<IStory> stories)
         {
-            return bugs
-                .OrderBy(b => b.Priority)
+            return stories
+                .OrderBy(s => s.Priority)
                 .ToList();
         }
 
-        private List<IBug> SortBySeverity(List<IBug> bugs)
+        private List<IStory> SortBySize(List<IStory> stories)
         {
-             return bugs
-                .OrderBy(b => b.Severity)
+            return stories
+                .OrderBy(s => s.Size)
                 .ToList();
         }
     }

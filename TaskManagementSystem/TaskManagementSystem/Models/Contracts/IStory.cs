@@ -3,15 +3,13 @@ using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models.Contracts
 {
-    public interface IStory : ITaskItem, IAssignable
+    public interface IStory : IAssignable
     {
         Priority Priority { get; }
 
         Size Size { get; }
 
         StoryStatus Status { get; }
-
-        IPerson Assignee { get; }
 
         void ChangePriority(Priority priority);
 

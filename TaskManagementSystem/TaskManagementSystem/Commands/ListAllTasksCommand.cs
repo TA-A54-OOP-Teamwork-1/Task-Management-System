@@ -2,14 +2,16 @@
 
 using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Exceptions;
+using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
     public class ListAllTasksCommand : BaseCommand
     {
-        private const string EmptyTasksListErrorMessage = "No tasks to list!";
+        private const string EmptyTasksListErrorMessage = "No tasks to display!";
+        private const string InvalidFormatErrorMessage = "Invalid input format!";        
 
-        private const int ExpectedParametersCount = 1;
+        private const int ExpectedParametersCount = 2;
 
         public ListAllTasksCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
@@ -20,25 +22,59 @@ namespace TaskManagementSystem.Commands
         {
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            var title = base.Parameters[0];
+            var tasks = base.Repository.GetAllTasks();
+            
+            this.ValidateEmptyList(tasks);
+            this.ValidateInputFormat(base.Parameters);
+
+            var title = base.Parameters[1];
+
+
+            if (base.Parameters.Contains("-ft"))
+            {
+                tasks = this.FilterTasksByTitle(tasks, title);
+            }
+            else if (base.Parameters.Contains("-st"))
+            {
+                tasks = this.SortTasksByTitle(tasks, title);
+            }
+                
             var output = new StringBuilder();
+            
+            tasks.ForEach(t => output.AppendLine(t.ToString()));
+            output.Append("End of displaying.");
 
-            var filtered = base.Repository.GetAllTasks()
-                .Where(t => t.Title == title)
-                .OrderBy(t => t.Title);
+            return output.ToString();
+        }
 
-            if (!filtered.Any())
+        private void ValidateInputFormat(IList<string> inputParameters)
+        {
+            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
+            {
+                throw new InvalidUserInputException(InvalidFormatErrorMessage);
+            }
+        }
+
+        private void ValidateEmptyList(List<ITaskItem> tasks)
+        {
+            if (!tasks.Any())
             {
                 throw new EmptyListException(EmptyTasksListErrorMessage);
             }
+        }
 
-            foreach (var task in filtered)
-            {
-                output.AppendLine(task.ToString());
-                output.AppendLine(new string('-', 15));
-            }
+        private List<ITaskItem> FilterTasksByTitle(List<ITaskItem> tasks, string title)
+        {
+            return tasks
+                .Where(t => t.Title == title)
+                .ToList();
+        }
 
-            return output.ToString().Trim();
+        private List<ITaskItem> SortTasksByTitle(List<ITaskItem> tasks, string title)
+        {
+            return tasks
+                .OrderBy(t => t.Title)
+                .ToList();
         }
     }
 }

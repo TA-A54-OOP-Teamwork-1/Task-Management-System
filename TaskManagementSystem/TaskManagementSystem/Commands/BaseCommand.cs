@@ -1,6 +1,7 @@
 ﻿using TaskManagementSystem.Core.Contracts;
 using TaskManagementSystem.Commands.Contracts;
 using TaskManagementSystem.Exceptions;
+using TaskManagementSystem.Helpers;
 
 namespace TaskManagementSystem.Commands
 {
@@ -8,7 +9,7 @@ namespace TaskManagementSystem.Commands
     {
         private const string InvalidParametersCountErrorMessage = "Parameters count is {0} and does not match expected count of {1}!";
         private const string CouldNotParseIntegerErrorMessage = "Could not be parsed to int!";
-        private const string CouldNotParseEnumErrorMessage = "None of the enums in {0} matches the value {1}!";        
+        private const string CouldNotParseEnumErrorMessage = "None of the statuses in {0} matches the value {1}!";        
 
         public BaseCommand(IList<string> parameters, IRepository repository)
         {
@@ -28,6 +29,11 @@ namespace TaskManagementSystem.Commands
             {
                 throw new InvalidUserInputException(string.Format(InvalidParametersCountErrorMessage, Parameters.Count, expectedCount));
             }
+        }
+
+        protected void ValidateParametersCount(int min, int max)
+        {
+            ValidationHelper.ValidateIntRange(Parameters.Count, min, max, "Parameters");
         }
 
         protected int ParseInt(string integer)

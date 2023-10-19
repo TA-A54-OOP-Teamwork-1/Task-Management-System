@@ -58,6 +58,7 @@ namespace TaskManagementSystem.Models
 
         private void LogActivity(string log)
         {
+            this.LastActivity = log;
             this.activityHistory.Add(new Event(log));
         }
         
