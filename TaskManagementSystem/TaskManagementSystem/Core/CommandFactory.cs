@@ -82,11 +82,11 @@ namespace TaskManagementSystem.Core
                     case CommandType.ListAllTasks:
                         return new ListAllTasksCommand(commandParams, this.repository);
                     case CommandType.ListBugs:
-                        return new ListAllTasksCommand(commandParams, this.repository);
+                        return new ListBugsCommand(commandParams, this.repository);
                     case CommandType.ListStories:
-                        break;
-                    case CommandType.ListFeedback:
-                        break;
+                        return new ListStoriesCommand(commandParams, this.repository);                        
+                    case CommandType.ListFeedbacks:
+                        return new ListFeedbacksCommand(commandParams, this.repository);
                     case CommandType.ListTasksWithAssignee:
                         return new ListAllTasksCommand(commandParams, this.repository);
                 }

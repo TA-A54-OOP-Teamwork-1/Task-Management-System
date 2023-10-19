@@ -8,7 +8,7 @@ using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
 {
-    public class ListFeedbackCommand : BaseCommand
+    public class ListFeedbacksCommand : BaseCommand
     {
         private const string EmptyFeedbacksListErrorMessage = "No feedbacks to display.";
         private const string InvalidFormatErrorMessage = "Invalid input format!";
@@ -16,7 +16,7 @@ namespace TaskManagementSystem.Commands
         private const int ExpectedParametersMinCount = 2;
         private const int ExpectedParametersMaxCount = 3;
 
-        public ListFeedbackCommand(IList<string> parameters, IRepository repository) 
+        public ListFeedbacksCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
         {
         }

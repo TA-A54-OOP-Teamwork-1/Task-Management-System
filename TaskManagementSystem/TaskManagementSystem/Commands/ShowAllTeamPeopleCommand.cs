@@ -33,8 +33,6 @@ namespace TaskManagementSystem.Commands
                 .ToList()
                 .ForEach(member => output.AppendLine(member.ToString()));
 
-            output.Append("End of displaying!");
-
             return output.ToString();
         }
     }

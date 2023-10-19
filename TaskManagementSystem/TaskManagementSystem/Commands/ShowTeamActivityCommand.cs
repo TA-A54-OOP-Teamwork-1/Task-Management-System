@@ -35,8 +35,6 @@ namespace TaskManagementSystem.Commands
                 .ToList()
                 .ForEach(logEntry => logEntry.ToString());
             
-            output.Append("End of displaying!");
-
             return output.ToString();
         }
     }

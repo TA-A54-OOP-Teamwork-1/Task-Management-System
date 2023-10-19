@@ -30,8 +30,6 @@ namespace TaskManagementSystem.Commands
                 .ToList()
                 .ForEach(person => output.AppendLine(person.ToString()));
 
-            output.Append("End of displaying!");
-
             return output.ToString();
         }
     }

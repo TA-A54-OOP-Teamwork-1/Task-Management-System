@@ -35,7 +35,7 @@
         ListAllTasks,
         ListBugs,
         ListStories,
-        ListFeedback,
+        ListFeedbacks,
         ListTasksWithAssignee
     }
 }

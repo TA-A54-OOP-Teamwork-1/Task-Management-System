@@ -9,7 +9,7 @@ namespace TaskManagementSystem.Helpers.Printers
 
         public void PrintInfo(string message, bool newLine = true)
         {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Green;
             if (newLine)
             {
                 Console.WriteLine(message);

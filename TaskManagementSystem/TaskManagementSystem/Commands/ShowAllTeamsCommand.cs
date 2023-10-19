@@ -31,8 +31,6 @@ namespace TaskManagementSystem.Commands
                 .ToList()
                 .ForEach(team => output.AppendLine(team.ToString()));
 
-            output.Append("End of displaying!");
-
             return output.ToString();
         }
     }
