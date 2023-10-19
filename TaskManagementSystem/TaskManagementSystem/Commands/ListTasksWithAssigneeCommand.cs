@@ -79,9 +79,7 @@ namespace TaskManagementSystem.Commands
             }
 
             var output = new StringBuilder();
-
             assignableTasks.ForEach(t => output.AppendLine(t.ToString()));
-            output.Append("End of display!");
 
             return output.ToString();
         }

@@ -63,9 +63,7 @@ namespace TaskManagementSystem.Commands
             }
 
             var output = new StringBuilder();
-
             stories.ForEach(s => output.AppendLine(s.ToString()));
-            output.Append("End of display.");
 
             return output.ToString();
         }

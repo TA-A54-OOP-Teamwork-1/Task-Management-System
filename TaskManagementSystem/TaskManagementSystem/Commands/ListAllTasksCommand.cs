@@ -40,10 +40,8 @@ namespace TaskManagementSystem.Commands
             }
                 
             var output = new StringBuilder();
-            
             tasks.ForEach(t => output.AppendLine(t.ToString()));
-            output.Append("End of displaying.");
-
+            
             return output.ToString();
         }
 

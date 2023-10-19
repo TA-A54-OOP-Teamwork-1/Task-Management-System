@@ -46,9 +46,7 @@ namespace TaskManagementSystem.Commands
             }
 
             var output = new StringBuilder();
-
             feedbacks.ForEach(f => output.AppendLine(f.ToString()));
-            output.Append("End of display.");
 
             return output.ToString();
         }
