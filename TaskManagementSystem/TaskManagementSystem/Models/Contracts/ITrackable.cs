@@ -2,7 +2,7 @@
 {
     public interface ITrackable
     {
-        IReadOnlyCollection<string> ActivityHistory { get; }
+        IReadOnlyCollection<IEvent> ActivityHistory { get; }
 
         string LastActivity { get; }
     }

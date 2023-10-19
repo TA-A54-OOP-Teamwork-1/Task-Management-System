@@ -49,5 +49,10 @@ namespace TaskManagementSystem.Models
         {
             this.boards.Add(board);
         }
+
+        public override string ToString()
+        {
+            return $" # Team : {Name}";
+        }
     }
 }

@@ -176,7 +176,7 @@ namespace TaskManagementSystem.Core
         public T GetTaskByID<T>(int ID) where T : ITaskItem
         {
             var type = typeof(T).Name.Substring(1);
-            return (T)this.assignableTasks.FirstOrDefault(t => t.ID == ID) ?? 
+            return (T)this.assignableTasks.FirstOrDefault(t => t.ID == ID && t is T) ?? 
                 throw new EntityNotFoundException(string.Format(TaskNotExistentErrorMessage, type, ID));
         }
 

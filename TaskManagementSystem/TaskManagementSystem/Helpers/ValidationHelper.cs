@@ -1,4 +1,6 @@
-﻿namespace TaskManagementSystem.Helpers
+﻿using TaskManagementSystem.Exceptions;
+
+namespace TaskManagementSystem.Helpers
 {
     public static class ValidationHelper
     {
@@ -17,7 +19,7 @@
         {
             if (value < min || value > max)
             {
-                throw new ArgumentException(string.Format(InvalidLengthErrorMessage, propertyName, min, max));
+                throw new InvalidUserInputException(string.Format(InvalidLengthErrorMessage, propertyName, min, max));
             }
         }
 

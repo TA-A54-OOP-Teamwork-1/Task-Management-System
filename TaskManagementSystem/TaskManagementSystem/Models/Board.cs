@@ -11,13 +11,13 @@ namespace TaskManagementSystem.Models
         private string name;
         private readonly List<IAssignable> tasks;
         private readonly List<IFeedback> feedbacks;
-        private readonly List<string> activityHistory;
+        private readonly List<IEvent> activityHistory;
 
         public Board(string name)
         {
             this.tasks = new List<IAssignable>();
             this.feedbacks = new List<IFeedback>();
-            this.activityHistory = new List<string>();
+            this.activityHistory = new List<IEvent>();
 
             this.Name = name;
 
@@ -44,7 +44,7 @@ namespace TaskManagementSystem.Models
             get { return this.feedbacks; }
         }
 
-        public IReadOnlyCollection<string> ActivityHistory
+        public IReadOnlyCollection<IEvent> ActivityHistory
         {
             get { return this.activityHistory; }
         }
@@ -65,7 +65,8 @@ namespace TaskManagementSystem.Models
 
         private void LogActivity(string log)
         {
-            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
+            this.LastActivity = log;
+            this.activityHistory.Add(new Event(log));
         }
     }
 }

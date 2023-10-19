@@ -14,12 +14,12 @@ namespace TaskManagementSystem.Models
         private string title;
         private string description;
         private readonly List<IComment> comments;
-        private readonly List<string> activityHistory;
+        private readonly List<IEvent> activityHistory;
 
         protected TaskItem(int id, string title, string desciption, TaskType taskType)
         {
             this.comments = new List<IComment>();
-            this.activityHistory = new List<string>();
+            this.activityHistory = new List<IEvent>();
 
             this.ID = id;
             this.TaskType = taskType;
@@ -58,7 +58,7 @@ namespace TaskManagementSystem.Models
             get { return this.comments; }
         }
 
-        public IReadOnlyCollection<string> ActivityHistory
+        public IReadOnlyCollection<IEvent> ActivityHistory
         {
             get { return this.activityHistory; }
         }
@@ -74,9 +74,7 @@ namespace TaskManagementSystem.Models
         protected void LogActivity(string log)
         {
             this.LastActivity = log;
-            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
+            this.activityHistory.Add(new Event(log));
         }
-
-        
     }
 }

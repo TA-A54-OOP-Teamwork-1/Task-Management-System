@@ -18,8 +18,8 @@ namespace TaskManagementSystem.Commands
         {
             base.ValidateParametersCount(ExpectedParametersCount);
 
-            var boardName = Parameters[0];
-            var teamName = Parameters[1];
+            var boardName = base.Parameters[0];
+            var teamName = base.Parameters[1];
 
             if (base.Repository.BoardExists(boardName))
             {

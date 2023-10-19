@@ -10,12 +10,12 @@ namespace TaskManagementSystem.Models
 
         private string name;
         private readonly List<IAssignable> tasks;
-        private readonly List<string> activityHistory;
+        private readonly List<IEvent> activityHistory;
 
         public Person(string name)
         {
             this.tasks = new List<IAssignable>();
-            this.activityHistory = new List<string>();
+            this.activityHistory = new List<IEvent>();
 
             this.Name = name;
 
@@ -37,7 +37,7 @@ namespace TaskManagementSystem.Models
             get { return this.tasks; }
         }
 
-        public IReadOnlyCollection<string> ActivityHistory
+        public IReadOnlyCollection<IEvent> ActivityHistory
         {
             get { return this.activityHistory; }
         }
@@ -58,9 +58,12 @@ namespace TaskManagementSystem.Models
 
         private void LogActivity(string log)
         {
-            // ToDo: make private
-            this.activityHistory.Add($"[{DateTime.Now:dd/MM/yyyy}] | {log}");
+            this.activityHistory.Add(new Event(log));
         }
-
+        
+        public override string ToString()
+        {
+            return $" # Person : {Name}";
+        }
     }
 }
