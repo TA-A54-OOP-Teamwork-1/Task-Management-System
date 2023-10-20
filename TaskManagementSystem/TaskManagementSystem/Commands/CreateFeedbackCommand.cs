@@ -8,6 +8,8 @@ namespace TaskManagementSystem.Commands
     public class CreateFeedbackCommand : BaseCommand
     {
         private const int ExpectedParametersCount = 4;
+        private const int MinRating = 1;
+        private const int MaxRating = 5;
 
         public CreateFeedbackCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
@@ -23,7 +25,7 @@ namespace TaskManagementSystem.Commands
             var rating = base.ParseInt(base.Parameters[2]);
             var boardName = base.Parameters[3];
 
-            ValidationHelper.ValidateIntRange(rating, 1, 5, "Rating");
+            ValidationHelper.ValidateIntRange(rating, MinRating, MaxRating, "Rating");
 
             var board = base.Repository.GetBoardByName(boardName);
             var feedback = base.Repository.CreateFeedback(title, description, rating);

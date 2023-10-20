@@ -21,6 +21,9 @@ namespace TaskManagementSystem.Commands
             var status = base.ParseEnum<FeedbackStatus>(base.Parameters[1]);
 
             var feedback = base.Repository.GetTaskByID<IFeedback>(feedbackID);
+
+            base.EnsureNotEqual(status, feedback.Status);
+
             var result = base.Repository.UpdateFeedbackStatus(feedback, status);
 
             return result;

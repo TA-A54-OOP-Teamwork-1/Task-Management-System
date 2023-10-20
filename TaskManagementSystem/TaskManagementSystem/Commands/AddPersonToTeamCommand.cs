@@ -28,7 +28,7 @@ namespace TaskManagementSystem.Commands
             {
                 throw new NotAllowedException(string.Format(PersonAlreadyMemeberOfTeamErrorMessage, personName, teamName));
             }
-
+            
             team.AddPerson(person);
 
             return $"Person with name {personName} added to team {teamName}";

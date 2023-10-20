@@ -8,10 +8,10 @@ namespace TaskManagementSystem.Commands
 {
     public class ListAllTasksCommand : BaseCommand
     {
-        private const string EmptyTasksListErrorMessage = "No tasks to display!";
-        private const string InvalidFormatErrorMessage = "Invalid input format!";        
+        private const string EmptyTasksListErrorMessage = "No tasks to display!";       
 
-        private const int ExpectedParametersCount = 2;
+        private const int ExpectedParametersMinCount = 1;
+        private const int ExpectedParametersMaxCount = 2;
 
         public ListAllTasksCommand(IList<string> parameters, IRepository repository) 
             : base(parameters, repository)
@@ -20,37 +20,28 @@ namespace TaskManagementSystem.Commands
 
         public override string Execute()
         {
-            base.ValidateParametersCount(ExpectedParametersCount);
+            base.ValidateParametersCount(ExpectedParametersMinCount, ExpectedParametersMaxCount);
 
             var tasks = base.Repository.GetAllTasks();
             
             this.ValidateEmptyList(tasks);
-            this.ValidateInputFormat(base.Parameters);
+            base.ValidateInputFormat();
 
-            var title = base.Parameters[1];
-
-
-            if (base.Parameters.Contains("-ft"))
+            if (base.Parameters.Contains("-ft")) // ListAllTasks "-st"
             {
+                var title = base.Parameters[1];
                 tasks = this.FilterTasksByTitle(tasks, title);
+                this.ValidateEmptyList(tasks);
             }
             else if (base.Parameters.Contains("-st"))
             {
-                tasks = this.SortTasksByTitle(tasks, title);
+                tasks = this.SortTasksByTitle(tasks);
             }
                 
             var output = new StringBuilder();
             tasks.ForEach(t => output.AppendLine(t.ToString()));
             
             return output.ToString();
-        }
-
-        private void ValidateInputFormat(IList<string> inputParameters)
-        {
-            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
-            {
-                throw new InvalidUserInputException(InvalidFormatErrorMessage);
-            }
         }
 
         private void ValidateEmptyList(List<ITaskItem> tasks)
@@ -68,7 +59,7 @@ namespace TaskManagementSystem.Commands
                 .ToList();
         }
 
-        private List<ITaskItem> SortTasksByTitle(List<ITaskItem> tasks, string title)
+        private List<ITaskItem> SortTasksByTitle(List<ITaskItem> tasks)
         {
             return tasks
                 .OrderBy(t => t.Title)

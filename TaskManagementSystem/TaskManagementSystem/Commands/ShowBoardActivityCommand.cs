@@ -28,11 +28,24 @@ namespace TaskManagementSystem.Commands
                 throw new EmptyListException(string.Format(EmptyActivityLogErrorMessage, boardName));
             }
 
+            var allEvents = new List<IEvent>();
+            
+            allEvents.AddRange(
+                board.ActivityHistory
+                    .ToList()
+            );
+
+            allEvents.AddRange(
+                board.Tasks
+                    .SelectMany(t => t.ActivityHistory)
+                    .ToList()
+            );
+
+            allEvents = allEvents.OrderBy(e => e.TimeStamp).ToList();
+
             StringBuilder output = new StringBuilder();
 
-            board.ActivityHistory
-                .ToList()
-                .ForEach(logEntry => output.AppendLine(logEntry.ToString()));
+            allEvents.ForEach(e => output.AppendLine(e.ToString()));
 
             return output.ToString();
         }

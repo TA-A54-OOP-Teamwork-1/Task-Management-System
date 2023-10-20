@@ -34,7 +34,7 @@ namespace TaskManagementSystem.Commands
             output.AppendLine(bug.LastActivity);
             output.Append(board.LastActivity);
 
-            return bug.LastActivity;
+            return output.ToString();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Models;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums.Statuses;
 
@@ -21,6 +22,9 @@ namespace TaskManagementSystem.Commands
             var status = base.ParseEnum<StoryStatus>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
+
+            base.EnsureNotEqual(status, story.Status);
+
             var result = base.Repository.UpdateStoryStatus(story, status);
 
             return result;

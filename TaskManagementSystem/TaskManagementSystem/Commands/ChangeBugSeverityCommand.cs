@@ -21,6 +21,9 @@ namespace TaskManagementSystem.Commands
             var severity = base.ParseEnum<Severity>(base.Parameters[1]);
 
             var bug = base.Repository.GetTaskByID<IBug>(bugID);
+
+            base.EnsureNotEqual(severity, bug.Severity);
+
             var result = base.Repository.UpdateBugSeverity(bug, severity);
 
             return result;

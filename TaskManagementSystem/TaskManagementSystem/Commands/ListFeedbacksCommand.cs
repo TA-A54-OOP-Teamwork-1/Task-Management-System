@@ -11,7 +11,6 @@ namespace TaskManagementSystem.Commands
     public class ListFeedbacksCommand : BaseCommand
     {
         private const string EmptyFeedbacksListErrorMessage = "No feedbacks to display.";
-        private const string InvalidFormatErrorMessage = "Invalid input format!";
 
         private const int ExpectedParametersMinCount = 2;
         private const int ExpectedParametersMaxCount = 3;
@@ -28,13 +27,15 @@ namespace TaskManagementSystem.Commands
             var feedbacks = this.FilterFeedbacks();
 
             this.ValidateEmptyList(feedbacks);
-            this.ValidateInputFormat(base.Parameters);
+            base.ValidateInputFormat();
 
             if (base.Parameters.Contains("-fs"))
             {
                 var status = base.ParseEnum<FeedbackStatus>(base.Parameters[1]);
                 feedbacks = this.FilterByStatus(feedbacks, status);
             }
+
+            this.ValidateEmptyList(feedbacks);
 
             if (base.Parameters.Contains("-st"))
             {
@@ -49,14 +50,6 @@ namespace TaskManagementSystem.Commands
             feedbacks.ForEach(f => output.AppendLine(f.ToString()));
 
             return output.ToString();
-        }
-
-        private void ValidateInputFormat(IList<string> inputParameters)
-        {
-            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
-            {
-                throw new InvalidUserInputException(InvalidFormatErrorMessage);
-            }
         }
 
         private void ValidateEmptyList(List<IFeedback> feedbacks)

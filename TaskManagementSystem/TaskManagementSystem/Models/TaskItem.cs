@@ -25,8 +25,6 @@ namespace TaskManagementSystem.Models
             this.TaskType = taskType;
             this.Title = title;
             this.Description = desciption;
-
-            this.LogActivity($"{this.TaskType} with ID {this.ID} was created.");
         }
 
         public int ID { get; }

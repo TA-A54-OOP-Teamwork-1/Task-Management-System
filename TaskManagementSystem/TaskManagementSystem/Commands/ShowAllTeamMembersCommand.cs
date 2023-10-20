@@ -4,13 +4,13 @@ using TaskManagementSystem.Exceptions;
 
 namespace TaskManagementSystem.Commands
 {
-    public class ShowAllTeamPeopleCommand : BaseCommand
+    public class ShowAllTeamMembersCommand : BaseCommand
     {
         private const string NoPeopleErrorMessage = "No people are present in team {0}!";
 
         private const int ExpectedParametersCount = 1;
 
-        public ShowAllTeamPeopleCommand(IList<string> parameters, IRepository repository)
+        public ShowAllTeamMembersCommand(IList<string> parameters, IRepository repository)
             : base(parameters, repository)
         {
         }

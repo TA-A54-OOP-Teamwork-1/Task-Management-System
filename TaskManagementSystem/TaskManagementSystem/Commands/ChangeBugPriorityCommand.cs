@@ -1,11 +1,12 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
 {
     public class ChangeBugPriorityCommand : BaseCommand
-    {           
+    {
         private const int ExpectedParametersCount = 2;
 
         public ChangeBugPriorityCommand(IList<string> parameters, IRepository repository) 
@@ -21,6 +22,9 @@ namespace TaskManagementSystem.Commands
             var priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
             var bug = base.Repository.GetTaskByID<IBug>(bugID);
+
+            base.EnsureNotEqual(priority, bug.Priority);
+
             var result = base.Repository.UpdateBugPriority(bug, priority);
 
             return result;

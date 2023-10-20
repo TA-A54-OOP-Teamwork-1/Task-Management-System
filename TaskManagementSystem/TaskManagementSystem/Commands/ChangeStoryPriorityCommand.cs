@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Core.Contracts;
+using TaskManagementSystem.Models;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 
@@ -21,6 +22,9 @@ namespace TaskManagementSystem.Commands
             var priority = base.ParseEnum<Priority>(base.Parameters[1]);
 
             var story = base.Repository.GetTaskByID<IStory>(storyID);
+
+            base.EnsureNotEqual(priority, story.Priority);
+
             var result = base.Repository.UpdateStoryPriority(story, priority);
 
             return result;

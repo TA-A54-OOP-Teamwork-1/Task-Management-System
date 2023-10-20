@@ -22,12 +22,12 @@
         ShowPersonActivity,
         ShowAllTeams,
         ShowTeamActivity,
-        ShowAllTeamPeople,
+        ShowAllTeamMembers,
         ShowAllTeamBoards,
         ShowBoardActivity,
 
         AddPersonToTeam,
-        AddCommentToATask,
+        AddCommentToTask,
         
         AssignTaskToPerson,
         UnassignTaskToPerson,

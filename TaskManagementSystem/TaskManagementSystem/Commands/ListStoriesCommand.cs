@@ -11,7 +11,6 @@ namespace TaskManagementSystem.Commands
     public class ListStoriesCommand : BaseCommand
     {
         private const string EmptyStoriesListErrorMessage = "No stories to display!";
-        private const string InvalidFormatErrorMessage = "Invalid input format!";
 
         private const int ExpectedParametersMinCount = 2;
         private const int ExpectedParametersMaxCount = 4;
@@ -28,7 +27,7 @@ namespace TaskManagementSystem.Commands
             var stories = this.FilterStories();
 
             this.ValidateEmptyList(stories);
-            this.ValidateInputFormat(base.Parameters);
+            base.ValidateInputFormat();
 
             if (base.Parameters.Contains("-fsa"))
             {
@@ -49,6 +48,8 @@ namespace TaskManagementSystem.Commands
                 stories = this.FilterByAssignee(stories, assignee);
             }
 
+            this.ValidateEmptyList(stories);
+
             if (base.Parameters.Contains("-st"))
             {
                 stories = this.SortByTitle(stories);
@@ -66,14 +67,6 @@ namespace TaskManagementSystem.Commands
             stories.ForEach(s => output.AppendLine(s.ToString()));
 
             return output.ToString();
-        }
-
-        private void ValidateInputFormat(IList<string> inputParameters)
-        {
-            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
-            {
-                throw new InvalidUserInputException(InvalidFormatErrorMessage);
-            }
         }
 
         private void ValidateEmptyList(List<IStory> stories)

@@ -11,7 +11,6 @@ namespace TaskManagementSystem.Commands
     internal class ListTasksWithAssigneeCommand : BaseCommand
     {
         private const string EmptyAssignableTasksListErrorMessage = "No assigned tasks to display.";
-        private const string InvalidFormatErrorMessage = "Invalid input format!";
         private const string StatusDoesNotExistErrorMessage = "No such status {0}!";
 
         private const int ExpectedParametersMinCount = 2;
@@ -28,7 +27,7 @@ namespace TaskManagementSystem.Commands
             var assignableTasks = new List<IAssignable>(base.Repository.AssignableTasks);
 
             this.ValidateEmptyList(assignableTasks);
-            this.ValidateInputFormat(base.Parameters);
+            base.ValidateInputFormat();
 
             if (base.Parameters.Contains("-fsa"))
             {
@@ -73,6 +72,8 @@ namespace TaskManagementSystem.Commands
                 assignableTasks = this.FilterByAssignee(assignableTasks, assignee);
             }
 
+            this.ValidateEmptyList(assignableTasks);
+
             if (base.Parameters.Contains("-st"))
             {
                 assignableTasks = this.SortByTitle(assignableTasks);
@@ -82,14 +83,6 @@ namespace TaskManagementSystem.Commands
             assignableTasks.ForEach(t => output.AppendLine(t.ToString()));
 
             return output.ToString();
-        }
-
-        private void ValidateInputFormat(IList<string> inputParameters)
-        {
-            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
-            {
-                throw new InvalidUserInputException(InvalidFormatErrorMessage);
-            }
         }
 
         private void ValidateEmptyList(List<IAssignable> assignableTasks)

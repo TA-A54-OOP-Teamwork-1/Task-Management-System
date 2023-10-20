@@ -16,7 +16,7 @@ namespace TaskManagementSystem.Models
 
         public override string ToString()
         {
-            return $"[{this.TimeStamp:dd/MM/yyyy}] {this.Message}";
+            return $"[{this.TimeStamp:dd/MM/yyyy/HH:MM}] {this.Message}";
         }
     }
 }

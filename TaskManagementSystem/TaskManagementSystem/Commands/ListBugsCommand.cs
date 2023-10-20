@@ -11,9 +11,8 @@ namespace TaskManagementSystem.Commands
     public class ListBugsCommand : BaseCommand
     {
         private const string EmptyBugsListErrorMessage = "No bugs to display.";
-        private const string InvalidFormatErrorMessage = "Invalid input format!";
 
-        private const int ExpectedParametersMinCount = 2;
+        private const int ExpectedParametersMinCount = 1;
         private const int ExpectedParametersMaxCount = 4;
 
         public ListBugsCommand(IList<string> parameters, IRepository repository) 
@@ -28,7 +27,7 @@ namespace TaskManagementSystem.Commands
             var bugs = this.FilterBugs();
 
             this.ValidateEmptyList(bugs);
-            this.ValidateInputFormat(base.Parameters);
+            base.ValidateInputFormat();
 
             if (base.Parameters.Contains("-fsa"))
             {
@@ -47,7 +46,9 @@ namespace TaskManagementSystem.Commands
             {
                 var assignee = base.Repository.GetPersonByName(base.Parameters[1]);
                 bugs = this.FilterByAssignee(bugs, assignee);
-            }            
+            }
+
+            this.ValidateEmptyList(bugs);
 
             if (base.Parameters.Contains("-st"))
             {
@@ -66,14 +67,6 @@ namespace TaskManagementSystem.Commands
             bugs.ForEach(b => output.AppendLine(b.ToString()));
 
             return output.ToString();
-        }
-
-        private void ValidateInputFormat(IList<string> inputParameters)
-        {
-            if (!inputParameters.Contains("-f") || !inputParameters.Contains("-s"))
-            {
-                throw new InvalidUserInputException(InvalidFormatErrorMessage);
-            }
         }
 
         private void ValidateEmptyList(List<IBug> bugs)

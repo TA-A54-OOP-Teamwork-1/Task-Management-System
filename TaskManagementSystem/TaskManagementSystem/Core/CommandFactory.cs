@@ -67,8 +67,8 @@ namespace TaskManagementSystem.Core
                         return new ShowAllTeamsCommand(commandParams, this.repository);
                     case CommandType.ShowTeamActivity:
                         return new ShowTeamActivityCommand(commandParams, this.repository);
-                    case CommandType.ShowAllTeamPeople:
-                        return new ShowAllTeamPeopleCommand(commandParams, this.repository);
+                    case CommandType.ShowAllTeamMembers:
+                        return new ShowAllTeamMembersCommand(commandParams, this.repository);
                     case CommandType.ShowAllTeamBoards:
                         return new ShowAllTeamBoardsCommand(commandParams, this.repository);
                     case CommandType.ShowBoardActivity:
@@ -77,7 +77,7 @@ namespace TaskManagementSystem.Core
                         return new AssignTaskToPersonCommand(commandParams, this.repository);
                     case CommandType.UnassignTaskToPerson:
                         return new UnassignTaskToPersonCommand(commandParams, this.repository);
-                    case CommandType.AddCommentToATask:
+                    case CommandType.AddCommentToTask:
                         return new AddCommentToTaskCommand(commandParams, this.repository);
                     case CommandType.ListAllTasks:
                         return new ListAllTasksCommand(commandParams, this.repository);
