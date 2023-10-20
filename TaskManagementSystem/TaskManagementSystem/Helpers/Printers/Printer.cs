@@ -5,8 +5,6 @@ namespace TaskManagementSystem.Helpers.Printers
     // Using a Singleton for Printer
     public class Printer : IPrinter
     {
-        public static Printer Instance = new Printer();
-
         public void PrintInfo(string message, bool newLine = true)
         {
             Console.ForegroundColor = ConsoleColor.Green;

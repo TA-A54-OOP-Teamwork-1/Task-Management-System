@@ -17,7 +17,7 @@ namespace TaskManagementSystem.Core
         public Engine(ICommandFactory commandFactory)
         {
             this.commandFactory = commandFactory;
-            this.printer = new Printer();
+            printer = new Printer();
         }
 
         public void Start()
@@ -41,7 +41,7 @@ namespace TaskManagementSystem.Core
                     ICommand command = commandFactory.Create(inputCommand);
                     string commandResult = command.Execute();
 
-                    Printer.Instance.PrintInfo(commandResult);
+                    printer.PrintInfo(commandResult);
                 }
                 catch (EmptyListException ex)
                 {
@@ -70,16 +70,16 @@ namespace TaskManagementSystem.Core
         {
             if (!b_ExpectedException)
             {
-                Printer.Instance.PrintError($"Error : unexpected exception of type {ex.GetType()} handled!");
+                printer.PrintError($"Error : unexpected exception of type {ex.GetType()} handled!");
             }
 
             if (!string.IsNullOrEmpty(ex.Message))
             {
-                Printer.Instance.PrintError(ex.Message);                
+                printer.PrintError(ex.Message);                
             }
             else
             {
-                Printer.Instance.PrintError(ex);
+                printer.PrintError(ex);
             }
         }
     }
