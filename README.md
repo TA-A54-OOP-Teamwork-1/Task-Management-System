@@ -59,6 +59,7 @@ o List bugs/stories/feedback only.
 
 • Sort by title/priority/severity/size/rating (depending on the task type) / -st, -sp, -ss, -ss, -sr / 
   - NOTE! BOTH SIZE AND SEVERITY ARE /-ss/ BUT SIZE IS FOR STORIES AND SEVERITY IS FOR BUGS
+    
           FILTER IS ALWAYS BEFORE SORTING
   - Right: ListBugs -fsa (status) (assignee) -ss
   - Wrong: ListBugs -ss -fsa (status) (assignee)
