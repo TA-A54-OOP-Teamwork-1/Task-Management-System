@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Helpers;
+﻿using System.Text;
+using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Models
@@ -67,6 +68,15 @@ namespace TaskManagementSystem.Models
         {
             this.LastActivity = log;
             this.activityHistory.Add(new Event(log));
+        }
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            output.AppendLine($" # Name: {this.Name}");
+
+            return output.ToString();
         }
     }
 }

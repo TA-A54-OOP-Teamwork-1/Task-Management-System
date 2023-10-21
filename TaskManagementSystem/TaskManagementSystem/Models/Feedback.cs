@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Models.Contracts;
+﻿using System.Text;
+using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
@@ -32,5 +33,17 @@ namespace TaskManagementSystem.Models
 
             base.LogActivity($"Rating of [Feedback - ID: {this.ID}] changed from {previousRating} to {rating}.");
         }
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            output.AppendLine(base.ToString());
+            output.AppendLine($" # Status: {this.Status}");
+            output.AppendLine($" # Rating: {this.Rating}");
+
+            return output.ToString();
+        }
+
     }
 }

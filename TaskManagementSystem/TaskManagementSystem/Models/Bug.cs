@@ -1,10 +1,11 @@
-﻿using TaskManagementSystem.Models.Contracts;
+﻿using System.Text;
+using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
 namespace TaskManagementSystem.Models
 {
-    internal class Bug : TaskItem, IBug
+    public class Bug : TaskItem, IBug
     {
         private readonly IReadOnlyCollection<string> stepsToReproduce;
 
@@ -73,6 +74,18 @@ namespace TaskManagementSystem.Models
         {
             this.Assignee = null;
             base.LogActivity($"Assignee removed.");
+        }
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            output.AppendLine(base.ToString());
+            output.AppendLine($" # Status: {this.Status}");
+            output.AppendLine($" # Priority: {this.Priority}");
+            output.Append($" # Severity: {this.Severity}");
+
+            return output.ToString();
         }
     }
 }

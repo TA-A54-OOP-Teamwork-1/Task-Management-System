@@ -1,5 +1,4 @@
 ﻿using TaskManagementSystem.Core.Contracts;
-using TaskManagementSystem.Exceptions;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 

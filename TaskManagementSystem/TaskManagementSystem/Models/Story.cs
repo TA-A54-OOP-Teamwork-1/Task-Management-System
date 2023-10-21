@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Models.Contracts;
+﻿using System.Text;
+using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 using TaskManagementSystem.Models.Enums.Statuses;
 
@@ -21,7 +22,7 @@ namespace TaskManagementSystem.Models
             this.Priority = priority;
             this.Size = size;
         }
-
+        
         public Priority Priority { get; private set; }
 
         public Size Size { get; private set; }
@@ -65,5 +66,18 @@ namespace TaskManagementSystem.Models
             this.Assignee = null;
             base.LogActivity($"Assignee removed.");
         }
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            output.AppendLine(base.ToString());
+            output.AppendLine($" # Status: {this.Status}");
+            output.AppendLine($" # Priority: {this.Priority}");
+            output.Append($" # Size: {this.Size}");
+
+            return output.ToString();
+        }
     }
 }
+    

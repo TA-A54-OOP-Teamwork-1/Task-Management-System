@@ -1,4 +1,5 @@
-﻿using TaskManagementSystem.Helpers;
+﻿using System.Text;
+using TaskManagementSystem.Helpers;
 using TaskManagementSystem.Models.Contracts;
 using TaskManagementSystem.Models.Enums;
 
@@ -67,6 +68,17 @@ namespace TaskManagementSystem.Models
         {
             this.comments.Add(comment);
             this.LogActivity($"Comment with author {comment.Author} was added to {this.TaskType} with ID {this.ID}.");
+        }
+
+        public override string ToString()
+        {
+            var output = new StringBuilder();
+
+            output.AppendLine($" # Type: {this.TaskType}");
+            output.AppendLine($" # ID: {this.ID}");
+            output.Append($" # Title: {this.Title}");
+
+            return output.ToString();
         }
 
         protected void LogActivity(string log)
