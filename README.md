@@ -7,9 +7,13 @@ It is a console application that will help a small team of developers to organiz
 The application supports the following commands:
 
 • Create a new person. / requires person name /
+
 • Show all people.
+
 • Show person's activity. / required person name /
+
 • Create a new team. / requires team name /
+
 • Show all teams.
 • Show team's activity. / requires team name /
 • Add person to team. / requires person name and team name /
