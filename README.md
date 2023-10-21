@@ -45,14 +45,18 @@ The application supports the following commands:
 • Add comment to a task. / comment content and task id /
 
 o List all tasks.
+
 • Filter by title / -ft /
+
 • Sort by title / -st /
   - NOTE! FILTER IS ALWAYS BEFORE SORTING
   - Right: ListAllTasks -ft -st
   - Wrong: ListAllTasks -st -ft
 
 o List bugs/stories/feedback only.
+
 • Filter by status and/or assignee / -fs, -fa, -fsa /
+
 • Sort by title/priority/severity/size/rating (depending on the task type) / -st, -sp, -ss, -ss, -sr / 
   - NOTE! BOTH SIZE AND SEVERITY ARE /-ss/ BUT SIZE IS FOR STORIES AND SEVERITY IS FOR BUGS
           FILTER IS ALWAYS BEFORE SORTING
@@ -60,7 +64,9 @@ o List bugs/stories/feedback only.
   - Wrong: ListBugs -ss -fsa (status) (assignee)
     
 o List tasks with assignee.
+
 • Filter by status and/or assignee / -fs, -fa, -fsa /
+
 • Sort by title / -st /
   - NOTE! FILTER IS ALWAYS BEFORE SORTING
   - Right: ListTasksWithAssignee -fsa (status) (assignee) -st
