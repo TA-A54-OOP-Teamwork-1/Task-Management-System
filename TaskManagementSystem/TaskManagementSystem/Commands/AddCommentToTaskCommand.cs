@@ -4,7 +4,7 @@ using TaskManagementSystem.Models.Contracts;
 
 namespace TaskManagementSystem.Commands
 {
-    internal class AddCommentToTaskCommand : BaseCommand
+    public class AddCommentToTaskCommand : BaseCommand
     {
         private const int ExpectedParametersCount = 3;
 

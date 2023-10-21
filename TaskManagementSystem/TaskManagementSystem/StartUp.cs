@@ -3,7 +3,7 @@ using TaskManagementSystem.Core.Contracts;
 
 namespace TaskManagementSystem
 {
-    internal class StartUp
+    public class StartUp
     {
         static void Main(string[] args)
         {

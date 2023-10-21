@@ -8,7 +8,7 @@ using TaskManagementSystem.Models.Enums;
 
 namespace TaskManagementSystem.Commands
 {
-    internal class ListTasksWithAssigneeCommand : BaseCommand
+    public class ListTasksWithAssigneeCommand : BaseCommand
     {
         private const string EmptyAssignableTasksListErrorMessage = "No assigned tasks to display.";
         private const string StatusDoesNotExistErrorMessage = "No such status {0}!";

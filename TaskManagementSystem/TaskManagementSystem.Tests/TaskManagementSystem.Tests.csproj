@@ -16,11 +16,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="RepositoryTests\Create\" />
+	<Folder Include="RepositoryTests\Create\" />
+    <Folder Include="RepositoryTests\Update\" />
+    <Folder Include="CommandTests\Change\" />
+    <Folder Include="CommandTests\Update\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskManagementSystem\TaskManagementSystem.csproj" />
+	<ProjectReference Include="..\TaskManagementSystem\TaskManagementSystem.csproj" />
   </ItemGroup>
+
 
 </Project>
