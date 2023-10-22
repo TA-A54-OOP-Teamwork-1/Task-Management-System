@@ -1,8 +1,9 @@
 # Task-Management-System
-- Group project developed by Plamen and Ventsislav -
+-- Group project developed by Plamen and Ventsislav --
 
 Task Management System is a console application that will help a small team of developers to organize and manage their work tasks.
-The application supports Bug, Story and Feedback tasks and the following commands:(NOTE : no whitespaces are allowed in the input arguments!)
+The application supports Bug, Story and Feedback tasks and the following commands:<br><br>
+**NOTE: no whitespaces are allowed in the input arguments**
 
 1. Create a new person. / requires person name /<br>
   • **CreatePerson TestPerson**
@@ -47,18 +48,18 @@ The application supports Bug, Story and Feedback tasks and the following command
   • **CreateFeedback SomeFeedbackTitle SomeFeedbackDescription 3 TestBoard**
 
 15. Change the Priority/Severity/Status of a bug. / requires bug id and new value /<br>
-  • **ChangeBugPriority 0 Low**
-  • **ChangeBugSeverity 0 Minor**
+  • **ChangeBugPriority 0 Low**<br>
+  • **ChangeBugSeverity 0 Minor**<br>
   • **ChangeBugStatus 0 Fixed**
 
 16. Change the Priority/Size/Status of a story. / requires story id and new value /<br>
-  • **ChangeStoryPriority 1 Low**
-  • **ChangeStorySize 1 Minor**
+  • **ChangeStoryPriority 1 Low**<br>
+  • **ChangeStorySize 1 Minor**<br>
   • **ChangeStoryStatus 1 Done**
   
 17. Change the Rating/Status of a feedback. / requires feedback id and new value /<br>
-  • **ChangeFeedbackRating 2 5**
-  • **ChangeFeedbackStatus 2 Scheduled**
+  • **ChangeFeedbackRating 2 5**<br>
+  • **ChangeFeedbackStatus 2 Scheduled**<br>
   
 18. Assign/Unassign a task to a person. / requires task id and person name /<br> 
   • **AssignTaskToPerson 0 TestPerson**
@@ -67,13 +68,13 @@ The application supports Bug, Story and Feedback tasks and the following command
   • **AddCommentToTask Author 0 SomeCommentFromAuthor**
 
 20. List all tasks.<br>  
-  o Filter by title / -ft /  
-  o Sort by title / -st /
+  • Filter by title / -ft /  
+  • Sort by title / -st /
     - NOTE! FILTER IS ALWAYS BEFORE SORTING!
     - Right: ListAllTasks -ft -st
     - Wrong: ListAllTasks -st -ft
   
-  • **ListAllTasks -ft**
+  • **ListAllTasks -ft**<br>
   • **ListAllTasks -ft -st**
 
 • List bugs/stories/feedback only.
