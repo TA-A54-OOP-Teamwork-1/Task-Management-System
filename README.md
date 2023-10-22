@@ -1,72 +1,72 @@
 # Task-Management-System
 - Group project developed by Plamen and Ventsislav -
 
-Task Management System is a console application that will help a small team of developers to organize and manage their work tasks. The system currently supports Bug, Story and Feedback tasks.
-The application supports the following commands (NOTE : no whitespaces are allowed in input arguments):
+Task Management System is a console application that will help a small team of developers to organize and manage their work tasks.
+The application supports Bug, Story and Feedback tasks and the following commands:(NOTE : no whitespaces are allowed in the input arguments!)
 
-• Create a new person. / requires person name /
+1. Create a new person. / requires person name /<br>
   • **CreatePerson TestPerson**
 
-• Show all people.
+2. Show all people.<br>
   • **ShowAllPeople**
 
-• Show person's activity. / required person name /
-  • **ShowPersonActivity TestPerson**
+3. Show person's activity. / required person name /<br>
+	• **ShowPersonActivity TestPerson**
 
-• Create a new team. / requires team name /
+4. Create a new team. / requires team name /<br>
   • **CreateTeam TestTeam**
 
-• Show all teams.
+5. Show all teams.<br>
   • **ShowAllTeams**
 
-• Show team's activity. / requires team name /
+6. Show team's activity. / requires team name /<br>
   • **ShowTeamActivity TestTeam**
 
-• Add person to team. / requires person name and team name /
+7. Add person to team. / requires person name and team name /<br>
   • **AddPersonToTeam TestPerson TestTeam**
 
-• Show all team members. / requires team name /
+8. Show all team members. / requires team name /<br>
   • **ShowAllTeamMembers TestTeam**
 
-• Create a new board in a team. / requires board name and a team name /
+9. Create a new board in a team. / requires board name and a team name /<br>
   • **CreateBoard TestBoard TestTeam**
 
-• Show all team boards. / requires team name /
+10. Show all team boards. / requires team name /<br>
   • **ShowAllTeamBoards TestTeam**
 
-• Show board's activity. / requires board name /
+11. Show board's activity. / requires board name /<br>
   • **ShowBoardActivity TestBoard**
 
-• Create a new Bug in a board. / requires title, description, priority, severity, steps to reproduce and board name / 
+12. Create a new Bug in a board. / requires title, description, priority, severity, steps to reproduce and board name /<br> 
   • **CreateBug FixPrintingTeamFunctionality TeamMembeersAreNotIndented High Major CreateNewTeam;AddTwoNewMembers;PrintTeam; TestBoard**
 
-• Create a new Story in a board. / requires title, description, priority, size, board name /
+13. Create a new Story in a board. / requires title, description, priority, size, board name /<br>
   • **CreateStory SomeStoryTitle SomeStoryDescription Medium Medium TestBoard**
 
-• Create a new Feedback in a board. / requires title, description, rating, board name /
+14. Create a new Feedback in a board. / requires title, description, rating, board name /<br>
   • **CreateFeedback SomeFeedbackTitle SomeFeedbackDescription 3 TestBoard**
 
-• Change the Priority/Severity/Status of a bug. / requires bug id and new value /
+15. Change the Priority/Severity/Status of a bug. / requires bug id and new value /<br>
   • **ChangeBugPriority 0 Low**
   • **ChangeBugSeverity 0 Minor**
   • **ChangeBugStatus 0 Fixed**
 
-• Change the Priority/Size/Status of a story. / requires story id and new value /
+16. Change the Priority/Size/Status of a story. / requires story id and new value /<br>
   • **ChangeStoryPriority 1 Low**
   • **ChangeStorySize 1 Minor**
   • **ChangeStoryStatus 1 Done**
   
-• Change the Rating/Status of a feedback. / requires feedback id and new value /
+17. Change the Rating/Status of a feedback. / requires feedback id and new value /<br>
   • **ChangeFeedbackRating 2 5**
   • **ChangeFeedbackStatus 2 Scheduled**
   
-• Assign/Unassign a task to a person. / requires task id and person name / 
+18. Assign/Unassign a task to a person. / requires task id and person name /<br> 
   • **AssignTaskToPerson 0 TestPerson**
   
-• Add comment to a task. / author, comment content and task id /
+19. Add comment to a task. / author, comment content and task id /<br>
   • **AddCommentToTask Author 0 SomeCommentFromAuthor**
 
-• List all tasks.  
+20. List all tasks.<br>  
   o Filter by title / -ft /  
   o Sort by title / -st /
     - NOTE! FILTER IS ALWAYS BEFORE SORTING!
