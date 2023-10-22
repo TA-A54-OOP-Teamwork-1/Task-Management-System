@@ -67,24 +67,23 @@ The application supports Bug, Story and Feedback tasks and the following command
 19. Add comment to a task. / author, comment content and task id /<br>
   • **AddCommentToTask Author 0 SomeCommentFromAuthor**
 
-20. List all tasks.<br>  
-  • Filter by title / -ft /  
-  • Sort by title / -st /
-    - NOTE! FILTER IS ALWAYS BEFORE SORTING!
-    - Right: ListAllTasks -ft -st
-    - Wrong: ListAllTasks -st -ft
-  
-  • **ListAllTasks -ft**<br>
-  • **ListAllTasks -ft -st**
+20. List all tasks.<br><br>
+	• Filter by title / -ft /  
+      		- **ListAllTasks -ft**<br><br>
+    	• Sort by title / -st /<br>
+	• NOTE! FILTER IS ALWAYS BEFORE SORTING!<br>
+	• Right: ListAllTasks -ft -st<br>
+	• Wrong: ListAllTasks -st -ft <br>
+		- **ListAllTasks -ft -st**
 
-• List bugs/stories/feedback only.
+22. List bugs/stories/feedback only.
   o Filter by status and/or assignee / -fs, -fa, -fsa /
   o Sort by title/priority/severity/size/rating (depending on the task type) / -st, -sp, -ss, -ss, -sr / 
     - NOTE! BOTH SIZE AND SEVERITY ARE /-ss/ BUT SIZE IS FOR STORIES AND SEVERITY IS FOR BUGS. FILTER IS ALWAYS BEFORE SORTING!
     - Right: ListBugs -fsa (status) (assignee) -ss
     - Wrong: ListBugs -ss -fsa (status) (assignee)
     
-• List tasks with assignee.
+23. List tasks with assignee.
   o Filter by status and/or assignee / -fs, -fa, -fsa /
   o Sort by title / -st /
     - NOTE! FILTER IS ALWAYS BEFORE SORTING!
